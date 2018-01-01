@@ -1,0 +1,53 @@
+
+<form name="loadUrlForm" id="loadUrlForm" #loadUrlForm="ngForm" (ngSubmit)="onSubmit(urlLeft.value,urlRight.value)">
+  <div class="form-group">
+    <label for="urlLeft">URL-Left</label>
+    <input
+      required
+      pattern="^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$"
+      ngModel
+      name= "urlLeft"
+      #urlLeft="ngModel"
+      id="urlLeft"
+      type="text"
+      class="form-control">
+    <div
+      class="alert alert-danger"
+      *ngIf="urlLeft.touched && !urlLeft.valid">
+      <div
+        *ngIf="urlLeft.errors.required">
+        URL-Left is required.
+      </div>
+      <div
+        *ngIf="urlLeft.errors.pattern">
+        Please enter a valid url.
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="urlRight">URL-Right</label>
+    <input
+      required
+      pattern="^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$"
+      ngModel
+      name= "urlRight"
+      #urlRight="ngModel"
+      id="urlRight"
+      type="text"
+      class="form-control">
+    <div
+      class="alert alert-danger"
+      *ngIf="urlRight.touched && !urlRight.valid">
+      <div
+        *ngIf="urlRight.errors.required">
+        URL-Right is required.
+      </div>
+      <div
+        *ngIf="urlRight.errors.pattern">
+        Please enter a valid url.
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" [disabled]="!loadUrlForm.form.valid">Submit</button>
+</form>
+
