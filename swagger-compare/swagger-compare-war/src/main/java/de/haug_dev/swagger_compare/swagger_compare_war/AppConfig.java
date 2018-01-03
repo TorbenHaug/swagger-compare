@@ -1,4 +1,4 @@
-package de.haug_dev.swagger_compare_war;
+package de.haug_dev.swagger_compare.swagger_compare_war;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
