@@ -5,10 +5,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --prod --base-href /swagger-compare-ui/ --deploy-url /swagger-compare-ui",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "localDebug": "ng serve --proxy-config proxy.config.json"
   },
   "private": true,
   "dependencies": {
