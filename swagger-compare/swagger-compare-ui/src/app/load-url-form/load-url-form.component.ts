@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {FlashMessagesService} from "ngx-flash-messages";
+import {TraceBoxDataService} from "../trace-box/trace-box.data.service";
 
 @Component({
   selector: 'load-url-form',
@@ -8,7 +10,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class LoadUrlFormComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private flashMessagesService: FlashMessagesService,private data: TraceBoxDataService) { }
 
   ngOnInit() {
   }
@@ -19,6 +21,12 @@ export class LoadUrlFormComponent implements OnInit {
       urlLeft: urlLeft,
       urlRight: urlRight
     }
-    this.http.post("/api/compare",body).subscribe(res => console.log(res));
+    this.http.post("/api/compare",body).subscribe(
+      data => console.log('success', data),
+      error => {
+        console.log(error);
+        this.flashMessagesService.show(error.message);
+        this.data.showTrace(error.error);
+      });
   }
 }
