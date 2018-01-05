@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {FlashMessagesService} from "ngx-flash-messages";
 import {TraceBoxDataService} from "../trace-box/trace-box.data.service";
 
@@ -23,10 +23,7 @@ export class LoadUrlFormComponent implements OnInit {
     }
     this.http.post("/api/compare",body).subscribe(
       data => console.log('success', data),
-      error => {
-        console.log(error);
-        this.flashMessagesService.show(error.message);
-        this.data.showTrace(error.error);
-      });
+      (error: HttpErrorResponse) => this.data.showTrace(error)
+      );
   }
 }
