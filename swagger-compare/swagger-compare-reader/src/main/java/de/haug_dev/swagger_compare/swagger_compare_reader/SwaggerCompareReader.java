@@ -18,8 +18,8 @@ public class SwaggerCompareReader {
 
     OpenAPIV3Parser parser = new OpenAPIV3Parser();
 
-    public Map<String,OpenAPI> read(URL left, URL right) throws InvalidOpenAPIFileException {
-        HashMap<String, OpenAPI> result = new HashMap<>();
+    public OpenAPI[] read(URL left, URL right) throws InvalidOpenAPIFileException {
+        OpenAPI[] result = new OpenAPI[2];
         try {
             logger.debug("Try reading left: " + left.toString());
             OpenAPI swaggerLeft = parser.read(left.toString());
@@ -29,12 +29,12 @@ public class SwaggerCompareReader {
             logger.debug("Result left: " + swaggerLeft.toString());
             logger.debug("Try reading right: " + right.toString());
             OpenAPI swaggerRight = parser.read(right.toString());
-            if(swaggerLeft == null){
+            if(swaggerRight == null){
                 throw new InvalidOpenAPIFileException(right + " is not a valid OpenAPI-File");
             }
             logger.debug("Result right: " + swaggerRight.toString());
-            result.put("left", swaggerLeft);
-            result.put("left", swaggerLeft);
+            result[0] = swaggerLeft;
+            result[1] = swaggerRight;
         }catch (Throwable e){
             logger.debug("Exception: ", e);
             throw e;

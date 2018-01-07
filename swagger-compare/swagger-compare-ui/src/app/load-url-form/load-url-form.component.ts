@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {FlashMessagesService} from "ngx-flash-messages";
 import {TraceBoxDataService} from "../trace-box/trace-box.data.service";
+import {CompareResultDataService} from "../compare-result/compare-result.data.service";
 
 @Component({
   selector: 'load-url-form',
@@ -10,7 +11,13 @@ import {TraceBoxDataService} from "../trace-box/trace-box.data.service";
 })
 export class LoadUrlFormComponent implements OnInit {
 
-  constructor(private http: HttpClient, private flashMessagesService: FlashMessagesService,private data: TraceBoxDataService) { }
+  constructor(
+    private http: HttpClient,
+    private flashMessagesService: FlashMessagesService,
+    private traceBoxDataService: TraceBoxDataService,
+    private compareResultDataService: CompareResultDataService) {
+
+  }
 
   ngOnInit() {
   }
@@ -22,8 +29,15 @@ export class LoadUrlFormComponent implements OnInit {
       urlRight: urlRight
     }
     this.http.post("/api/compare",body).subscribe(
-      data => console.log('success', data),
-      (error: HttpErrorResponse) => this.data.showTrace(error)
+      (data) => {
+        this.compareResultDataService.showResult(data);
+        this.traceBoxDataService.showTrace("");
+        },
+      (error: HttpErrorResponse) => {
+        this.compareResultDataService.showResult("");
+        this.traceBoxDataService.showTrace(error);
+
+      }
       );
   }
 }

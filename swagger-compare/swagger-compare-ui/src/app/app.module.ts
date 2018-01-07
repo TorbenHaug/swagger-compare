@@ -12,13 +12,16 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { FlashMessagesModule } from "ngx-flash-messages";
 import { TraceBoxComponent } from './trace-box/trace-box.component';
 import {TraceBoxDataService} from "./trace-box/trace-box.data.service";
+import { CompareResultComponent } from './compare-result/compare-result.component';
+import {CompareResultDataService} from "./compare-result/compare-result.data.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoadUrlFormComponent,
-    TraceBoxComponent
+    TraceBoxComponent,
+    CompareResultComponent
   ],
   imports: [
     NgbModule.forRoot(),
@@ -28,7 +31,7 @@ import {TraceBoxDataService} from "./trace-box/trace-box.data.service";
     HttpClientModule,
     FlashMessagesModule
   ],
-  providers: [TraceBoxDataService],
+  providers: [TraceBoxDataService, CompareResultDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

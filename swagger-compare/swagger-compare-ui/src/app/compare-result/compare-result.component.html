@@ -1,0 +1,81 @@
+<h2>Result</h2>
+
+
+<div *ngIf="isCompareResult">
+  <ngb-accordion #acc="ngbAccordion">
+    <ngb-panel [title]="'(' + resultCreatedKeys.length + ') Created'">
+      <ng-template ngbPanelContent>
+        <div *ngFor="let key of resultCreatedKeys">
+          <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel [title]="key">
+              <ng-template ngbPanelContent>
+                <div class="halfSide">
+                  TODO: Details
+                </div>
+                <div class="halfSide">
+                  TODO: Details
+                </div>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel [title]="'(' + resultDeletedKeys.length + ') Deleted'">
+      <ng-template ngbPanelContent>
+        <div *ngFor="let key of resultDeletedKeys">
+          <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel [title]="key">
+              <<ng-template ngbPanelContent>
+              <div class="halfSide">
+                TODO: Details
+              </div>
+              <div class="halfSide">
+                TODO: Details
+              </div>
+            </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel [title]="'(' + resultChangedKeys.length + ') Changed'">
+      <ng-template ngbPanelContent>
+        <div *ngFor="let key of resultChangedKeys">
+          <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel [title]="key">
+              <ng-template ngbPanelContent>
+                <div class="halfSide">
+                  TODO: Details
+                </div>
+                <div class="halfSide">
+                  TODO: Details
+                </div>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel [title]="'(' + resultUnchangedKeys.length + ') Unchanged'">
+      <ng-template ngbPanelContent>
+        <div *ngFor="let key of resultUnchangedKeys">
+          <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel [title]="key">
+              <ng-template ngbPanelContent>
+                <div class="halfSide">
+                  TODO: Details
+                </div>
+                <div class="halfSide">
+                  TODO: Details
+                </div>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>
+
+<div [innerHTML]="resultText" *ngIf="!isCompareResult"></div>

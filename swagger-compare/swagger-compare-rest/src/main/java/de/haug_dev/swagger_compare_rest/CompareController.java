@@ -1,5 +1,6 @@
 package de.haug_dev.swagger_compare_rest;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.SwaggerCompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_facade.SwaggerCompareFacade;
 import de.haug_dev.swagger_compare.swagger_compare_reader.InvalidOpenAPIFileException;
 import org.slf4j.Logger;
@@ -19,9 +20,9 @@ public class CompareController {
     SwaggerCompareFacade facade;
 
     @RequestMapping(value = "/compare",method = RequestMethod.POST)
-    public CompareResponse compare(@RequestBody CompareRequest value) throws MalformedURLException, InvalidOpenAPIFileException {
+    public SwaggerCompareResult compare(@RequestBody CompareRequest value) throws MalformedURLException, InvalidOpenAPIFileException {
         logger.debug("Received: " + value);
-        facade.compare(value.urlLeft, value.urlRigth);
-        return new CompareResponse();
+        SwaggerCompareResult compareResult = facade.compare(value.urlLeft, value.urlRigth);
+        return compareResult;
     }
 }

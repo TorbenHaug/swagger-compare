@@ -1,0 +1,17 @@
+.halfSide{
+  font-size: 18px;
+  line-height: 1.3em;
+  vertical-align: top;
+  margin-bottom: 1em;
+  border-radius: 0.5em;
+  padding: 1em;
+  // This insures everything up to the border
+  // is included in the width
+  box-sizing: border-box;
+  // The default width of my divs
+  width: 49%;
+  background: salmon;
+  border: solid red 1px;
+  // Overrides default display (which would be block)
+  display: inline-block;
+}

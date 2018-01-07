@@ -1,5 +1,7 @@
 package de.haug_dev.swagger_compare.swagger_compare_facade;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.SwaggerCompareCore;
+import de.haug_dev.swagger_compare.swagger_compare_core.SwaggerCompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_reader.SwaggerCompareReader;
 import de.haug_dev.swagger_compare.swagger_compare_reader.InvalidOpenAPIFileException;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -52,7 +54,10 @@ public class SwaggerCompareFacade {
     @Autowired
     SwaggerCompareReader reader;
 
-    public String compare(String urlLeftString, String urlRightString) throws MalformedURLException, InvalidOpenAPIFileException {
+    @Autowired
+    SwaggerCompareCore core;
+
+    public SwaggerCompareResult compare(String urlLeftString, String urlRightString) throws MalformedURLException, InvalidOpenAPIFileException {
         logger.debug("Urls to compare: \"" + urlLeftString + ", \"" + urlRightString + "\"");
         URL urlLeft;
         URL urlRight;
@@ -70,7 +75,8 @@ public class SwaggerCompareFacade {
             throw new MalformedURLException("UrlLeft is not a valid URL: " + urlRightString);
         }
 
-        Map<String, OpenAPI> read = reader.read(urlLeft, urlRight);
-        return "";
+        OpenAPI[] read = reader.read(urlLeft, urlRight);
+        SwaggerCompareResult result = core.compare(read[0], read[1]);
+        return result;
     }
 }
