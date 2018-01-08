@@ -32,9 +32,8 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <repository>torbenhaug/docker-compare</repository>
+                            <repository>torbenhaug/swagger-compare</repository>
                             <tag>${project.version}</tag>
-                            <tag>latest</tag>
                             <buildArgs>
                                 <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                             </buildArgs>
@@ -133,6 +132,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <addResources>true</addResources>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
@@ -141,6 +143,9 @@
                 <excludes>
                     <exclude>**/META-INF</exclude>
                 </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
             </resource>
         </resources>
     </build>
