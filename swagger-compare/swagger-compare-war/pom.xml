@@ -13,19 +13,6 @@
     <artifactId>swagger-compare-war</artifactId>
     <packaging>war</packaging>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <!-- Import dependency management from Spring Boot -->
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>1.5.9.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>de.haug-dev.swagger-compare</groupId>
@@ -48,7 +35,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.2</version>
                 <executions>
                     <execution>
                         <id>unpack</id>
