@@ -1,94 +1,122 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.dto.OpenAPICompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_core.dto.PathsResultItem;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.PathItem;
+import io.swagger.v3.oas.models.Paths;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class SwaggerCompareCore {
 
-    public SwaggerCompareResult compare(OpenAPI left, OpenAPI right){
+    @Autowired
+    UnchangedPathFinder unchangedPathFinder;
+
+    @Autowired
+    ChangedPathFinder changedPathFinder;
+
+    @Autowired
+    DeletedPathFinder deletedPathFinder;
+
+    @Autowired
+    CreatedPathFinder createdPathFinder;
+
+    public OpenAPICompareResult compare(OpenAPI left, OpenAPI right){
         Assert.notNull(left, "Left API must be set");
         Assert.notNull(right, "Right API must be set");
-        SwaggerCompareResult result = new SwaggerCompareResult();
 
-        if(left.equals(right)) {
-            result.addUnchangedItems(findUnchangedItems(left.getPaths(), right.getPaths()));
+        NormalizeResultPack leftNormalized = normalizeOpenAPI(left);
+        NormalizeResultPack rightNormalized = normalizeOpenAPI(right);
+
+        OpenAPICompareResult result = new OpenAPICompareResult(leftNormalized, rightNormalized);
+
+        Map<String,PathItem> _left = new HashMap<>(leftNormalized.normalizedAPI.getPaths());
+        Map<String,PathItem> _right = new HashMap<>(rightNormalized.normalizedAPI.getPaths());
+
+        List<PathsResultItem> unchangedItems = unchangedPathFinder.process(_left, _right, leftNormalized, rightNormalized);
+        _left = clearTempPathHolder(_left, unchangedItems, leftNormalized);
+        _right = clearTempPathHolder(_right, unchangedItems, rightNormalized);
+        result.addPathResultItems(unchangedItems);
+
+        List<PathsResultItem> createdItems = createdPathFinder.process(_left, _right, leftNormalized, rightNormalized);
+        _left = clearTempPathHolder(_left, createdItems, leftNormalized);
+        _right = clearTempPathHolder(_right, createdItems, rightNormalized);
+        result.addPathResultItems(createdItems);
+
+        List<PathsResultItem> deletedItems = deletedPathFinder.process(_left, _right, leftNormalized, rightNormalized);
+        _left = clearTempPathHolder(_left, deletedItems, leftNormalized);
+        _right = clearTempPathHolder(_right, deletedItems, rightNormalized);
+        result.addPathResultItems(deletedItems);
+
+        List<PathsResultItem> changedItems = changedPathFinder.process(_left, _right, leftNormalized, rightNormalized);
+        _left = clearTempPathHolder(_left, changedItems, leftNormalized);
+        _right = clearTempPathHolder(_right, changedItems, rightNormalized);
+        result.addPathResultItems(changedItems);
+
+//
+//        Map<String, ChangedValue> changedItems = changedPathFinder.process(_left, _right);
+//        _left.keySet().removeAll(changedItems.keySet());
+//        _right.keySet().removeAll(changedItems.keySet());
+//        result.addChangedItems(changedItems);
+//
+//
+//        Assert.isTrue(_left.isEmpty(),"Not all items of the left side are processed!");
+//        Assert.isTrue(_right.isEmpty(),"Not all items of the right side are processed!");
+
+        return result;
+    }
+
+    private Map<String, PathItem> clearTempPathHolder(Map<String, PathItem> pathHolder, List<PathsResultItem> unchangedItems, NormalizeResultPack normalizeResultPack) {
+        Map<String, PathItem> result = new HashMap<>(pathHolder);
+        unchangedItems.forEach((value) -> {
+            result.remove(normalizeResultPack.getNormalizedPath(value));
+        });
+        return result;
+    }
+
+    NormalizeResultPack normalizeOpenAPI(OpenAPI api){
+        Paths normalizedPathes = new Paths();
+        DualHashBidiMap<String,String> mappingNormalizedToOriginal = new DualHashBidiMap<>();
+        api.getPaths().forEach((key, value) -> {
+            String normalizePath = normalizePath(key);
+            normalizedPathes.put(normalizePath, value);
+            mappingNormalizedToOriginal.put(normalizePath, key);
+        });
+
+        Assert.isTrue(api.getPaths().size() == normalizedPathes.size(), "OpenAPI-Document is not valid");
+        OpenAPI resultAPI = new OpenAPI();
+        resultAPI.setPaths(normalizedPathes);
+        return new NormalizeResultPack(resultAPI, api, mappingNormalizedToOriginal);
+    }
+
+    String normalizePath(String path){
+        String repString = "{var}";
+        String rx = "(\\$\\{[^}]+\\})";
+
+        StringBuffer sb = new StringBuffer();
+        Pattern p = Pattern.compile(rx);
+        Matcher m = p.matcher(path);
+
+        while (m.find()){
+            if (repString != null) {
+                m.appendReplacement(sb, repString);
+            }
         }
+        m.appendTail(sb);
 
-        HashMap<String,PathItem> _left = new HashMap<>(left.getPaths());
-        HashMap<String,PathItem> _right = new HashMap<>(right.getPaths());
-
-        Map<String, ChangedValue> createdItems = findCreatedItems(_left, _right);
-        _right.keySet().removeAll(createdItems.keySet());
-        result.addCreatedItems(createdItems);
-
-        Map<String, ChangedValue> deletedItems = findDeletedItems(_left, _right);
-        _left.keySet().removeAll(deletedItems.keySet());
-        result.addDeletedItems(deletedItems);
-
-        Map<String, ChangedValue> changedItems = findChangedItems(_left, _right);
-        _left.keySet().removeAll(changedItems.keySet());
-        _right.keySet().removeAll(changedItems.keySet());
-        result.addChangedItems(changedItems);
-
-        Map<String, ChangedValue> unchangedItems = findUnchangedItems(_left, _right);
-        result.addUnchangedItems(changedItems);
-
-
-        return result;
-
-
+        return sb.toString();
     }
 
-    private Map<String,ChangedValue> findUnchangedItems(Map<String, PathItem> left, Map<String, PathItem> right) {
-        final Map<String,ChangedValue> result = new HashMap<>();
 
-        left.forEach((key, value) -> {
-            PathItem value2 = right.get(key);
-            if(value2 != null && value2.equals(value)){
-                result.put(key, new ChangedValue(value, value2));
-            }
-        });
 
-        return result;
-    }
-
-    private Map<String,ChangedValue> findChangedItems(Map<String, PathItem> left, Map<String, PathItem> right) {
-        final Map<String,ChangedValue> result = new HashMap<>();
-
-        left.forEach((key, value) -> {
-            PathItem value2 = right.get(key);
-            if(value2 != null && ! value2.equals(value)){
-                result.put(key, new ChangedValue(value, value2));
-            }
-        });
-
-        return result;
-    }
-
-    private Map<String, ChangedValue> findCreatedItems(Map<String, PathItem> left, Map<String, PathItem> right) {
-        HashMap<String, ChangedValue> result = new HashMap<>();
-        HashMap<String, PathItem> _right = new HashMap<>(right);
-        _right.keySet().removeAll(left.keySet());
-        _right.forEach((key, value) -> {
-            result.put(key, new ChangedValue(null, value));
-        });
-        return result;
-    }
-
-    private Map<String, ChangedValue> findDeletedItems(Map<String, PathItem> left, Map<String, PathItem> right) {
-        HashMap<String, ChangedValue> result = new HashMap<>();
-        HashMap<String, PathItem> _left = new HashMap<>(left);
-        _left.keySet().removeAll(right.keySet());
-        _left.forEach((key, value) -> {
-            result.put(key, new ChangedValue(value, null));
-        });
-        return result;
-    }
 }

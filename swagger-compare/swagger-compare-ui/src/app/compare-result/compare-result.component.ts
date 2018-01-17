@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {CompareResultDataService} from "./compare-result.data.service";
 import {CompareResultJson, CompareResultType} from "./CompareResultType";
 import { SwaggerUI } from 'swagger-ui';
+import {OpenAPICompareResult, PathsResultItem} from '../../../target/typescript-generator/swagger-compare-ui';
+
 
 
 
@@ -12,31 +14,67 @@ import { SwaggerUI } from 'swagger-ui';
 })
 export class CompareResultComponent implements OnInit {
 
-  result: CompareResultType;
+  result: OpenAPICompareResult;
   isCompareResult: boolean;
   resultText: any;
-  resultUnchangedKeys: string[];
-  resultChangedKeys: string[];
-  resultCreatedKeys: string[];
-  resultDeletedKeys: string[];
+  resultUnchanged: PathsResultItem[] = [];
+  resultChanged: PathsResultItem[] = [];
+  resultCreated: PathsResultItem[] = [];
+  resultDeleted: PathsResultItem[] = [];
 
 
   constructor(private data: CompareResultDataService) { }
 
   ngOnInit() {
     this.data.currentResult.subscribe(result => {
-      let tmpResult = (result as CompareResultJson);
-      if(!(typeof tmpResult.unchanged === "undefined")){
+      let tmpResult = (result as OpenAPICompareResult);
+      if(!(typeof tmpResult.pathsResult === "undefined")){
         this.isCompareResult = true;
-        this.result = new CompareResultType(tmpResult);
-        this.resultUnchangedKeys = Array.from(this.result.unchanged.keys());
-        this.resultChangedKeys = Array.from(this.result.changed.keys());
-        this.resultCreatedKeys = Array.from(this.result.created.keys());
-        this.resultDeletedKeys = Array.from(this.result.deleted.keys());
-        this.resultUnchangedKeys.sort();
-        this.resultChangedKeys.sort();
-        this.resultCreatedKeys.sort();
-        this.resultDeletedKeys.sort();
+        this.result = tmpResult;
+        this.resultUnchanged = [];
+        this.resultChanged = [];
+        this.resultCreated = [];
+        this.resultDeleted = [];
+        tmpResult.pathsResult.pathsResultItems.forEach((value) => {
+          if(value.compareResultType === "UNCHANGED"){
+            this.resultUnchanged.push(value);
+          }else if(value.compareResultType === "CHANGED"){
+            this.resultChanged.push(value);
+          }else if(value.compareResultType === "CREATED"){
+            this.resultCreated.push(value);
+          }else if(value.compareResultType === "DELETED"){
+            this.resultDeleted.push(value);
+          }
+        });
+
+        this.resultUnchanged.sort((a, b) => {
+          if(a.pathRight.length){
+            return a.pathRight.localeCompare(b.pathRight);
+          } else {
+            return a.pathLeft.localeCompare(b.pathLeft);
+          }
+        });
+        this.resultChanged.sort((a, b) => {
+          if(a.pathRight.length){
+            return a.pathRight.localeCompare(b.pathRight);
+          } else {
+            return a.pathLeft.localeCompare(b.pathLeft);
+          }
+        });
+        this.resultCreated.sort((a, b) => {
+          if(a.pathRight.length){
+            return a.pathRight.localeCompare(b.pathRight);
+          } else {
+            return a.pathLeft.localeCompare(b.pathLeft);
+          }
+        });
+        this.resultDeleted.sort((a, b) => {
+          if(a.pathRight.length){
+            return a.pathRight.localeCompare(b.pathRight);
+          } else {
+            return a.pathLeft.localeCompare(b.pathLeft);
+          }
+        });
       }else {
         this.isCompareResult = false;
         this.resultText = result;

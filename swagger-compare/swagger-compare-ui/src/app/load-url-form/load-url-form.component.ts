@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, isDevMode, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {FlashMessagesService} from "ngx-flash-messages";
 import {TraceBoxDataService} from "../trace-box/trace-box.data.service";
@@ -31,13 +31,17 @@ export class LoadUrlFormComponent implements OnInit {
     this.http.post("/api/compare",body).subscribe(
       (data) => {
         this.compareResultDataService.showResult(data);
-        this.traceBoxDataService.showTrace("");
-        },
+        if(isDevMode()){
+          this.traceBoxDataService.showTrace(JSON.stringify(data));
+        }else {
+          this.traceBoxDataService.showTrace("");
+        }
+      },
       (error: HttpErrorResponse) => {
         this.compareResultDataService.showResult("");
         this.traceBoxDataService.showTrace(error);
 
       }
-      );
+    );
   }
 }
