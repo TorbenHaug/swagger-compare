@@ -31,12 +31,15 @@ public class SwaggerCompareCore {
     @Autowired
     CreatedPathFinder createdPathFinder;
 
+    @Autowired
+    Normalizer normalizer;
+
     public OpenAPICompareResult compare(OpenAPI left, OpenAPI right){
         Assert.notNull(left, "Left API must be set");
         Assert.notNull(right, "Right API must be set");
 
-        NormalizeResultPack leftNormalized = normalizeOpenAPI(left);
-        NormalizeResultPack rightNormalized = normalizeOpenAPI(right);
+        NormalizeResultPack leftNormalized = normalizer.normalizeOpenAPI(left);
+        NormalizeResultPack rightNormalized = normalizer.normalizeOpenAPI(right);
 
         OpenAPICompareResult result = new OpenAPICompareResult(leftNormalized, rightNormalized);
 
@@ -63,15 +66,6 @@ public class SwaggerCompareCore {
         _right = clearTempPathHolder(_right, changedItems, rightNormalized);
         result.addPathResultItems(changedItems);
 
-//
-//        Map<String, ChangedValue> changedItems = changedPathFinder.process(_left, _right);
-//        _left.keySet().removeAll(changedItems.keySet());
-//        _right.keySet().removeAll(changedItems.keySet());
-//        result.addChangedItems(changedItems);
-//
-//
-//        Assert.isTrue(_left.isEmpty(),"Not all items of the left side are processed!");
-//        Assert.isTrue(_right.isEmpty(),"Not all items of the right side are processed!");
 
         return result;
     }
@@ -84,38 +78,7 @@ public class SwaggerCompareCore {
         return result;
     }
 
-    NormalizeResultPack normalizeOpenAPI(OpenAPI api){
-        Paths normalizedPathes = new Paths();
-        DualHashBidiMap<String,String> mappingNormalizedToOriginal = new DualHashBidiMap<>();
-        api.getPaths().forEach((key, value) -> {
-            String normalizePath = normalizePath(key);
-            normalizedPathes.put(normalizePath, value);
-            mappingNormalizedToOriginal.put(normalizePath, key);
-        });
 
-        Assert.isTrue(api.getPaths().size() == normalizedPathes.size(), "OpenAPI-Document is not valid");
-        OpenAPI resultAPI = new OpenAPI();
-        resultAPI.setPaths(normalizedPathes);
-        return new NormalizeResultPack(resultAPI, api, mappingNormalizedToOriginal);
-    }
-
-    String normalizePath(String path){
-        String repString = "{var}";
-        String rx = "(\\$\\{[^}]+\\})";
-
-        StringBuffer sb = new StringBuffer();
-        Pattern p = Pattern.compile(rx);
-        Matcher m = p.matcher(path);
-
-        while (m.find()){
-            if (repString != null) {
-                m.appendReplacement(sb, repString);
-            }
-        }
-        m.appendTail(sb);
-
-        return sb.toString();
-    }
 
 
 
