@@ -1,5 +1,7 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.dto;
 
+import java.util.Objects;
+
 public class PathsResultItem {
     String pathLeft;
     String pathRight;
@@ -21,5 +23,29 @@ public class PathsResultItem {
 
     public CompareResultType getCompareResultType() {
         return compareResultType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PathsResultItem)) return false;
+        PathsResultItem that = (PathsResultItem) o;
+        return Objects.equals(getPathLeft(), that.getPathLeft()) &&
+                Objects.equals(getPathRight(), that.getPathRight()) &&
+                getCompareResultType() == that.getCompareResultType();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPathLeft(), getPathRight(), getCompareResultType());
+    }
+
+    @Override
+    public String toString() {
+        return "PathsResultItem{" +
+                "pathLeft='" + pathLeft + '\'' +
+                ", pathRight='" + pathRight + '\'' +
+                ", compareResultType=" + compareResultType +
+                '}';
     }
 }
