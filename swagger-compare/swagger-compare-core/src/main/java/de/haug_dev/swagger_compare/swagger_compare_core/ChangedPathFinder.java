@@ -15,16 +15,6 @@ class ChangedPathFinder implements SwaggerCompareProcessor {
 
     @Override
     public List<PathsResultItem> process(Map<String, PathItem> left, Map<String, PathItem> right, NormalizeResultPack leftNormalized, NormalizeResultPack rightNormalized) {
-//        final Map<String,ChangedValue> result = new HashMap<>();
-//
-//        left.forEach((key, value) -> {
-//            PathItem value2 = right.get(key);
-//            if(value2 != null && ! value2.equals(value)){
-//                result.put(key, new ChangedValue(value, value2));
-//            }
-//        });
-//        return null;
-
         List<PathsResultItem> pathsResultItems = new ArrayList<>();
         left.forEach((key, value) -> {
             PathItem value2 = right.get(key);

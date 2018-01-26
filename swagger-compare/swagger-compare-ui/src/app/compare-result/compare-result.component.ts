@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CompareResultDataService} from "./compare-result.data.service";
 import {CompareResultJson, CompareResultType} from "./CompareResultType";
-import { SwaggerUI } from 'swagger-ui';
 import {OpenAPICompareResult, PathsResultItem} from '../../../target/typescript-generator/swagger-compare-ui';
 
 
