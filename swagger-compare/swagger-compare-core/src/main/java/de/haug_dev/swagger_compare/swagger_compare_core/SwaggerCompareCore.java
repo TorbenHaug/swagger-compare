@@ -2,10 +2,12 @@ package de.haug_dev.swagger_compare.swagger_compare_core;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.dto.OpenAPICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_core.dto.PathsResultItem;
+import de.haug_dev.swagger_compare.swagger_compare_core.processors.ChangedPathFinder;
+import de.haug_dev.swagger_compare.swagger_compare_core.processors.CreatedPathFinder;
+import de.haug_dev.swagger_compare.swagger_compare_core.processors.DeletedPathFinder;
+import de.haug_dev.swagger_compare.swagger_compare_core.processors.UnchangedPathFinder;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.PathItem;
-import io.swagger.v3.oas.models.Paths;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -13,8 +15,6 @@ import org.springframework.util.Assert;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Component
 public class SwaggerCompareCore {
