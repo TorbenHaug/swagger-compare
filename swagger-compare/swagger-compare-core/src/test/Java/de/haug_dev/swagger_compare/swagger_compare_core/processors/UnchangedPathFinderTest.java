@@ -1,8 +1,10 @@
-package de.haug_dev.swagger_compare.swagger_compare_core;
+package de.haug_dev.swagger_compare.swagger_compare_core.processors;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.NormalizeResultPack;
+import de.haug_dev.swagger_compare.swagger_compare_core.Normalizer;
 import de.haug_dev.swagger_compare.swagger_compare_core.dto.CompareResultType;
 import de.haug_dev.swagger_compare.swagger_compare_core.dto.PathsResultItem;
-import de.haug_dev.swagger_compare.swagger_compare_core.processors.CreatedPathFinder;
+import de.haug_dev.swagger_compare.swagger_compare_core.processors.UnchangedPathFinder;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
@@ -14,12 +16,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CreatedPathFinderTest {
+class UnchangedPathFinderTest {
 
     Normalizer normalizer = new Normalizer();
 
     @Test
-    void testOnePathOneTheRightSide_ExpectOneResult() {
+    void testOnePathNotEqualPaths_ExpectEmptyList() {
 
         OpenAPI leftOpenAPI = new OpenAPI();
         OpenAPI rightOpenAPI = new OpenAPI();
@@ -30,25 +32,25 @@ class CreatedPathFinderTest {
         leftOpenAPI.setPaths(leftPaths);
         rightOpenAPI.setPaths(rightPaths);
 
+        PathItem leftPathItem = new PathItem();
         PathItem rightPathItem = new PathItem();
 
+        leftPaths.put("/test/", leftPathItem);
         rightPaths.put("/test2/", rightPathItem);
 
         NormalizeResultPack leftNormalized = normalizer.normalizeOpenAPI(leftOpenAPI);
         NormalizeResultPack rightNormalized = normalizer.normalizeOpenAPI(rightOpenAPI);
 
-        PathsResultItem expectedPathResultItem1 = new PathsResultItem(null, "/test2/", CompareResultType.CREATED);
         List<PathsResultItem> expected = new ArrayList<>();
-        expected.add(expectedPathResultItem1);
 
-        CreatedPathFinder createdPathFinder = new CreatedPathFinder();
-        List<PathsResultItem> actual = createdPathFinder.process(leftOpenAPI.getPaths(), rightOpenAPI.getPaths(), leftNormalized, rightNormalized);
+        UnchangedPathFinder unchangedPathFinder = new UnchangedPathFinder();
+        List<PathsResultItem> actual = unchangedPathFinder.process(leftOpenAPI.getPaths(), rightOpenAPI.getPaths(), leftNormalized, rightNormalized);
 
         assertEquals(expected, actual);
     }
 
     @Test
-    void testOnePathEqualPathItem_ExpectEmptyList() {
+    void testOnePathNotEqualPathItem_ExpectEmptyList() {
 
         OpenAPI leftOpenAPI = new OpenAPI();
         OpenAPI rightOpenAPI = new OpenAPI();
@@ -75,14 +77,14 @@ class CreatedPathFinderTest {
 
         List<PathsResultItem> expected = new ArrayList<>();
 
-        CreatedPathFinder createdPathFinder = new CreatedPathFinder();
-        List<PathsResultItem> actual = createdPathFinder.process(leftOpenAPI.getPaths(), rightOpenAPI.getPaths(), leftNormalized, rightNormalized);
+        UnchangedPathFinder unchangedPathFinder = new UnchangedPathFinder();
+        List<PathsResultItem> actual = unchangedPathFinder.process(leftOpenAPI.getPaths(), rightOpenAPI.getPaths(), leftNormalized, rightNormalized);
 
         assertEquals(expected, actual);
     }
 
     @Test
-    void testOnePathNotEqual_ExpectOnePathInResult() {
+    void testOnePathEqual_ExpectOnePathInResult() {
 
         OpenAPI leftOpenAPI = new OpenAPI();
         OpenAPI rightOpenAPI = new OpenAPI();
@@ -97,18 +99,18 @@ class CreatedPathFinderTest {
         PathItem rightPathItem = new PathItem();
 
         leftPaths.put("/test/", leftPathItem);
-        rightPaths.put("/test2/", rightPathItem);
+        rightPaths.put("/test/", rightPathItem);
 
         NormalizeResultPack leftNormalized = normalizer.normalizeOpenAPI(leftOpenAPI);
         NormalizeResultPack rightNormalized = normalizer.normalizeOpenAPI(rightOpenAPI);
 
-        PathsResultItem expectedPathResultItem1 = new PathsResultItem(null, "/test2/", CompareResultType.CREATED);
+        PathsResultItem expectedPathResultItem1 = new PathsResultItem("/test/", "/test/", CompareResultType.UNCHANGED);
         List<PathsResultItem> expected = new ArrayList<>();
         expected.add(expectedPathResultItem1);
 
 
-        CreatedPathFinder createdPathFinder = new CreatedPathFinder();
-        List<PathsResultItem> actual = createdPathFinder.process(leftOpenAPI.getPaths(), rightOpenAPI.getPaths(), leftNormalized, rightNormalized);
+        UnchangedPathFinder unchangedPathFinder = new UnchangedPathFinder();
+        List<PathsResultItem> actual = unchangedPathFinder.process(leftOpenAPI.getPaths(), rightOpenAPI.getPaths(), leftNormalized, rightNormalized);
 
         assertEquals(expected, actual);
 
@@ -138,13 +140,13 @@ class CreatedPathFinderTest {
         NormalizeResultPack leftNormalized = normalizer.normalizeOpenAPI(leftOpenAPI);
         NormalizeResultPack rightNormalized = normalizer.normalizeOpenAPI(rightOpenAPI);
 
-        PathsResultItem expectedPathResultItem1 = new PathsResultItem(null, "/test3/", CompareResultType.CREATED);
+        PathsResultItem expectedPathResultItem1 = new PathsResultItem("/test/", "/test/", CompareResultType.UNCHANGED);
         List<PathsResultItem> expected = new ArrayList<>();
         expected.add(expectedPathResultItem1);
 
 
-        CreatedPathFinder createdPathFinder = new CreatedPathFinder();
-        List<PathsResultItem> actual = createdPathFinder.process(leftOpenAPI.getPaths(), rightOpenAPI.getPaths(), leftNormalized, rightNormalized);
+        UnchangedPathFinder unchangedPathFinder = new UnchangedPathFinder();
+        List<PathsResultItem> actual = unchangedPathFinder.process(leftOpenAPI.getPaths(), rightOpenAPI.getPaths(), leftNormalized, rightNormalized);
 
         assertEquals(expected, actual);
 
