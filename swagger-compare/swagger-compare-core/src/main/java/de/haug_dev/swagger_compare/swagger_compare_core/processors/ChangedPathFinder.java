@@ -14,7 +14,7 @@ import java.util.Map;
  * Find Changed Pathes
  */
 @Component
-class ChangedPathFinder implements SwaggerCompareProcessor {
+public class ChangedPathFinder implements SwaggerCompareProcessor {
 
     /**
      * @see SwaggerCompareProcessor

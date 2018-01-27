@@ -16,7 +16,7 @@ import java.util.Map;
  * Find Deleted Paths
  */
 @Component
-class DeletedPathFinder implements SwaggerCompareProcessor {
+public class DeletedPathFinder implements SwaggerCompareProcessor {
 
     /**
      * @see SwaggerCompareProcessor

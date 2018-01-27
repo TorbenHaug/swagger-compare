@@ -14,7 +14,7 @@ import java.util.Map;
  * Find Unchanged Paths
  */
 @Component
-class UnchangedPathFinder implements SwaggerCompareProcessor {
+public class UnchangedPathFinder implements SwaggerCompareProcessor {
 
     /**
      * @see SwaggerCompareProcessor

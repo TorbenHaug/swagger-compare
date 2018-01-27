@@ -16,7 +16,7 @@ import java.util.Map;
  * Find Created Paths
  */
 @Component
-class CreatedPathFinder implements SwaggerCompareProcessor {
+public class CreatedPathFinder implements SwaggerCompareProcessor {
 
     /**
      * @see SwaggerCompareProcessor

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 @Component
 public class Normalizer {
-    NormalizeResultPack normalizeOpenAPI(OpenAPI api){
+    public NormalizeResultPack normalizeOpenAPI(OpenAPI api){
         Paths normalizedPathes = new Paths();
         DualHashBidiMap<String,String> mappingNormalizedToOriginal = new DualHashBidiMap<>();
         api.getPaths().forEach((key, value) -> {
@@ -28,7 +28,7 @@ public class Normalizer {
 
     private String normalizePath(String path){
         String repString = "{var}";
-        String rx = "(\\$\\{[^}]+\\})";
+        String rx = "(\\{[^}]+\\})";
 
         StringBuffer sb = new StringBuffer();
         Pattern p = Pattern.compile(rx);
