@@ -1,7 +1,5 @@
 package de.haug_dev.swagger_compare.swagger_compare_dto;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.NormalizeResultPack;
-
 import java.util.ArrayList;
 import java.util.List;
 
