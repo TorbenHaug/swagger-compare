@@ -1,8 +1,8 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.processors;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.NormalizeResultPack;
-import de.haug_dev.swagger_compare.swagger_compare_core.dto.CompareResultType;
-import de.haug_dev.swagger_compare.swagger_compare_core.dto.PathsResultItem;
+import de.haug_dev.swagger_compare.swagger_compare_dto.CompareResultType;
+import de.haug_dev.swagger_compare.swagger_compare_dto.NormalizeResultPack;
+import de.haug_dev.swagger_compare.swagger_compare_dto.PathsResultItem;
 import io.swagger.v3.oas.models.PathItem;
 import org.springframework.stereotype.Component;
 

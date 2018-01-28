@@ -21,7 +21,7 @@
   <dependencies>
     <dependency>
       <groupId>de.haug-dev.swagger-compare</groupId>
-      <artifactId>swagger-compare-core</artifactId>
+      <artifactId>swagger-compare-dto</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
@@ -60,7 +60,7 @@
         <configuration>
           <jsonLibrary>jackson2</jsonLibrary>
           <classes>
-            <class>de.haug_dev.swagger_compare.swagger_compare_core.dto.OpenAPICompareResult</class>
+            <class>de.haug_dev.swagger_compare.swagger_compare_dto.OpenAPICompareResult</class>
           </classes>
           <outputKind>module</outputKind>
         </configuration>

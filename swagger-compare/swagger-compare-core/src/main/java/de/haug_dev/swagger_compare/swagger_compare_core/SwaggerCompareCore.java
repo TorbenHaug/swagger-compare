@@ -1,7 +1,8 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.dto.OpenAPICompareResult;
-import de.haug_dev.swagger_compare.swagger_compare_core.dto.PathsResultItem;
+import de.haug_dev.swagger_compare.swagger_compare_dto.NormalizeResultPack;
+import de.haug_dev.swagger_compare.swagger_compare_dto.OpenAPICompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_dto.PathsResultItem;
 import de.haug_dev.swagger_compare.swagger_compare_core.processors.ChangedPathFinder;
 import de.haug_dev.swagger_compare.swagger_compare_core.processors.CreatedPathFinder;
 import de.haug_dev.swagger_compare.swagger_compare_core.processors.DeletedPathFinder;

@@ -1,10 +1,8 @@
-package de.haug_dev.swagger_compare.swagger_compare_core;
+package de.haug_dev.swagger_compare.swagger_compare_dto;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.dto.PathsResultItem;
 import io.swagger.v3.oas.models.OpenAPI;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
-import java.util.Map;
 import java.util.Objects;
 
 public class NormalizeResultPack {

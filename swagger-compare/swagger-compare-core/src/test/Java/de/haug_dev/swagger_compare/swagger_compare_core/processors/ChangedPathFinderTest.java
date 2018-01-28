@@ -4,7 +4,6 @@ import de.haug_dev.swagger_compare.swagger_compare_core.NormalizeResultPack;
 import de.haug_dev.swagger_compare.swagger_compare_core.Normalizer;
 import de.haug_dev.swagger_compare.swagger_compare_core.dto.CompareResultType;
 import de.haug_dev.swagger_compare.swagger_compare_core.dto.PathsResultItem;
-import de.haug_dev.swagger_compare.swagger_compare_core.processors.ChangedPathFinder;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
