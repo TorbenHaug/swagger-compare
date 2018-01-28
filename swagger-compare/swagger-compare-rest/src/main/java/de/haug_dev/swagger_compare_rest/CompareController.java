@@ -1,6 +1,5 @@
 package de.haug_dev.swagger_compare_rest;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.SwaggerCompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_core.dto.OpenAPICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_facade.SwaggerCompareFacade;
 import de.haug_dev.swagger_compare.swagger_compare_reader.InvalidOpenAPIFileException;

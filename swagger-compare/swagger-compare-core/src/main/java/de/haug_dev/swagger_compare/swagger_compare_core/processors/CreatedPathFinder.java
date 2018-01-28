@@ -1,6 +1,5 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.processors;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.ChangedValue;
 import de.haug_dev.swagger_compare.swagger_compare_core.NormalizeResultPack;
 import de.haug_dev.swagger_compare.swagger_compare_core.dto.CompareResultType;
 import de.haug_dev.swagger_compare.swagger_compare_core.dto.PathsResultItem;
@@ -24,7 +23,6 @@ public class CreatedPathFinder implements SwaggerCompareProcessor {
     @Override
     public List<PathsResultItem> process(Map<String, PathItem> left, Map<String, PathItem> right, NormalizeResultPack leftNormalized, NormalizeResultPack rightNormalized) {
         List<PathsResultItem> pathsResultItems = new ArrayList<>();
-        HashMap<String, ChangedValue> result = new HashMap<>();
         HashMap<String, PathItem> _right = new HashMap<>(right);
         _right.keySet().removeAll(left.keySet());
         _right.forEach((key, value) -> {
