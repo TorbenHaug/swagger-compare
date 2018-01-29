@@ -51,11 +51,15 @@ public class SwaggerCompareFacade {
 
     Logger logger = LoggerFactory.getLogger(SwaggerCompareFacade.class);
 
-    @Autowired
-    SwaggerCompareReader reader;
+    private SwaggerCompareReader reader;
+
+    private SwaggerCompareCore core;
 
     @Autowired
-    SwaggerCompareCore core;
+    public SwaggerCompareFacade(SwaggerCompareReader reader, SwaggerCompareCore core) {
+        this.reader = reader;
+        this.core = core;
+    }
 
     public OpenAPICompareResult compare(String urlLeftString, String urlRightString) throws MalformedURLException, InvalidOpenAPIFileException {
         logger.debug("Urls to compare: \"" + urlLeftString + ", \"" + urlRightString + "\"");
