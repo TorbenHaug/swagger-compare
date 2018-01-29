@@ -5,15 +5,16 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class NormalizerTest {
+public class NormalizerTest {
 
     Normalizer normalizer = new Normalizer();
+
     @Test
-    void normalizeOpenAPI() {
+    public void normalizeOpenAPI() {
         OpenAPI openAPI = new OpenAPI();
         Paths paths = new Paths();
         PathItem pathItem1 = new PathItem();
@@ -34,7 +35,7 @@ class NormalizerTest {
         resMap.put("/test/","/test/");
 
         NormalizeResultPack result = normalizer.normalizeOpenAPI(openAPI);
-        NormalizeResultPack expected = new NormalizeResultPack(openAPIRes, openAPI, resMap);
+        NormalizeResultPack expected = new NormalizeResultPack(openAPI, openAPIRes, resMap);
         assertEquals(expected,result);
     }
 }

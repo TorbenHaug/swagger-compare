@@ -2,6 +2,7 @@ package de.haug_dev.swagger_compare.swagger_compare_dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PathsResult {
     private final NormalizeResultPack leftNormalized;
@@ -32,5 +33,30 @@ public class PathsResult {
 
     public List<PathsResultItem> getPathsResultItems() {
         return pathsResultItems;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PathsResult)) return false;
+        PathsResult that = (PathsResult) o;
+        return Objects.equals(leftNormalized, that.leftNormalized) &&
+                Objects.equals(rightNormalized, that.rightNormalized) &&
+                Objects.equals(getPathsResultItems(), that.getPathsResultItems());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(leftNormalized, rightNormalized, getPathsResultItems());
+    }
+
+    @Override
+    public String toString() {
+        return "PathsResult{" +
+                "leftNormalized=" + leftNormalized +
+                ", rightNormalized=" + rightNormalized +
+                ", pathsResultItems=" + pathsResultItems +
+                '}';
     }
 }

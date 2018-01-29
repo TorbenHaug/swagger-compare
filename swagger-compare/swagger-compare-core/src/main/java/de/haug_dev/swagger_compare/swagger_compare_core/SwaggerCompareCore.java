@@ -21,19 +21,19 @@ import java.util.Map;
 public class SwaggerCompareCore {
 
     @Autowired
-    UnchangedPathFinder unchangedPathFinder;
+    private UnchangedPathFinder unchangedPathFinder;
 
     @Autowired
-    ChangedPathFinder changedPathFinder;
+    private ChangedPathFinder changedPathFinder;
 
     @Autowired
-    DeletedPathFinder deletedPathFinder;
+    private DeletedPathFinder deletedPathFinder;
 
     @Autowired
-    CreatedPathFinder createdPathFinder;
+    private CreatedPathFinder createdPathFinder;
 
     @Autowired
-    Normalizer normalizer;
+    private Normalizer normalizer;
 
     public OpenAPICompareResult compare(OpenAPI left, OpenAPI right){
         Assert.notNull(left, "Left API must be set");

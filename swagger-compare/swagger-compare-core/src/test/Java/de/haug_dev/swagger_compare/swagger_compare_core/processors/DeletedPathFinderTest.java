@@ -8,19 +8,19 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.parameters.Parameter;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class DeletedPathFinderTest {
+public class DeletedPathFinderTest {
 
     Normalizer normalizer = new Normalizer();
 
     @Test
-    void testOnePathOneTheLeftSide_ExpectOneResult() {
+    public void testOnePathOneTheLeftSide_ExpectOneResult() {
 
         OpenAPI leftOpenAPI = new OpenAPI();
         OpenAPI rightOpenAPI = new OpenAPI();
@@ -49,7 +49,7 @@ class DeletedPathFinderTest {
     }
 
     @Test
-    void testOnePathEqualPathItem_ExpectEmptyList() {
+    public void testOnePathEqualPathItem_ExpectEmptyList() {
 
         OpenAPI leftOpenAPI = new OpenAPI();
         OpenAPI rightOpenAPI = new OpenAPI();
@@ -83,7 +83,7 @@ class DeletedPathFinderTest {
     }
 
     @Test
-    void testOnePathNotEqual_ExpectOnePathInResult() {
+    public void testOnePathNotEqual_ExpectOnePathInResult() {
 
         OpenAPI leftOpenAPI = new OpenAPI();
         OpenAPI rightOpenAPI = new OpenAPI();
@@ -116,7 +116,7 @@ class DeletedPathFinderTest {
     }
 
     @Test
-    void testTwoPathOneEqual_ExpectOnePathInResult() {
+    public void testTwoPathOneEqual_ExpectOnePathInResult() {
 
         OpenAPI leftOpenAPI = new OpenAPI();
         OpenAPI rightOpenAPI = new OpenAPI();

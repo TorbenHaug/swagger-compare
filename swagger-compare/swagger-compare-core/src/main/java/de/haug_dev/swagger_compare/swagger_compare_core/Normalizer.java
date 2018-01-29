@@ -24,7 +24,7 @@ public class Normalizer {
         Assert.isTrue(api.getPaths().size() == normalizedPathes.size(), "OpenAPI-Document is not valid");
         OpenAPI resultAPI = new OpenAPI();
         resultAPI.setPaths(normalizedPathes);
-        return new NormalizeResultPack(resultAPI, api, mappingNormalizedToOriginal);
+        return new NormalizeResultPack(api, resultAPI, mappingNormalizedToOriginal);
     }
 
     private String normalizePath(String path){
