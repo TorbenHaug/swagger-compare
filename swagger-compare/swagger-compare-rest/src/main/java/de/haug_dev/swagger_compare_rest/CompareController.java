@@ -14,10 +14,14 @@ import java.net.MalformedURLException;
 @RequestMapping("/api")
 public class CompareController {
 
-    Logger logger = LoggerFactory.getLogger(CompareController.class);
+    private Logger logger = LoggerFactory.getLogger(CompareController.class);
+
+    private SwaggerCompareFacade facade;
 
     @Autowired
-    SwaggerCompareFacade facade;
+    public CompareController(SwaggerCompareFacade facade) {
+        this.facade = facade;
+    }
 
     @RequestMapping(value = "/compare",method = RequestMethod.POST)
     public OpenAPICompareResult compare(@RequestBody CompareRequest value) throws MalformedURLException, InvalidOpenAPIFileException {
