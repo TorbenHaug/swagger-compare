@@ -3,7 +3,6 @@ package de.haug_dev.swagger_compare.swagger_compare_reader;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.net.MalformedURLException;
 import java.net.URL;
