@@ -14,9 +14,17 @@ import java.util.Map;
 @Component
 public class SwaggerCompareReader {
 
-    Logger logger = LoggerFactory.getLogger(SwaggerCompareReader.class);
+    private Logger logger = LoggerFactory.getLogger(SwaggerCompareReader.class);
 
-    OpenAPIV3Parser parser = new OpenAPIV3Parser();
+    private OpenAPIV3Parser parser;
+
+    public SwaggerCompareReader() {
+        this.parser = new OpenAPIV3Parser();
+    }
+
+    public SwaggerCompareReader(OpenAPIV3Parser parser) {
+        this.parser = parser;
+    }
 
     public OpenAPI[] read(URL left, URL right) throws InvalidOpenAPIFileException {
         OpenAPI[] result = new OpenAPI[2];
