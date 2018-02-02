@@ -24,27 +24,20 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
 public class SwaggerCompareCoreTest {
 
 
-    @Spy
     private UnchangedPathFinder unchangedPathFinder = new UnchangedPathFinder();
 
-    @Spy
     private ChangedPathFinder changedPathFinder = new ChangedPathFinder();
 
-    @Spy
     private DeletedPathFinder deletedPathFinder = new DeletedPathFinder();
 
-    @Spy
     private CreatedPathFinder createdPathFinder = new CreatedPathFinder();
 
-    @Spy
     private Normalizer normalizer = new Normalizer();
 
-    @InjectMocks
-    private SwaggerCompareCore swaggerCompareCore = new SwaggerCompareCore();
+    private SwaggerCompareCore swaggerCompareCore = new SwaggerCompareCore(unchangedPathFinder, changedPathFinder, deletedPathFinder, createdPathFinder, normalizer);
 
     @Test
     public void compare() {

@@ -19,10 +19,12 @@ public class SwaggerCompareReaderTest {
         URL urlLeft = new URL("http://left/left");
         URL urlRight = new URL("http://right/right");
         OpenAPI openAPIRight = mock(OpenAPI.class);
+        OpenAPIV3ParserFactory parserFactory = mock(OpenAPIV3ParserFactory.class);
         OpenAPIV3Parser parser = mock(OpenAPIV3Parser.class);
+        when(parserFactory.getParser()).thenReturn(parser);
         when(parser.read(urlLeft.toString())).thenReturn(null);
         when(parser.read(urlRight.toString())).thenReturn(openAPIRight);
-        SwaggerCompareReader reader = new SwaggerCompareReader(parser);
+        SwaggerCompareReader reader = new SwaggerCompareReader(parserFactory);
         reader.read(urlLeft, urlRight);
     }
 
@@ -31,10 +33,12 @@ public class SwaggerCompareReaderTest {
         URL urlLeft = new URL("http://left/left");
         URL urlRight = new URL("http://right/right");
         OpenAPI openAPILeft = mock(OpenAPI.class);
+        OpenAPIV3ParserFactory parserFactory = mock(OpenAPIV3ParserFactory.class);
         OpenAPIV3Parser parser = mock(OpenAPIV3Parser.class);
+        when(parserFactory.getParser()).thenReturn(parser);
         when(parser.read(urlLeft.toString())).thenReturn(openAPILeft);
         when(parser.read(urlRight.toString())).thenReturn(null);
-        SwaggerCompareReader reader = new SwaggerCompareReader(parser);
+        SwaggerCompareReader reader = new SwaggerCompareReader(parserFactory);
         reader.read(urlLeft, urlRight);
     }
 
@@ -47,10 +51,12 @@ public class SwaggerCompareReaderTest {
         OpenAPI[] expected = new OpenAPI[2];
         expected[0] = openAPILeft;
         expected[1] = openAPIRight;
+        OpenAPIV3ParserFactory parserFactory = mock(OpenAPIV3ParserFactory.class);
         OpenAPIV3Parser parser = mock(OpenAPIV3Parser.class);
+        when(parserFactory.getParser()).thenReturn(parser);
         when(parser.read(urlLeft.toString())).thenReturn(openAPILeft);
         when(parser.read(urlRight.toString())).thenReturn(openAPIRight);
-        SwaggerCompareReader reader = new SwaggerCompareReader(parser);
+        SwaggerCompareReader reader = new SwaggerCompareReader(parserFactory);
         OpenAPI[] actual = reader.read(urlLeft, urlRight);
         verify(parser,times(2)).read(anyString());
         assertEquals(Arrays.asList(expected), Arrays.asList(actual));

@@ -20,20 +20,25 @@ import java.util.Map;
 @Component
 public class SwaggerCompareCore {
 
-    @Autowired
     private UnchangedPathFinder unchangedPathFinder;
 
-    @Autowired
     private ChangedPathFinder changedPathFinder;
 
-    @Autowired
     private DeletedPathFinder deletedPathFinder;
 
-    @Autowired
     private CreatedPathFinder createdPathFinder;
 
-    @Autowired
     private Normalizer normalizer;
+
+    @Autowired
+    public SwaggerCompareCore(
+            UnchangedPathFinder unchangedPathFinder, ChangedPathFinder changedPathFinder, DeletedPathFinder deletedPathFinder, CreatedPathFinder createdPathFinder, Normalizer normalizer) {
+        this.unchangedPathFinder = unchangedPathFinder;
+        this.changedPathFinder = changedPathFinder;
+        this.deletedPathFinder = deletedPathFinder;
+        this.createdPathFinder = createdPathFinder;
+        this.normalizer = normalizer;
+    }
 
     public OpenAPICompareResult compare(OpenAPI left, OpenAPI right){
         Assert.notNull(left, "Left API must be set");

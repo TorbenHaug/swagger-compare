@@ -5,6 +5,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -18,27 +19,28 @@ public class SwaggerCompareReader {
 
     private OpenAPIV3Parser parser;
 
-    public SwaggerCompareReader() {
-        this.parser = new OpenAPIV3Parser();
-    }
-
-    public SwaggerCompareReader(OpenAPIV3Parser parser) {
-        this.parser = parser;
+    @Autowired()
+    public SwaggerCompareReader(OpenAPIV3ParserFactory parserFactory) {
+        this.parser = parserFactory.getParser();
     }
 
     public OpenAPI[] read(URL left, URL right) throws InvalidOpenAPIFileException {
         OpenAPI[] result = new OpenAPI[2];
         try {
-            logger.debug("Try reading left: " + left.toString());
-            OpenAPI swaggerLeft = parser.read(left.toString());
+            String leftString = fixUri(left.toString());
+            logger.debug("Try reading left: " + leftString);
+
+            OpenAPI swaggerLeft = parser.read(leftString);
             if(swaggerLeft == null){
-                throw new InvalidOpenAPIFileException(left + " is not a valid OpenAPI-File");
+                throw new InvalidOpenAPIFileException(leftString + " is not a valid OpenAPI-File");
             }
             logger.debug("Result left: " + swaggerLeft.toString());
-            logger.debug("Try reading right: " + right.toString());
-            OpenAPI swaggerRight = parser.read(right.toString());
+
+            String rightString = fixUri(right.toString());
+            logger.debug("Try reading right: " + rightString);
+            OpenAPI swaggerRight = parser.read(rightString);
             if(swaggerRight == null){
-                throw new InvalidOpenAPIFileException(right + " is not a valid OpenAPI-File");
+                throw new InvalidOpenAPIFileException(rightString + " is not a valid OpenAPI-File");
             }
             logger.debug("Result right: " + swaggerRight.toString());
             result[0] = swaggerLeft;
@@ -48,5 +50,9 @@ public class SwaggerCompareReader {
             throw e;
         }
         return result;
+    }
+
+    private String fixUri(String s) {
+        return (s != null && s.startsWith("file:/"))? s.replace("file:/", "file:///") : s;
     }
 }
