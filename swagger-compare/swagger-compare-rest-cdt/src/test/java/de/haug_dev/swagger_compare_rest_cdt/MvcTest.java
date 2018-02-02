@@ -13,13 +13,12 @@ import de.haug_dev.swagger_compare_rest.CompareController;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import org.junit.Before;
+import org.mockito.Mockito;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class MvcTest {
 
@@ -30,20 +29,11 @@ public class MvcTest {
         String test1_yaml = fixUri(this.getClass().getResource("/yaml/test2.yaml").toString());
         System.err.println(test1_yaml);
         OpenAPIV3Parser openAPIV3Parser = new OpenAPIV3Parser();
-        OpenAPIV3Parser openApiv3ParserMock= mock(OpenAPIV3Parser.class);
+        OpenAPIV3Parser openApiv3ParserMock = spy(OpenAPIV3Parser.class);
         when(openAPIV3ParserFactory.getParser()).thenReturn(openApiv3ParserMock);
-        when(openApiv3ParserMock.read("https://mocked.mock/test1.yaml"))
-                .thenReturn(
-                        openAPIV3Parser.read(
-                                fixUri(this.getClass().getResource("/yaml/test1.yaml").toString())
-                        )
-                );
-        when(openApiv3ParserMock.read("https://mocked.mock/test2.yaml"))
-                .thenReturn(
-                        openAPIV3Parser.read(
-                                fixUri(this.getClass().getResource("/yaml/test2.yaml").toString())
-                        )
-                );
+        mockUrlResult("https://mocked.mock/basicPathLeft.yaml", "/yaml/basicPathLeft.yaml", openApiv3ParserMock, openAPIV3Parser);
+        mockUrlResult("https://mocked.mock/basicPathRight.yaml", "/yaml/basicPathRight.yaml", openApiv3ParserMock, openAPIV3Parser);
+
         RestAssuredMockMvc.standaloneSetup(
                 new CompareController(
                         new SwaggerCompareFacade(
@@ -62,5 +52,13 @@ public class MvcTest {
 
     private String fixUri(String s) {
         return (s != null && s.startsWith("file:/"))? s.replace("file:/", "file:///") : s;
+    }
+
+    private void mockUrlResult(String url, String filePath, OpenAPIV3Parser spiedParser, OpenAPIV3Parser realParser){
+        doReturn(
+                realParser.read(
+                        fixUri(this.getClass().getResource(filePath).toString())
+                )
+        ).when(spiedParser).read(url);
     }
 }

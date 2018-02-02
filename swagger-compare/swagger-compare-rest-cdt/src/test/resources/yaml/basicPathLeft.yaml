@@ -1,0 +1,56 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Example
+servers:
+  - url: http://example.com/api
+paths:
+  /unchanged/:
+    get:
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /unchanged/{unchanged1}:
+    get:
+      parameters:
+        - in: path
+          name: unchanged1
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: string
+  /changed/{changed1}:
+    get:
+      parameters:
+        - in: path
+          name: changed1
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: string
+  /deleted/:
+    get:
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: string
