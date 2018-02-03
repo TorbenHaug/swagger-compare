@@ -26,8 +26,6 @@ public class MvcTest {
     public void setup() throws URISyntaxException, MalformedURLException {
 
         OpenAPIV3ParserFactory openAPIV3ParserFactory = mock(OpenAPIV3ParserFactory.class);
-        String test1_yaml = fixUri(this.getClass().getResource("/yaml/test2.yaml").toString());
-        System.err.println(test1_yaml);
         OpenAPIV3Parser openAPIV3Parser = new OpenAPIV3Parser();
         OpenAPIV3Parser openApiv3ParserMock = spy(OpenAPIV3Parser.class);
         when(openAPIV3ParserFactory.getParser()).thenReturn(openApiv3ParserMock);

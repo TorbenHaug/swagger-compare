@@ -35,7 +35,7 @@
             <groupId>de.haug-dev.swagger-compare</groupId>
             <artifactId>swagger-compare-rest</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -51,14 +51,6 @@
                     <!-- Provide the base class for your auto-generated tests -->
                     <baseClassForTests>de.haug_dev.swagger_compare_rest_cdt.MvcTest</baseClassForTests>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>de.haug-dev.swagger-compare</groupId>
-                        <artifactId>swagger-compare-rest</artifactId>
-                        <version>${project.version}</version>
-                        <scope>compile</scope>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
