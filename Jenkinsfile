@@ -38,7 +38,7 @@ pipeline {
     stage('BuildBranch') {
       when{
         not{
-          branch 'Jenkins'
+          branch 'master'
         }
       }
       steps {
@@ -66,7 +66,7 @@ pipeline {
     stage('DockerBranch') {
       when{
         not{
-          branch 'Jenkins'
+          branch 'master'
         }
       }
       steps{
