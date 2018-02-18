@@ -21,13 +21,11 @@ public class CompareController {
 
     @Autowired
     public CompareController(SwaggerCompareFacade facade) {
-        System.err.println("Created");
         this.facade = facade;
     }
 
     @PostMapping(value = "/compare")
     public OpenAPICompareResult compare(@RequestBody CompareRequest value) throws MalformedURLException, InvalidOpenAPIFileException {
-        System.err.println("Called");
         logger.debug("Received: " + value);
         OpenAPICompareResult compareResult = facade.compare(value.urlLeft, value.urlRigth);
         return compareResult;
