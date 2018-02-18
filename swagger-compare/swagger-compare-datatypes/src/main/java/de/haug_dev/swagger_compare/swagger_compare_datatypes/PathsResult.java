@@ -1,4 +1,4 @@
-package de.haug_dev.swagger_compare.swagger_compare_dto;
+package de.haug_dev.swagger_compare.swagger_compare_datatypes;
 
 import java.util.ArrayList;
 import java.util.List;

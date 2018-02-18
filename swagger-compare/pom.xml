@@ -105,8 +105,7 @@
         <module>swagger-compare-standalone</module>
         <module>swagger-compare-ui</module>
         <module>swagger-compare-war</module>
-        <module>swagger-compare-dto</module>
-
+        <module>swagger-compare-datatypes</module>
     </modules>
 
     <build>

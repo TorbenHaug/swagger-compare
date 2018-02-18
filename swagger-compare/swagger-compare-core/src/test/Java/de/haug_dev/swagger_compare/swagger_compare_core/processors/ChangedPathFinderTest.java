@@ -1,9 +1,9 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.processors;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.Normalizer;
-import de.haug_dev.swagger_compare.swagger_compare_dto.CompareResultType;
-import de.haug_dev.swagger_compare.swagger_compare_dto.NormalizeResultPack;
-import de.haug_dev.swagger_compare.swagger_compare_dto.PathsResultItem;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResultType;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.NormalizeResultPack;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.PathsResultItem;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
