@@ -21,7 +21,7 @@ pipeline {
     }
     stage('BuildMaster') {
       when{
-         branch 'MavenCleanup'
+         branch 'master'
       }
       steps {
         withMaven(
@@ -38,7 +38,7 @@ pipeline {
     stage('BuildBranch') {
       when{
         not{
-          branch 'MavenCleanup'
+          branch 'master'
         }
       }
       steps {
@@ -55,7 +55,7 @@ pipeline {
       
     stage('DockerMaster') {
       when{
-          branch 'MavenCleanup'
+          branch 'master'
       }
       steps {
         sh "docker stop swagger-compare-instance || true && docker rm swagger-compare-instance || true"
@@ -65,11 +65,11 @@ pipeline {
     stage('DockerBranch') {
       when{
         not{
-          branch 'MavenCleanup'
+          branch 'master'
         }
       }
       steps{
-        println "Current branch ${env.BRANCH_NAME}: Docker is only build on the MavenCleanup"
+        println "Current branch ${env.BRANCH_NAME}: Docker is only build on the master"
       }
     }
   }
