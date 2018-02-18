@@ -58,7 +58,6 @@ pipeline {
           branch 'master'
       }
       steps {
-        sh "docker tag torbenhaug/swagger-compare:${version()} torbenhaug/swagger-compare:latest"
         sh "docker stop swagger-compare-instance || true && docker rm swagger-compare-instance || true"
         sh "docker run --name swagger-compare-instance -d -p 7070:8080 torbenhaug/swagger-compare:latest"
       }

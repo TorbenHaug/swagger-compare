@@ -5,18 +5,14 @@ import de.haug_dev.swagger_compare.swagger_compare_core.processors.ChangedPathFi
 import de.haug_dev.swagger_compare.swagger_compare_core.processors.CreatedPathFinder;
 import de.haug_dev.swagger_compare.swagger_compare_core.processors.DeletedPathFinder;
 import de.haug_dev.swagger_compare.swagger_compare_core.processors.UnchangedPathFinder;
-import de.haug_dev.swagger_compare.swagger_compare_dto.CompareResultType;
-import de.haug_dev.swagger_compare.swagger_compare_dto.OpenAPICompareResult;
-import de.haug_dev.swagger_compare.swagger_compare_dto.PathsResultItem;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResultType;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.OpenAPICompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.PathsResultItem;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>de.haug-dev.swagger-compare</groupId>
-            <artifactId>swagger-compare-dto</artifactId>
+            <artifactId>swagger-compare-datatypes</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

@@ -12,13 +12,12 @@
 
     <packaging>jar</packaging>
 
-    <artifactId>swagger-compare-dto</artifactId>
+    <artifactId>swagger-compare-datatypes</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>4.1</version>
         </dependency>
         <dependency>
             <groupId>io.swagger.parser.v3</groupId>

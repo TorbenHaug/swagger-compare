@@ -29,7 +29,10 @@
         <swagger_parser.version>2.0.0-rc2</swagger_parser.version>
         <slf4j.version>1.7.25</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
+        <commons-collections4.version>4.1</commons-collections4.version>
         <dockerfile-maven-plugin.version>1.3.7</dockerfile-maven-plugin.version>
+        <spring-cloud-contract-maven-plugin.version>1.2.1.RELEASE</spring-cloud-contract-maven-plugin.version>
+        <commons-logging.version>1.2</commons-logging.version>
     </properties>
 
 
@@ -61,7 +64,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
-                <version>4.1</version>
+                <version>${commons-collections4.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -78,6 +81,11 @@
             <version>${log4j.version}</version>
         </dependency>
         <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons-logging.version}</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -87,11 +95,6 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>2.0.2-beta</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -105,8 +108,7 @@
         <module>swagger-compare-standalone</module>
         <module>swagger-compare-ui</module>
         <module>swagger-compare-war</module>
-        <module>swagger-compare-dto</module>
-
+        <module>swagger-compare-datatypes</module>
     </modules>
 
     <build>
@@ -170,6 +172,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>${maven-release-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-contract-maven-plugin</artifactId>
+                    <version>1.2.1.RELEASE</version>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -1,4 +1,4 @@
-package de.haug_dev.swagger_compare.swagger_compare_dto;
+package de.haug_dev.swagger_compare.swagger_compare_datatypes;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
