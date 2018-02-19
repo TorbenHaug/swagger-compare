@@ -6,7 +6,11 @@ pipeline {
 
   post {
     always {
-        cleanWs();
+      cleanWs();
+      step([$class: 'Mailer',
+        notifyEveryUnstableBuild: true,
+        recipients: "info@haug-dev.de",
+        sendToIndividuals: true])
     }
   }
 
@@ -19,6 +23,9 @@ pipeline {
     }
     stage('BuildBranch') {
       steps {
+        script {
+          currentBuild.result = 'SUCCESS'
+        }
         withMaven(
         maven: 'M3',
         mavenLocalRepo: '.repository') {
