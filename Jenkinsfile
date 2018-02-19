@@ -23,7 +23,6 @@ pipeline {
     }
     stage('BuildBranch') {
       steps {
-        sh '''return -1'''
         withMaven(
         maven: 'M3',
         mavenLocalRepo: '.repository') {
