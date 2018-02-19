@@ -36,6 +36,7 @@ pipeline {
           sh "docker stop swagger-compare-instance || true && docker rm swagger-compare-instance || true"
           sh "docker run --name swagger-compare-instance -d -p 7070:8080 torbenhaug/swagger-compare:latest"
           sh "docker login --username $USERNAME --password $PASSWORD && docker push torbenhaug/swagger-compare:${version()} && docker push torbenhaug/swagger-compare:latest"
+        }
       }
     }
   }
