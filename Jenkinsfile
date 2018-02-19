@@ -23,9 +23,7 @@ pipeline {
     }
     stage('BuildBranch') {
       steps {
-        script {
-          currentBuild.result = 'SUCCESS'
-        }
+        sh '''return -1'''
         withMaven(
         maven: 'M3',
         mavenLocalRepo: '.repository') {
