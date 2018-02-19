@@ -21,7 +21,7 @@ pipeline {
         checkout scm
       }
     }
-    stage('BuildBranch') {
+    stage('Build') {
       steps {
         withMaven(
         maven: 'M3',
