@@ -1,0 +1,49 @@
+pipeline {
+  tools {
+    maven "M3"
+    jdk "JDK8U152"
+  }
+
+  post {
+    always {
+      cleanWs();
+      step([$class: 'Mailer',
+        notifyEveryUnstableBuild: true,
+        recipients: "info@haug-dev.de",
+        sendToIndividuals: true])
+    }
+  }
+
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+    stage('BuildBranch') {
+      steps {
+        withMaven(
+        maven: 'M3',
+        mavenLocalRepo: '.repository') {
+          sh "mvn clean install -f swagger-compare/pom.xml -P dockerBuild"
+        }
+      }
+    }
+    stage('Deploy') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+          sh "docker stop swagger-compare-instance || true && docker rm swagger-compare-instance || true"
+          sh "docker run --name swagger-compare-instance -d -p 7070:8080 torbenhaug/swagger-compare:latest"
+          sh "docker login --username $USERNAME --password $PASSWORD && docker push torbenhaug/swagger-compare:${version()} && docker push torbenhaug/swagger-compare:latest"
+        }
+      }
+    }
+  }
+}
+
+def version() {
+  def matcher = readFile('swagger-compare/pom.xml') =~ '<version>(.+)</version>'
+  matcher ? matcher[0][1].trim() : null
+}
+
