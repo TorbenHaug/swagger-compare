@@ -18,14 +18,68 @@ org.springframework.cloud.contract.spec.Contract.make {
         status 200
         body(
             """{
-                "pathsResult":{
-                    "pathsResultItems":[
-                        {"pathLeft":"/unchanged/{unchanged1}","pathRight":"/unchanged/{unchanged2}","compareResultType":"UNCHANGED"},
-                        {"pathLeft":"/unchanged/","pathRight":"/unchanged/","compareResultType":"UNCHANGED"},
-                        {"pathLeft":null,"pathRight":"/created/","compareResultType":"CREATED"},
-                        {"pathLeft":"/deleted/","pathRight":null,"compareResultType":"DELETED"},
-                        {"pathLeft":"/changed/{changed1}","pathRight":"/changed/{changed1}","compareResultType":"CHANGED"}
-                    ]
+                "pathsCompareResult":{
+                    "unchanged":{
+                        "/unchanged/":{ "summary":null },
+                        "/unchanged/{unchanged1}":{ "summary":null }
+                    },
+                    "changed":{
+                        "/changed/{changed1}":{
+                            "parametersCompareResult":{
+                                "unchanged":[],
+                                "created":[],
+                                "deleted":[],
+                                "compareCriticalType":"NONE",
+                                "compareResultType":"UNCHANGED"
+                            },
+                            "refCompareResult":{
+                                "left":null,
+                                "right":null,
+                                "compareResultType":"UNCHANGED",
+                                "compareCriticalType":"NONE"
+                            },
+                            "createdOperations":{},
+                            "deletedOperations":{},
+                            "unchangedOperations":{},
+                            "changedOperations":{
+                                "GET":{
+                                    "compareCriticalType":"CRITICAL",
+                                    "compareResultType":"CHANGED",
+                                    "parametersCompareResult":{
+                                        "unchanged":[{
+                                            "name":"changed1",
+                                            "in":"path",
+                                        }],
+                                        "created":[{
+                                            "name":"changed2",
+                                            "in":"query",
+                                        }],
+                                        "deleted":[],
+                                        "compareCriticalType":"CRITICAL",
+                                        "compareResultType":"CHANGED"
+                                    },"deprecatedCompareResult":{
+                                        "compareResultType":"UNCHANGED",
+                                        "compareCriticalType":"NONE",
+                                        "left":null,
+                                        "right":null
+                                    },"requestBodyCompareResult":{
+                                        "left":null,
+                                        "right":null,
+                                        "compareResultType":"UNCHANGED",
+                                        "compareCriticalType":"NONE"
+                                    }
+                                }
+                            },
+                            "compareResultType":"CHANGED",
+                            "compareCriticalType":"CRITICAL"
+                        }
+                    },
+                    "deleted":{
+                        "/deleted/":{ "summary":null }
+                    },
+                    "created":{
+                        "/created/":{ "summary":null }   
+                    }
                 }
             }"""
         )
@@ -34,3 +88,4 @@ org.springframework.cloud.contract.spec.Contract.make {
         }
     }
 }
+

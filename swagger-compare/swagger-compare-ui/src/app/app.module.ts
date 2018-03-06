@@ -14,6 +14,8 @@ import { TraceBoxComponent } from './trace-box/trace-box.component';
 import {TraceBoxDataService} from "./trace-box/trace-box.data.service";
 import { CompareResultComponent } from './compare-result/compare-result.component';
 import {CompareResultDataService} from "./compare-result/compare-result.data.service";
+import { KeysPipe } from './keys.pipe';
+import { StringifyPipe } from './stringify.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import {CompareResultDataService} from "./compare-result/compare-result.data.ser
     HomeComponent,
     LoadUrlFormComponent,
     TraceBoxComponent,
-    CompareResultComponent
+    CompareResultComponent,
+    KeysPipe,
+    StringifyPipe
   ],
   imports: [
     NgbModule.forRoot(),

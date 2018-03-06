@@ -1,7 +1,7 @@
 package de.haug_dev.swagger_compare.swagger_compare_facade;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.SwaggerCompareCore;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.OpenAPICompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_reader.SwaggerCompareReader;
 import de.haug_dev.swagger_compare.swagger_compare_reader.InvalidOpenAPIFileException;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -60,7 +60,7 @@ public class SwaggerCompareFacade {
         this.core = core;
     }
 
-    public OpenAPICompareResult compare(String urlLeftString, String urlRightString) throws MalformedURLException, InvalidOpenAPIFileException {
+    public CompareResult compare(String urlLeftString, String urlRightString) throws MalformedURLException, InvalidOpenAPIFileException {
         logger.debug("Urls to compare: \"" + urlLeftString + ", \"" + urlRightString + "\"");
         URL urlLeft;
         URL urlRight;
@@ -79,7 +79,7 @@ public class SwaggerCompareFacade {
         }
 
         OpenAPI[] read = reader.read(urlLeft, urlRight);
-        OpenAPICompareResult result = core.compare(read[0], read[1]);
+        CompareResult result = core.compare(read[0], read[1]);
         return result;
     }
 }

@@ -1,91 +1,25 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.NormalizeResultPack;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.OpenAPICompareResult;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.PathsResultItem;
-import de.haug_dev.swagger_compare.swagger_compare_core.processors.ChangedPathFinder;
-import de.haug_dev.swagger_compare.swagger_compare_core.processors.CreatedPathFinder;
-import de.haug_dev.swagger_compare.swagger_compare_core.processors.DeletedPathFinder;
-import de.haug_dev.swagger_compare.swagger_compare_core.processors.UnchangedPathFinder;
+
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResult;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.PathItem;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Component
 public class SwaggerCompareCore {
 
-    private UnchangedPathFinder unchangedPathFinder;
+    public SwaggerCompareCore() { }
 
-    private ChangedPathFinder changedPathFinder;
-
-    private DeletedPathFinder deletedPathFinder;
-
-    private CreatedPathFinder createdPathFinder;
-
-    private Normalizer normalizer;
-
-    @Autowired
-    public SwaggerCompareCore(
-            UnchangedPathFinder unchangedPathFinder, ChangedPathFinder changedPathFinder, DeletedPathFinder deletedPathFinder, CreatedPathFinder createdPathFinder, Normalizer normalizer) {
-        this.unchangedPathFinder = unchangedPathFinder;
-        this.changedPathFinder = changedPathFinder;
-        this.deletedPathFinder = deletedPathFinder;
-        this.createdPathFinder = createdPathFinder;
-        this.normalizer = normalizer;
-    }
-
-    public OpenAPICompareResult compare(OpenAPI left, OpenAPI right){
+    public CompareResult compare(OpenAPI left, OpenAPI right){
         Assert.notNull(left, "Left API must be set");
         Assert.notNull(right, "Right API must be set");
+        CompareHolder leftCompareHolder = new CompareHolder(left);
+        CompareHolder rightCompareHolder = new CompareHolder(right);
+        CompareResult compareResult = leftCompareHolder.compare(rightCompareHolder);
 
-        NormalizeResultPack leftNormalized = normalizer.normalizeOpenAPI(left);
-        NormalizeResultPack rightNormalized = normalizer.normalizeOpenAPI(right);
-
-        OpenAPICompareResult result = new OpenAPICompareResult(leftNormalized, rightNormalized);
-
-        Map<String,PathItem> _left = new HashMap<>(leftNormalized.normalizedAPI.getPaths());
-        Map<String,PathItem> _right = new HashMap<>(rightNormalized.normalizedAPI.getPaths());
-
-        List<PathsResultItem> unchangedItems = unchangedPathFinder.process(_left, _right, leftNormalized, rightNormalized);
-        _left = clearTempPathHolder(_left, unchangedItems, leftNormalized);
-        _right = clearTempPathHolder(_right, unchangedItems, rightNormalized);
-        result.addPathResultItems(unchangedItems);
-
-        List<PathsResultItem> createdItems = createdPathFinder.process(_left, _right, leftNormalized, rightNormalized);
-        _left = clearTempPathHolder(_left, createdItems, leftNormalized);
-        _right = clearTempPathHolder(_right, createdItems, rightNormalized);
-        result.addPathResultItems(createdItems);
-
-        List<PathsResultItem> deletedItems = deletedPathFinder.process(_left, _right, leftNormalized, rightNormalized);
-        _left = clearTempPathHolder(_left, deletedItems, leftNormalized);
-        _right = clearTempPathHolder(_right, deletedItems, rightNormalized);
-        result.addPathResultItems(deletedItems);
-
-        List<PathsResultItem> changedItems = changedPathFinder.process(_left, _right, leftNormalized, rightNormalized);
-        _left = clearTempPathHolder(_left, changedItems, leftNormalized);
-        _right = clearTempPathHolder(_right, changedItems, rightNormalized);
-        result.addPathResultItems(changedItems);
-
-
-        return result;
+        return compareResult;
     }
-
-    private Map<String, PathItem> clearTempPathHolder(Map<String, PathItem> pathHolder, List<PathsResultItem> unchangedItems, NormalizeResultPack normalizeResultPack) {
-        Map<String, PathItem> result = new HashMap<>(pathHolder);
-        unchangedItems.forEach((value) -> {
-            result.remove(normalizeResultPack.getNormalizedPath(value));
-        });
-        return result;
-    }
-
-
-
-
 
 }

@@ -1,6 +1,6 @@
 package de.haug_dev.swagger_compare_rest;
 
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.OpenAPICompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_facade.SwaggerCompareFacade;
 import de.haug_dev.swagger_compare.swagger_compare_reader.InvalidOpenAPIFileException;
 import org.slf4j.Logger;
@@ -25,9 +25,9 @@ public class CompareController {
     }
 
     @PostMapping(value = "/compare")
-    public OpenAPICompareResult compare(@RequestBody CompareRequest value) throws MalformedURLException, InvalidOpenAPIFileException {
+    public CompareResult compare(@RequestBody CompareRequest value) throws MalformedURLException, InvalidOpenAPIFileException {
         logger.debug("Received: " + value);
-        OpenAPICompareResult compareResult = facade.compare(value.urlLeft, value.urlRigth);
+        CompareResult compareResult = facade.compare(value.urlLeft, value.urlRigth);
         return compareResult;
     }
 }

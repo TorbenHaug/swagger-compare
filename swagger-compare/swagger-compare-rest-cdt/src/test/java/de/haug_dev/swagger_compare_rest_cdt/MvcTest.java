@@ -1,11 +1,6 @@
 package de.haug_dev.swagger_compare_rest_cdt;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.Normalizer;
 import de.haug_dev.swagger_compare.swagger_compare_core.SwaggerCompareCore;
-import de.haug_dev.swagger_compare.swagger_compare_core.processors.ChangedPathFinder;
-import de.haug_dev.swagger_compare.swagger_compare_core.processors.CreatedPathFinder;
-import de.haug_dev.swagger_compare.swagger_compare_core.processors.DeletedPathFinder;
-import de.haug_dev.swagger_compare.swagger_compare_core.processors.UnchangedPathFinder;
 import de.haug_dev.swagger_compare.swagger_compare_facade.SwaggerCompareFacade;
 import de.haug_dev.swagger_compare.swagger_compare_reader.OpenAPIV3ParserFactory;
 import de.haug_dev.swagger_compare.swagger_compare_reader.SwaggerCompareReader;
@@ -13,7 +8,6 @@ import de.haug_dev.swagger_compare_rest.CompareController;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import org.junit.Before;
-import org.mockito.Mockito;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -36,13 +30,7 @@ public class MvcTest {
                 new CompareController(
                         new SwaggerCompareFacade(
                                 new SwaggerCompareReader(openAPIV3ParserFactory),
-                                new SwaggerCompareCore(
-                                        new UnchangedPathFinder(),
-                                        new ChangedPathFinder(),
-                                        new DeletedPathFinder(),
-                                        new CreatedPathFinder(),
-                                        new Normalizer()
-                                )
+                                new SwaggerCompareCore()
                         )
                 )
         );

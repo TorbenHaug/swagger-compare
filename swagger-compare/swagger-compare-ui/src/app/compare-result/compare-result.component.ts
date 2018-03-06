@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CompareResultDataService} from "./compare-result.data.service";
-import {CompareResultJson, CompareResultType} from "./CompareResultType";
-import {OpenAPICompareResult, PathsResultItem} from '../../../target/typescript-generator/swagger-compare-ui';
+import {CompareResult, PathItemCompareResult} from "../compare-result";
 
 
 
@@ -13,67 +12,27 @@ import {OpenAPICompareResult, PathsResultItem} from '../../../target/typescript-
 })
 export class CompareResultComponent implements OnInit {
 
-  result: OpenAPICompareResult;
+  result: CompareResult;
   isCompareResult: boolean;
   resultText: any;
-  resultUnchanged: PathsResultItem[] = [];
-  resultChanged: PathsResultItem[] = [];
-  resultCreated: PathsResultItem[] = [];
-  resultDeleted: PathsResultItem[] = [];
+  resultUnchanged: { [index: string]: any } = {};
+  resultChanged: { [index: string]: PathItemCompareResult } = {};
+  resultCreated: { [index: string]: any } = {};
+  resultDeleted: { [index: string]: any } = {};
 
 
   constructor(private data: CompareResultDataService) { }
 
   ngOnInit() {
     this.data.currentResult.subscribe(result => {
-      let tmpResult = (result as OpenAPICompareResult);
-      if(!(typeof tmpResult.pathsResult === "undefined")){
+      let tmpResult = (result as CompareResult);
+      if(!(typeof tmpResult.pathsCompareResult === "undefined")){
         this.isCompareResult = true;
         this.result = tmpResult;
-        this.resultUnchanged = [];
-        this.resultChanged = [];
-        this.resultCreated = [];
-        this.resultDeleted = [];
-        tmpResult.pathsResult.pathsResultItems.forEach((value) => {
-          if(value.compareResultType === "UNCHANGED"){
-            this.resultUnchanged.push(value);
-          }else if(value.compareResultType === "CHANGED"){
-            this.resultChanged.push(value);
-          }else if(value.compareResultType === "CREATED"){
-            this.resultCreated.push(value);
-          }else if(value.compareResultType === "DELETED"){
-            this.resultDeleted.push(value);
-          }
-        });
-
-        this.resultUnchanged.sort((a, b) => {
-          if(a.pathRight.length){
-            return a.pathRight.localeCompare(b.pathRight);
-          } else {
-            return a.pathLeft.localeCompare(b.pathLeft);
-          }
-        });
-        this.resultChanged.sort((a, b) => {
-          if(a.pathRight.length){
-            return a.pathRight.localeCompare(b.pathRight);
-          } else {
-            return a.pathLeft.localeCompare(b.pathLeft);
-          }
-        });
-        this.resultCreated.sort((a, b) => {
-          if(a.pathRight.length){
-            return a.pathRight.localeCompare(b.pathRight);
-          } else {
-            return a.pathLeft.localeCompare(b.pathLeft);
-          }
-        });
-        this.resultDeleted.sort((a, b) => {
-          if(a.pathRight.length){
-            return a.pathRight.localeCompare(b.pathRight);
-          } else {
-            return a.pathLeft.localeCompare(b.pathLeft);
-          }
-        });
+        this.resultUnchanged = tmpResult.pathsCompareResult.unchanged;
+        this.resultChanged = tmpResult.pathsCompareResult.changed;
+        this.resultCreated = tmpResult.pathsCompareResult.created;
+        this.resultDeleted = tmpResult.pathsCompareResult.deleted;
       }else {
         this.isCompareResult = false;
         this.resultText = result;
