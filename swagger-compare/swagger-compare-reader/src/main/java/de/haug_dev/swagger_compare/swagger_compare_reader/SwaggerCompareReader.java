@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,5 +55,12 @@ public class SwaggerCompareReader {
 
     private String fixUri(String s) {
         return (s != null && s.startsWith("file:/"))? s.replace("file:/", "file:///") : s;
+    }
+
+    public OpenAPI[] readFile(String left, String right) {
+        OpenAPI[] result = new OpenAPI[2];
+        result[0] = parser.readContents(left, new ArrayList<>(),null).getOpenAPI();
+        result[1] = parser.readContents(right, new ArrayList<>(),null).getOpenAPI();
+        return result;
     }
 }

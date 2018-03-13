@@ -1,0 +1,11 @@
+<form name="loadFileForm" id="loadFileForm" #loadFileForm="ngForm" (ngSubmit)="onSubmit()">
+  <div class="form-group-left">
+    <label for="fileLeft">Choose left file: </label>
+    <input required type="file" id="fileLeft" (change)="handleFileLeft($event.target.files)" accept=".json, .yaml">
+  </div>
+  <div class="form-group-right">
+    <label for="fileRight">Choose right file: </label>
+    <input required type="file" id="fileRight" (change)="handleFileRight($event.target.files)" accept=".json, .yaml">
+  </div>
+  <button class="btn btn-primary" [disabled]="!loadFileForm.form.valid || !frmValid()">Submit</button>
+</form>

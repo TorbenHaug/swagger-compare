@@ -82,4 +82,10 @@ public class SwaggerCompareFacade {
         CompareResult result = core.compare(read[0], read[1]);
         return result;
     }
+
+    public CompareResult compareFiles(String left, String right) {
+        OpenAPI[] read = reader.readFile(left, right);
+        CompareResult result = core.compare(read[0], read[1]);
+        return result;
+    }
 }

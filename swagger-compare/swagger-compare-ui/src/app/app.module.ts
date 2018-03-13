@@ -16,6 +16,7 @@ import { CompareResultComponent } from './compare-result/compare-result.componen
 import {CompareResultDataService} from "./compare-result/compare-result.data.service";
 import { KeysPipe } from './keys.pipe';
 import { StringifyPipe } from './stringify.pipe';
+import { LoadFromFileComponent } from './load-from-file/load-from-file.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { StringifyPipe } from './stringify.pipe';
     TraceBoxComponent,
     CompareResultComponent,
     KeysPipe,
-    StringifyPipe
+    StringifyPipe,
+    LoadFromFileComponent
   ],
   imports: [
     NgbModule.forRoot(),

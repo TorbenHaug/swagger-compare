@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.servlet.annotation.MultipartConfig;
+
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan("de.haug_dev")

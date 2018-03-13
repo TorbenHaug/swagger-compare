@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 @RestController()
@@ -26,8 +28,16 @@ public class CompareController {
 
     @PostMapping(value = "/compare")
     public CompareResult compare(@RequestBody CompareRequest value) throws MalformedURLException, InvalidOpenAPIFileException {
-        logger.debug("Received: " + value);
         CompareResult compareResult = facade.compare(value.urlLeft, value.urlRigth);
         return compareResult;
     }
+
+    @PostMapping(value = "/compareFiles")
+    public CompareResult compareFiles(@RequestParam("fileLeft") MultipartFile fileLeft, @RequestParam("fileRight") MultipartFile fileRight) throws IOException, InvalidOpenAPIFileException {
+        logger.info("Left: " + new String(fileLeft.getBytes()));
+        logger.info("Right: " + new String(fileRight.getBytes()));
+        CompareResult compareResult = facade.compareFiles(new String(fileLeft.getBytes()), new String(fileRight.getBytes()));
+        return compareResult;
+    }
+
 }
