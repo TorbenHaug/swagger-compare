@@ -27,9 +27,9 @@ export interface PathItemCompareResult {
 }
 
 export interface ParametersCompareResult {
-  unchanged: string[];
-  created: string[];
-  deleted: string[];
+  unchanged: any[];
+  created: any[];
+  deleted: any[];
   compareCriticalType: CompareCriticalType;
   compareResultType: CompareResultType;
 }
@@ -58,15 +58,15 @@ export interface DeprecatedCompareResult {
 }
 
 export interface RequestBodyCompareResult {
-  left: string;
-  right: string;
+  left: any;
+  right: any;
   compareResultType: CompareResultType;
   compareCriticalType: CompareCriticalType;
 }
 
 export interface ApiResponsesCompareResult {
-  left: { [index: string]: string };
-  right: { [index: string]: string };
+  left: any;
+  right: any;
   compareResultType: CompareResultType;
   compareCriticalType: CompareCriticalType;
 }

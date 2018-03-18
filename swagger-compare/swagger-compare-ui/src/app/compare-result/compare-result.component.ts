@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CompareResultDataService} from "./compare-result.data.service";
-import {CompareResult, PathItemCompareResult} from "../compare-result";
+import {CompareResult} from "../compare-result";
 
 
 
@@ -15,10 +15,6 @@ export class CompareResultComponent implements OnInit {
   result: CompareResult;
   isCompareResult: boolean;
   resultText: any;
-  resultUnchanged: { [index: string]: any } = {};
-  resultChanged: { [index: string]: PathItemCompareResult } = {};
-  resultCreated: { [index: string]: any } = {};
-  resultDeleted: { [index: string]: any } = {};
 
 
   constructor(private data: CompareResultDataService) { }
@@ -29,10 +25,6 @@ export class CompareResultComponent implements OnInit {
       if(!(typeof tmpResult.pathsCompareResult === "undefined")){
         this.isCompareResult = true;
         this.result = tmpResult;
-        this.resultUnchanged = tmpResult.pathsCompareResult.unchanged;
-        this.resultChanged = tmpResult.pathsCompareResult.changed;
-        this.resultCreated = tmpResult.pathsCompareResult.created;
-        this.resultDeleted = tmpResult.pathsCompareResult.deleted;
       }else {
         this.isCompareResult = false;
         this.resultText = result;
