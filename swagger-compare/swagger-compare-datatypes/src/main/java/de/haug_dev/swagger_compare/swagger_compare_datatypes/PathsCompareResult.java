@@ -6,13 +6,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
-public class PathsCompareResult{
+public class PathsCompareResult extends AbstractBasicCompareResult{
     private final Map<String, PathItem> unchanged = new TreeMap<>();
     private final Map<String, PathItemCompareResult> changed = new TreeMap<>();
     private final Map<String, PathItem> created = new TreeMap<>();
     private final Map<String, PathItem> deleted = new TreeMap<>();
-    private CompareResultType compareResultType = CompareResultType.UNCHANGED;
-    private CompareCriticalType compareCriticalType = CompareCriticalType.NONE;
 
     public void putUnchanged(String path, PathItem pathItem){
         unchanged.put(path,pathItem);
@@ -20,26 +18,20 @@ public class PathsCompareResult{
 
     public void putChanged(String path, PathItemCompareResult pathItem){
         changed.put(path,pathItem);
-        this.compareResultType = CompareResultType.CHANGED;
-        if(this.compareCriticalType.getLevel() < pathItem.getCompareCriticalType().getLevel()){
-            this.compareCriticalType = pathItem.getCompareCriticalType();
-        }
+        setCompareResultType(CompareResultType.CHANGED);
+        setHighestCompareCriticalType(pathItem.getCompareCriticalType());
     }
 
     public void putCreated(String path, PathItem pathItem){
         created.put(path,pathItem);
-        this.compareResultType = CompareResultType.CHANGED;
-        if(this.compareCriticalType.getLevel() < CompareCriticalType.INFO.getLevel()){
-            this.compareCriticalType = CompareCriticalType.INFO;
-        }
+        setCompareResultType(CompareResultType.CHANGED);
+        setHighestCompareCriticalType(CompareCriticalType.INFO);
     }
 
     public void putDeleted(String path, PathItem pathItem){
         deleted.put(path,pathItem);
-        this.compareResultType = CompareResultType.CHANGED;
-        if(this.compareCriticalType.getLevel() < CompareCriticalType.CRITICAL.getLevel()){
-            this.compareCriticalType = CompareCriticalType.CRITICAL;
-        }
+        setCompareResultType(CompareResultType.CHANGED);
+        setHighestCompareCriticalType(CompareCriticalType.CRITICAL);
     }
 
     public Map<String, PathItem> getUnchanged() {
@@ -58,30 +50,22 @@ public class PathsCompareResult{
         return deleted;
     }
 
-    public CompareResultType getCompareResultType() {
-        return compareResultType;
-    }
-
-    public CompareCriticalType getCompareCriticalType() {
-        return compareCriticalType;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PathsCompareResult)) return false;
+        if (!super.equals(o)) return false;
         PathsCompareResult that = (PathsCompareResult) o;
         return Objects.equals(getUnchanged(), that.getUnchanged()) &&
                 Objects.equals(getChanged(), that.getChanged()) &&
                 Objects.equals(getCreated(), that.getCreated()) &&
-                Objects.equals(getDeleted(), that.getDeleted()) &&
-                getCompareResultType() == that.getCompareResultType() &&
-                getCompareCriticalType() == that.getCompareCriticalType();
+                Objects.equals(getDeleted(), that.getDeleted());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUnchanged(), getChanged(), getCreated(), getDeleted(), getCompareResultType(), getCompareCriticalType());
+
+        return Objects.hash(super.hashCode(), getUnchanged(), getChanged(), getCreated(), getDeleted());
     }
 
     @Override
@@ -91,8 +75,8 @@ public class PathsCompareResult{
                 ", changed=" + changed +
                 ", created=" + created +
                 ", deleted=" + deleted +
-                ", compareResultType=" + compareResultType +
-                ", compareCriticalType=" + compareCriticalType +
+                ", compareCriticalType=" + getCompareCriticalType() +
+                ", compareResultType=" + getCompareResultType() +
                 '}';
     }
 }

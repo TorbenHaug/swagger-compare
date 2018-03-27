@@ -5,15 +5,13 @@ import io.swagger.v3.oas.models.Operation;
 import java.util.Map;
 import java.util.Objects;
 
-public class PathItemCompareResult {
+public class PathItemCompareResult extends AbstractBasicCompareResult{
     private final ParametersCompareResult parametersCompareResult;
     private final RefCompareResult refCompareResult;
     private final Map<String, Operation> createdOperations;
     private final Map<String, Operation> deletedOperations;
     private final Map<String, Operation> unchangedOperations;
     private final Map<String, OperationCompareResult> changedOperations;
-    private final CompareResultType compareResultType;
-    private final CompareCriticalType compareCriticalType;
 
     public PathItemCompareResult(
             ParametersCompareResult parametersCompareResult,
@@ -33,32 +31,23 @@ public class PathItemCompareResult {
                 createdOperations.isEmpty() &&
                 deletedOperations.isEmpty() &&
                 changedOperations.isEmpty()) {
-            this.compareResultType = CompareResultType.UNCHANGED;
-            this.compareCriticalType = CompareCriticalType.NONE;
+            setCompareResultType(CompareResultType.UNCHANGED);
+            setHighestCompareCriticalType(CompareCriticalType.NONE);
         } else {
-            this.compareResultType = CompareResultType.CHANGED;
-            CompareCriticalType tmpCompareCriticalType = CompareCriticalType.NONE;
-            if(tmpCompareCriticalType.getLevel() < parametersCompareResult.getCompareCriticalType().getLevel()){
-                tmpCompareCriticalType = parametersCompareResult.getCompareCriticalType();
+            setCompareResultType(CompareResultType.CHANGED);
+            setHighestCompareCriticalType(parametersCompareResult.getCompareCriticalType());
+            setHighestCompareCriticalType(refCompareResult.getCompareCriticalType());
+            if(!createdOperations.isEmpty()){
+                setHighestCompareCriticalType(CompareCriticalType.INFO);
             }
-            if(tmpCompareCriticalType.getLevel() < refCompareResult.getCompareCriticalType().getLevel()){
-                tmpCompareCriticalType = refCompareResult.getCompareCriticalType();
-            }
-            if(tmpCompareCriticalType.getLevel() < CompareCriticalType.INFO.getLevel() && !createdOperations.isEmpty()){
-                tmpCompareCriticalType = CompareCriticalType.INFO;
-            }
-            if(tmpCompareCriticalType.getLevel() < CompareCriticalType.CRITICAL.getLevel() && !deletedOperations.isEmpty()){
-                tmpCompareCriticalType = CompareCriticalType.CRITICAL;
+            if(!deletedOperations.isEmpty()){
+                setHighestCompareCriticalType(CompareCriticalType.CRITICAL);
             }
             if(!changedOperations.isEmpty()){
                 for(OperationCompareResult operationCompareResult: changedOperations.values()) {
-                    if(tmpCompareCriticalType.getLevel() < operationCompareResult.getCompareCriticalType().getLevel()) {
-                        tmpCompareCriticalType = operationCompareResult.getCompareCriticalType();
-                    }
+                    setHighestCompareCriticalType(operationCompareResult.getCompareCriticalType());
                 }
             }
-
-            this.compareCriticalType = tmpCompareCriticalType;
         }
     }
 
@@ -68,14 +57,6 @@ public class PathItemCompareResult {
 
     public ParametersCompareResult getParametersCompareResult() {
         return parametersCompareResult;
-    }
-
-    public CompareResultType getCompareResultType() {
-        return compareResultType;
-    }
-
-    public CompareCriticalType getCompareCriticalType() {
-        return compareCriticalType;
     }
 
     public Map<String, Operation> getCreatedOperations() {
@@ -98,21 +79,20 @@ public class PathItemCompareResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PathItemCompareResult)) return false;
+        if (!super.equals(o)) return false;
         PathItemCompareResult that = (PathItemCompareResult) o;
         return Objects.equals(getParametersCompareResult(), that.getParametersCompareResult()) &&
                 Objects.equals(getRefCompareResult(), that.getRefCompareResult()) &&
-                Objects.equals(createdOperations, that.createdOperations) &&
-                Objects.equals(deletedOperations, that.deletedOperations) &&
-                Objects.equals(unchangedOperations, that.unchangedOperations) &&
-                Objects.equals(changedOperations, that.changedOperations) &&
-                getCompareResultType() == that.getCompareResultType() &&
-                getCompareCriticalType() == that.getCompareCriticalType();
+                Objects.equals(getCreatedOperations(), that.getCreatedOperations()) &&
+                Objects.equals(getDeletedOperations(), that.getDeletedOperations()) &&
+                Objects.equals(getUnchangedOperations(), that.getUnchangedOperations()) &&
+                Objects.equals(getChangedOperations(), that.getChangedOperations());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getParametersCompareResult(), getRefCompareResult(), createdOperations, deletedOperations, unchangedOperations, changedOperations, getCompareResultType(), getCompareCriticalType());
+        return Objects.hash(super.hashCode(), getParametersCompareResult(), getRefCompareResult(), getCreatedOperations(), getDeletedOperations(), getUnchangedOperations(), getChangedOperations());
     }
 
     @Override
@@ -124,8 +104,8 @@ public class PathItemCompareResult {
                 ", deletedOperations=" + deletedOperations +
                 ", unchangedOperations=" + unchangedOperations +
                 ", changedOperations=" + changedOperations +
-                ", compareResultType=" + compareResultType +
-                ", compareCriticalType=" + compareCriticalType +
+                ", compareCriticalType=" + getCompareCriticalType() +
+                ", compareResultType=" + getCompareResultType() +
                 '}';
     }
 }

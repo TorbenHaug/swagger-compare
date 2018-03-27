@@ -46,7 +46,7 @@ public class RequestBodyCompareResultTest {
         RequestBodyCompareResult requestBodyCompareResult = new RequestBodyCompareResult(left, right);
         Assert.assertEquals(left, requestBodyCompareResult.getLeft());
         Assert.assertEquals(right, requestBodyCompareResult.getRight());
-        Assert.assertEquals(CompareResultType.CHANGED, requestBodyCompareResult.getCompareResultType());
+        Assert.assertEquals(CompareResultType.CREATED, requestBodyCompareResult.getCompareResultType());
         Assert.assertEquals(CompareCriticalType.CRITICAL, requestBodyCompareResult.getCompareCriticalType());
     }
 
@@ -57,7 +57,7 @@ public class RequestBodyCompareResultTest {
         RequestBodyCompareResult requestBodyCompareResult = new RequestBodyCompareResult(left, right);
         Assert.assertEquals(left, requestBodyCompareResult.getLeft());
         Assert.assertEquals(right, requestBodyCompareResult.getRight());
-        Assert.assertEquals(CompareResultType.CHANGED, requestBodyCompareResult.getCompareResultType());
+        Assert.assertEquals(CompareResultType.DELETED, requestBodyCompareResult.getCompareResultType());
         Assert.assertEquals(CompareCriticalType.CRITICAL, requestBodyCompareResult.getCompareCriticalType());
     }
 }

@@ -1,5 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_datatypes;
 
+import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,20 +32,32 @@ public class ApiResponsesCompareResultTest {
     }
 
     @Test
-    public void testChangedValues1() {
+    public void testCreatedValues() {
         ApiResponses left = null;
         ApiResponses right = new ApiResponses();
         ApiResponsesCompareResult refCompareResult = new ApiResponsesCompareResult(left, right);
         Assert.assertEquals(left, refCompareResult.getLeft());
         Assert.assertEquals(right, refCompareResult.getRight());
-        Assert.assertEquals(CompareResultType.CHANGED, refCompareResult.getCompareResultType());
+        Assert.assertEquals(CompareResultType.CREATED, refCompareResult.getCompareResultType());
         Assert.assertEquals(CompareCriticalType.CRITICAL, refCompareResult.getCompareCriticalType());
     }
 
     @Test
-    public void testChangedValues2() {
+    public void testDeletedValues() {
         ApiResponses left = new ApiResponses();
         ApiResponses right = null;
+        ApiResponsesCompareResult refCompareResult = new ApiResponsesCompareResult(left, right);
+        Assert.assertEquals(left, refCompareResult.getLeft());
+        Assert.assertEquals(right, refCompareResult.getRight());
+        Assert.assertEquals(CompareResultType.DELETED, refCompareResult.getCompareResultType());
+        Assert.assertEquals(CompareCriticalType.CRITICAL, refCompareResult.getCompareCriticalType());
+    }
+
+    @Test
+    public void testChangedValues() {
+        ApiResponses left = new ApiResponses();
+        ApiResponses right = new ApiResponses();
+        right.addApiResponse("test", new ApiResponse());
         ApiResponsesCompareResult refCompareResult = new ApiResponsesCompareResult(left, right);
         Assert.assertEquals(left, refCompareResult.getLeft());
         Assert.assertEquals(right, refCompareResult.getRight());

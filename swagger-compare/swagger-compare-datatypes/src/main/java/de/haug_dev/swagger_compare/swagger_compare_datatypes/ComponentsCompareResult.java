@@ -2,54 +2,48 @@ package de.haug_dev.swagger_compare.swagger_compare_datatypes;
 
 import java.util.Objects;
 
-public class ComponentsCompareResult {
+public class ComponentsCompareResult extends AbstractBasicCompareResult{
     private ComponentsSchemaCompareResult componentsSchemaCompareResult;
-    private CompareResultType compareResultType = CompareResultType.UNCHANGED;
-    private CompareCriticalType compareCriticalType = CompareCriticalType.NONE;
+    private ComponentsResponsesCompareResult componentsResponsesCompareResult;
 
-    public ComponentsCompareResult(ComponentsSchemaCompareResult componentsSchemaCompareResult) {
+    public ComponentsCompareResult(ComponentsSchemaCompareResult componentsSchemaCompareResult, ComponentsResponsesCompareResult componentsResponsesCompareResult) {
         this.componentsSchemaCompareResult = componentsSchemaCompareResult;
-        if(!this.componentsSchemaCompareResult.getCompareResultType().equals(CompareResultType.UNCHANGED)){
-            this.compareResultType = CompareResultType.CHANGED;
+        this.componentsResponsesCompareResult = componentsResponsesCompareResult;
+        if(!this.componentsSchemaCompareResult.getCompareResultType().equals(CompareResultType.UNCHANGED) ||
+                !this.componentsResponsesCompareResult.getCompareResultType().equals(CompareResultType.UNCHANGED)){
+            setCompareResultType(CompareResultType.CHANGED);
         }
-        this.compareCriticalType = this.compareCriticalType.
-                greater(componentsSchemaCompareResult.getCompareCriticalType());
+        setHighestCompareCriticalType(this.componentsSchemaCompareResult.getCompareCriticalType());
+        setHighestCompareCriticalType(this.componentsResponsesCompareResult.getCompareCriticalType());
     }
 
     public ComponentsSchemaCompareResult getComponentsSchemaCompareResult() {
         return componentsSchemaCompareResult;
     }
 
-    public CompareResultType getCompareResultType() {
-        return compareResultType;
-    }
-
-    public CompareCriticalType getCompareCriticalType() {
-        return compareCriticalType;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ComponentsCompareResult)) return false;
+        if (!super.equals(o)) return false;
         ComponentsCompareResult that = (ComponentsCompareResult) o;
         return Objects.equals(getComponentsSchemaCompareResult(), that.getComponentsSchemaCompareResult()) &&
-                getCompareResultType() == that.getCompareResultType() &&
-                getCompareCriticalType() == that.getCompareCriticalType();
+                Objects.equals(componentsResponsesCompareResult, that.componentsResponsesCompareResult);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getComponentsSchemaCompareResult(), getCompareResultType(), getCompareCriticalType());
+        return Objects.hash(super.hashCode(), getComponentsSchemaCompareResult(), componentsResponsesCompareResult);
     }
 
     @Override
     public String toString() {
         return "ComponentsCompareResult{" +
                 "componentsSchemaCompareResult=" + componentsSchemaCompareResult +
-                ", compareResultType=" + compareResultType +
-                ", compareCriticalType=" + compareCriticalType +
+                ", componentsResponsesCompareResult=" + componentsResponsesCompareResult +
+                ", compareCriticalType=" + getCompareCriticalType() +
+                ", compareResultType=" + getCompareResultType() +
                 '}';
     }
 }
