@@ -1,15 +1,16 @@
 package de.haug_dev.swagger_compare.swagger_compare_datatypes;
 
+import io.swagger.v3.oas.models.media.Schema;
+
 import java.util.Objects;
 
-public class RefCompareResult {
-
-    private final String left;
-    private final String right;
+public class SchemaCompareResult {
+    private final Schema left;
+    private final Schema right;
     private final CompareResultType compareResultType;
     private final CompareCriticalType compareCriticalType;
 
-    public RefCompareResult(String left, String right) {
+    public SchemaCompareResult(Schema left, Schema right) {
         this.left = left;
         this.right = right;
         if(Objects.equals(left,right)){
@@ -29,11 +30,11 @@ public class RefCompareResult {
         }
     }
 
-    public String getLeft() {
+    public Schema getLeft() {
         return left;
     }
 
-    public String getRight() {
+    public Schema getRight() {
         return right;
     }
 
@@ -48,8 +49,8 @@ public class RefCompareResult {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RefCompareResult)) return false;
-        RefCompareResult that = (RefCompareResult) o;
+        if (!(o instanceof SchemaCompareResult)) return false;
+        SchemaCompareResult that = (SchemaCompareResult) o;
         return Objects.equals(getLeft(), that.getLeft()) &&
                 Objects.equals(getRight(), that.getRight()) &&
                 getCompareResultType() == that.getCompareResultType() &&
@@ -63,9 +64,9 @@ public class RefCompareResult {
 
     @Override
     public String toString() {
-        return "RefCompareResult{" +
-                "left='" + left + '\'' +
-                ", right='" + right + '\'' +
+        return "SchemaCompareResult{" +
+                "left=" + left +
+                ", right=" + right +
                 ", compareResultType=" + compareResultType +
                 ", compareCriticalType=" + compareCriticalType +
                 '}';

@@ -17,6 +17,11 @@ import {CompareResultDataService} from "./compare-result/compare-result.data.ser
 import { KeysPipe } from './keys.pipe';
 import { StringifyPipe } from './stringify.pipe';
 import { LoadFromFileComponent } from './load-from-file/load-from-file.component';
+import { ComponentsCompareResultComponent } from './components-compare-result/components-compare-result.component';
+import { ComponentsSchemaCompareResultComponent } from './components-schema-compare-result/components-schema-compare-result.component';
+import { CompareResultLeafComponent } from './compare-result-leaf/compare-result-leaf.component';
+import { CompareCriticalTypeToBootstrapTypePipe } from './compare-critical-type-to-bootstrap-type.pipe';
+import { GetHighestCompareCriticalTypePipe } from './get-highest-compare-critical-type.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +32,12 @@ import { LoadFromFileComponent } from './load-from-file/load-from-file.component
     CompareResultComponent,
     KeysPipe,
     StringifyPipe,
-    LoadFromFileComponent
+    LoadFromFileComponent,
+    ComponentsCompareResultComponent,
+    ComponentsSchemaCompareResultComponent,
+    CompareResultLeafComponent,
+    CompareCriticalTypeToBootstrapTypePipe,
+    GetHighestCompareCriticalTypePipe
   ],
   imports: [
     NgbModule.forRoot(),

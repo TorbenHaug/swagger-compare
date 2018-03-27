@@ -15,4 +15,8 @@ public enum CompareCriticalType{
     public int getLevel() {
         return level;
     }
+
+    public CompareCriticalType greater(CompareCriticalType other){
+        return this.getLevel() < other.getLevel() ? other : this;
+    }
 }

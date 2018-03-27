@@ -1,0 +1,47 @@
+<ngb-accordion #acc="ngbAccordion">
+  <ngb-panel [title]="'(' + (componentsSchemaCompareResult.created | keys).length  + ')' + ' Created'" [type]="(componentsSchemaCompareResult.created | keys).length > 0 ? 'success' : ''">
+    <ng-template ngbPanelContent>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel [title]="key" *ngFor="let key of componentsSchemaCompareResult.created | keys">
+          <ng-template ngbPanelContent>
+            <pre>{{componentsSchemaCompareResult.created[key] | stringify}}</pre>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel [title]="'(' + (componentsSchemaCompareResult.deleted | keys).length  + ')' + ' Deleted'" [type]="(componentsSchemaCompareResult.created | keys).length > 0 ? 'danger' : ''">
+    <ng-template ngbPanelContent>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel [title]="key" *ngFor="let key of componentsSchemaCompareResult.deleted | keys">
+          <ng-template ngbPanelContent>
+            <pre>{{componentsSchemaCompareResult.deleted[key] | stringify}}</pre>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel [title]="'(' + (componentsSchemaCompareResult.changed | keys).length  + ')' + ' Changed'" [type]="(componentsSchemaCompareResult.changed | getHighestCompareCriticalType) | compareCriticalTypeToBootstrapType">
+    <ng-template ngbPanelContent>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel [title]="key" [type]="componentsSchemaCompareResult.changed[key].compareCriticalType | compareCriticalTypeToBootstrapType" *ngFor="let key of componentsSchemaCompareResult.changed | keys">
+          <ng-template ngbPanelContent>
+            <compare-result-leaf [leaf]="componentsSchemaCompareResult.changed[key]"></compare-result-leaf>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel [title]="'(' + (componentsSchemaCompareResult.unchanged | keys).length  + ')' + ' Unchanged'">
+    <ng-template ngbPanelContent>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel [title]="key" *ngFor="let key of componentsSchemaCompareResult.unchanged | keys">
+          <ng-template ngbPanelContent>
+            <pre>{{componentsSchemaCompareResult.unchanged[key] | stringify}}</pre>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+

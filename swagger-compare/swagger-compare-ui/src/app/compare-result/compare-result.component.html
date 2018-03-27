@@ -3,182 +3,198 @@
 
 <div *ngIf="isCompareResult">
   <ngb-tabset>
-    <ngb-tab [title]="'(' + (result.pathsCompareResult.created | keys).length + ') Created'">
+    <ngb-tab title="Path Compare Results">
       <ng-template ngbTabContent>
-        <div *ngFor="let key of result.pathsCompareResult.created | keys">
-          <ngb-accordion #acc="ngbAccordion">
-            <ngb-panel [title]="key">
-              <ng-template ngbPanelContent>
-                <pre>{{result.pathsCompareResult.created[key] | stringify}}</pre>
-              </ng-template>
-            </ngb-panel>
-          </ngb-accordion>
-        </div>
-      </ng-template>
-    </ngb-tab>
-    <ngb-tab [title]="'(' + (result.pathsCompareResult.deleted | keys).length + ') Deleted'">
-      <ng-template ngbTabContent>
-        <div *ngFor="let key of result.pathsCompareResult.deleted | keys">
-          <ngb-accordion #acc="ngbAccordion">
-            <ngb-panel [title]="key">
-              <ng-template ngbPanelContent>
-                <pre>{{result.pathsCompareResult.deleted[key] | stringify}}</pre>
-              </ng-template>
-            </ngb-panel>
-          </ngb-accordion>
-        </div>
-      </ng-template>
-    </ngb-tab>
-    <ngb-tab [title]="'(' + (result.pathsCompareResult.changed | keys).length + ') Changed'">
-      <ng-template ngbTabContent>
-        <div *ngFor="let key of result.pathsCompareResult.changed | keys">
-          <ngb-accordion #acc="ngbAccordion">
-            <ngb-panel [title]="key">
-              <ng-template ngbPanelContent>
+        <ngb-tabset>
+          <ngb-tab [title]="'(' + (result.pathsCompareResult.created | keys).length + ') Created'">
+            <ng-template ngbTabContent>
+              <div *ngFor="let key of result.pathsCompareResult.created | keys">
                 <ngb-accordion #acc="ngbAccordion">
-                  <ngb-panel title="Parameters">
+                  <ngb-panel [title]="key">
+                    <ng-template ngbPanelContent>
+                      <pre>{{result.pathsCompareResult.created[key] | stringify}}</pre>
+                    </ng-template>
+                  </ngb-panel>
+                </ngb-accordion>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab [title]="'(' + (result.pathsCompareResult.deleted | keys).length + ') Deleted'">
+            <ng-template ngbTabContent>
+              <div *ngFor="let key of result.pathsCompareResult.deleted | keys">
+                <ngb-accordion #acc="ngbAccordion">
+                  <ngb-panel [title]="key">
+                    <ng-template ngbPanelContent>
+                      <pre>{{result.pathsCompareResult.deleted[key] | stringify}}</pre>
+                    </ng-template>
+                  </ngb-panel>
+                </ngb-accordion>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab [title]="'(' + (result.pathsCompareResult.changed | keys).length + ') Changed'">
+            <ng-template ngbTabContent>
+              <div *ngFor="let key of result.pathsCompareResult.changed | keys">
+                <ngb-accordion #acc="ngbAccordion">
+                  <ngb-panel [title]="key">
                     <ng-template ngbPanelContent>
                       <ngb-accordion #acc="ngbAccordion">
-                        <ngb-panel title="Created">
+                        <ngb-panel title="Parameters">
                           <ng-template ngbPanelContent>
-                            <pre>{{result.pathsCompareResult.changed[key].parametersCompareResult.created | stringify}}</pre>
-                          </ng-template>
-                        </ngb-panel>
-                        <ngb-panel title="Deleted">
-                          <ng-template ngbPanelContent>
-                            <pre>{{result.pathsCompareResult.changed[key].parametersCompareResult.deleted | stringify}}</pre>
-                          </ng-template>
-                        </ngb-panel>
-                        <ngb-panel title="Unchanged">
-                          <ng-template ngbPanelContent>
-                            <pre>{{result.pathsCompareResult.changed[key].parametersCompareResult.unchanged | stringify}}</pre>
+                            <ngb-accordion #acc="ngbAccordion">
+                              <ngb-panel title="Created">
+                                <ng-template ngbPanelContent>
+                                  <pre>{{result.pathsCompareResult.changed[key].parametersCompareResult.created | stringify}}</pre>
+                                </ng-template>
+                              </ngb-panel>
+                              <ngb-panel title="Deleted">
+                                <ng-template ngbPanelContent>
+                                  <pre>{{result.pathsCompareResult.changed[key].parametersCompareResult.deleted | stringify}}</pre>
+                                </ng-template>
+                              </ngb-panel>
+                              <ngb-panel title="Unchanged">
+                                <ng-template ngbPanelContent>
+                                  <pre>{{result.pathsCompareResult.changed[key].parametersCompareResult.unchanged | stringify}}</pre>
+                                </ng-template>
+                              </ngb-panel>
+                            </ngb-accordion>
                           </ng-template>
                         </ngb-panel>
                       </ngb-accordion>
-                    </ng-template>
-                  </ngb-panel>
-                </ngb-accordion>
-                <ngb-accordion #acc="ngbAccordion">
-                  <ngb-panel title="Ref">
-                    <ng-template ngbPanelContent>
-                      <pre>{{result.pathsCompareResult.changed[key].refCompareResult | stringify}}</pre>
-                    </ng-template>
-                  </ngb-panel>
-                </ngb-accordion>
-                <ngb-accordion #acc="ngbAccordion">
-                  <ngb-panel title="Operations">
-                    <ng-template ngbPanelContent>
                       <ngb-accordion #acc="ngbAccordion">
-                        <ngb-panel title="Changed">
+                        <ngb-panel title="Ref">
                           <ng-template ngbPanelContent>
-                            <div *ngFor="let operationKey of result.pathsCompareResult.changed[key].changedOperations | keys">
-                              <ngb-accordion #acc="ngbAccordion">
-                                <ngb-panel [title]="operationKey">
-                                  <ng-template ngbPanelContent>
+                            <pre>{{result.pathsCompareResult.changed[key].refCompareResult | stringify}}</pre>
+                          </ng-template>
+                        </ngb-panel>
+                      </ngb-accordion>
+                      <ngb-accordion #acc="ngbAccordion">
+                        <ngb-panel title="Operations">
+                          <ng-template ngbPanelContent>
+                            <ngb-accordion #acc="ngbAccordion">
+                              <ngb-panel title="Changed">
+                                <ng-template ngbPanelContent>
+                                  <div *ngFor="let operationKey of result.pathsCompareResult.changed[key].changedOperations | keys">
                                     <ngb-accordion #acc="ngbAccordion">
-                                      <ngb-panel title="Parameters">
+                                      <ngb-panel [title]="operationKey">
                                         <ng-template ngbPanelContent>
                                           <ngb-accordion #acc="ngbAccordion">
-                                            <ngb-panel title="Created">
+                                            <ngb-panel title="Parameters">
                                               <ng-template ngbPanelContent>
-                                                <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].parametersCompareResult.created | stringify}}</pre>
+                                                <ngb-accordion #acc="ngbAccordion">
+                                                  <ngb-panel title="Created">
+                                                    <ng-template ngbPanelContent>
+                                                      <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].parametersCompareResult.created | stringify}}</pre>
+                                                    </ng-template>
+                                                  </ngb-panel>
+                                                  <ngb-panel title="Deleted">
+                                                    <ng-template ngbPanelContent>
+                                                      <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].parametersCompareResult.deleted | stringify}}</pre>
+                                                    </ng-template>
+                                                  </ngb-panel>
+                                                  <ngb-panel title="Unchanged">
+                                                    <ng-template ngbPanelContent>
+                                                      <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].parametersCompareResult.unchanged | stringify}}</pre>
+                                                    </ng-template>
+                                                  </ngb-panel>
+                                                </ngb-accordion>
                                               </ng-template>
                                             </ngb-panel>
-                                            <ngb-panel title="Deleted">
+                                            <ngb-panel title="Deprecated">
                                               <ng-template ngbPanelContent>
-                                                <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].parametersCompareResult.deleted | stringify}}</pre>
+                                                <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].deprecatedCompareResult | stringify}}</pre>
                                               </ng-template>
                                             </ngb-panel>
-                                            <ngb-panel title="Unchanged">
+                                            <ngb-panel title="RequestBody">
                                               <ng-template ngbPanelContent>
-                                                <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].parametersCompareResult.unchanged | stringify}}</pre>
+                                                <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].requestBodyCompareResult | stringify}}</pre>
+                                              </ng-template>
+                                            </ngb-panel>
+                                            <ngb-panel title="Responses">
+                                              <ng-template ngbPanelContent>
+                                                <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].apiResponsesCompareResult | stringify}}</pre>
                                               </ng-template>
                                             </ngb-panel>
                                           </ngb-accordion>
                                         </ng-template>
                                       </ngb-panel>
-                                      <ngb-panel title="Deprecated">
+                                    </ngb-accordion>
+                                  </div>
+                                </ng-template>
+                              </ngb-panel>
+                              <ngb-panel title="Created">
+                                <ng-template ngbPanelContent>
+                                  <div *ngFor="let operationKey of result.pathsCompareResult.changed[key].createdOperations | keys">
+                                    <ngb-accordion #acc="ngbAccordion">
+                                      <ngb-panel [title]="operationKey">
                                         <ng-template ngbPanelContent>
-                                          <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].deprecatedCompareResult | stringify}}</pre>
-                                        </ng-template>
-                                      </ngb-panel>
-                                      <ngb-panel title="RequestBody">
-                                        <ng-template ngbPanelContent>
-                                          <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].requestBodyCompareResult | stringify}}</pre>
-                                        </ng-template>
-                                      </ngb-panel>
-                                      <ngb-panel title="Responses">
-                                        <ng-template ngbPanelContent>
-                                          <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].apiResponsesCompareResult | stringify}}</pre>
+                                          <pre>{{result.pathsCompareResult.changed[key].createdOperations[operationKey] | stringify}}</pre>
                                         </ng-template>
                                       </ngb-panel>
                                     </ngb-accordion>
-                                  </ng-template>
-                                </ngb-panel>
-                              </ngb-accordion>
-                            </div>
-                          </ng-template>
-                        </ngb-panel>
-                        <ngb-panel title="Created">
-                          <ng-template ngbPanelContent>
-                            <div *ngFor="let operationKey of result.pathsCompareResult.changed[key].createdOperations | keys">
-                              <ngb-accordion #acc="ngbAccordion">
-                                <ngb-panel [title]="operationKey">
-                                  <ng-template ngbPanelContent>
-                                    <pre>{{result.pathsCompareResult.changed[key].createdOperations[operationKey] | stringify}}</pre>
-                                  </ng-template>
-                                </ngb-panel>
-                              </ngb-accordion>
-                            </div>
-                          </ng-template>
-                        </ngb-panel>
-                        <ngb-panel title="Deleted">
-                          <ng-template ngbPanelContent>
-                            <div *ngFor="let operationKey of result.pathsCompareResult.changed[key].deletedOperations | keys">
-                              <ngb-accordion #acc="ngbAccordion">
-                                <ngb-panel [title]="operationKey">
-                                  <ng-template ngbPanelContent>
-                                    <pre>{{result.pathsCompareResult.changed[key].deletedOperations[operationKey] | stringify}}</pre>
-                                  </ng-template>
-                                </ngb-panel>
-                              </ngb-accordion>
-                            </div>
-                          </ng-template>
-                        </ngb-panel>
-                        <ngb-panel title="Unchanged">
-                          <ng-template ngbPanelContent>
-                            <div *ngFor="let operationKey of result.pathsCompareResult.changed[key].unchangedOperations | keys">
-                              <ngb-accordion #acc="ngbAccordion">
-                                <ngb-panel [title]="operationKey">
-                                  <ng-template ngbPanelContent>
-                                    <pre>{{result.pathsCompareResult.changed[key].unchangedOperations[operationKey] | stringify}}</pre>
-                                  </ng-template>
-                                </ngb-panel>
-                              </ngb-accordion>
-                            </div>
+                                  </div>
+                                </ng-template>
+                              </ngb-panel>
+                              <ngb-panel title="Deleted">
+                                <ng-template ngbPanelContent>
+                                  <div *ngFor="let operationKey of result.pathsCompareResult.changed[key].deletedOperations | keys">
+                                    <ngb-accordion #acc="ngbAccordion">
+                                      <ngb-panel [title]="operationKey">
+                                        <ng-template ngbPanelContent>
+                                          <pre>{{result.pathsCompareResult.changed[key].deletedOperations[operationKey] | stringify}}</pre>
+                                        </ng-template>
+                                      </ngb-panel>
+                                    </ngb-accordion>
+                                  </div>
+                                </ng-template>
+                              </ngb-panel>
+                              <ngb-panel title="Unchanged">
+                                <ng-template ngbPanelContent>
+                                  <div *ngFor="let operationKey of result.pathsCompareResult.changed[key].unchangedOperations | keys">
+                                    <ngb-accordion #acc="ngbAccordion">
+                                      <ngb-panel [title]="operationKey">
+                                        <ng-template ngbPanelContent>
+                                          <pre>{{result.pathsCompareResult.changed[key].unchangedOperations[operationKey] | stringify}}</pre>
+                                        </ng-template>
+                                      </ngb-panel>
+                                    </ngb-accordion>
+                                  </div>
+                                </ng-template>
+                              </ngb-panel>
+                            </ngb-accordion>
                           </ng-template>
                         </ngb-panel>
                       </ngb-accordion>
                     </ng-template>
                   </ngb-panel>
                 </ngb-accordion>
-              </ng-template>
-            </ngb-panel>
-          </ngb-accordion>
-        </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab [title]="'(' + (result.pathsCompareResult.unchanged | keys).length + ') Unchanged'">
+            <ng-template ngbTabContent>
+              <div *ngFor="let key of result.pathsCompareResult.unchanged | keys">
+                <ngb-accordion #acc="ngbAccordion">
+                  <ngb-panel [title]="key">
+                    <ng-template ngbPanelContent>
+                      <pre>{{result.pathsCompareResult.unchanged[key] | stringify}}</pre>
+                    </ng-template>
+                  </ngb-panel>
+                </ngb-accordion>
+              </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
       </ng-template>
     </ngb-tab>
-    <ngb-tab [title]="'(' + (result.pathsCompareResult.unchanged | keys).length + ') Unchanged'">
-      <ng-template ngbTabContent>
-        <div *ngFor="let key of result.pathsCompareResult.unchanged | keys">
-          <ngb-accordion #acc="ngbAccordion">
-            <ngb-panel [title]="key">
-              <ng-template ngbPanelContent>
-                <pre>{{result.pathsCompareResult.unchanged[key] | stringify}}</pre>
-              </ng-template>
-            </ngb-panel>
-          </ngb-accordion>
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <div [class]="'bg-'+ ((result.componentsCompareResult.compareCriticalType) | compareCriticalTypeToBootstrapType)">
+          Components Compare Results
         </div>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <components-compare-result [componentsCompareResult]="result.componentsCompareResult"></components-compare-result>
       </ng-template>
     </ngb-tab>
   </ngb-tabset>

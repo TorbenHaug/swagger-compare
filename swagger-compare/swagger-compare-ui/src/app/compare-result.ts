@@ -1,7 +1,7 @@
 
-
 export interface CompareResult {
   pathsCompareResult: PathsCompareResult;
+  componentsCompareResult: ComponentsCompareResult;
   compareResultType: CompareResultType;
   compareCriticalType: CompareCriticalType;
 }
@@ -25,6 +25,23 @@ export interface PathItemCompareResult {
   compareResultType: CompareResultType;
   compareCriticalType: CompareCriticalType;
 }
+
+export interface ComponentsCompareResult {
+  componentsSchemaCompareResult: ComponentsSchemaCompareResult;
+  compareResultType: CompareResultType;
+  compareCriticalType: CompareCriticalType;
+}
+
+export interface ComponentsSchemaCompareResult {
+  changed: { [index: string]: SchemaCompareResult };
+  unchanged: { [index: string]: any };
+  created: { [index: string]: any };
+  deleted: { [index: string]: any };
+  compareCriticalType: CompareCriticalType;
+  compareResultType: CompareResultType;
+}
+
+export interface SchemaCompareResult extends Leaf<any>{}
 
 export interface ParametersCompareResult {
   unchanged: any[];
@@ -57,12 +74,7 @@ export interface DeprecatedCompareResult {
   right: boolean;
 }
 
-export interface RequestBodyCompareResult {
-  left: any;
-  right: any;
-  compareResultType: CompareResultType;
-  compareCriticalType: CompareCriticalType;
-}
+export interface RequestBodyCompareResult extends Leaf<any>{}
 
 export interface ApiResponsesCompareResult {
   left: any;
@@ -71,6 +83,23 @@ export interface ApiResponsesCompareResult {
   compareCriticalType: CompareCriticalType;
 }
 
-export type CompareResultType = "CREATED" | "CHANGED" | "DELETED" | "UNCHANGED";
+export enum CompareResultType {
+  CREATED="CREATED",
+  CHANGED="CHANGED",
+  DELETED="DELETED",
+  UNCHANGED="UNCHANGED"
+}
 
-export type CompareCriticalType = "CRITICAL" | "WARNING" | "INFO" | "NONE";
+export enum CompareCriticalType {
+  CRITICAL="CRITICAL",
+  WARNING="WARNING",
+  INFO="INFO",
+  NONE="NONE"
+}
+
+export interface Leaf<T> {
+  left: T;
+  right: T;
+  compareResultType: CompareResultType;
+  compareCriticalType: CompareCriticalType;
+}

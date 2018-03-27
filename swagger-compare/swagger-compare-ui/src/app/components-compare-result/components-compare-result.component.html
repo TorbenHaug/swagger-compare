@@ -1,0 +1,14 @@
+<div>
+  <ngb-tabset>
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <div [class]="'bg-'+ ((componentsCompareResult.componentsSchemaCompareResult.compareCriticalType) | compareCriticalTypeToBootstrapType)">
+          Schema
+        </div>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <components-schema-compare-result [componentsSchemaCompareResult]="componentsCompareResult.componentsSchemaCompareResult"></components-schema-compare-result>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>

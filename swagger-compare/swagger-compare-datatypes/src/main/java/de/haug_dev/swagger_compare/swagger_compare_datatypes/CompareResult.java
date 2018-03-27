@@ -4,17 +4,30 @@ import java.util.Objects;
 
 public class CompareResult {
     private final PathsCompareResult pathsCompareResult;
-    private final CompareResultType compareResultType;
-    private final CompareCriticalType compareCriticalType;
+    private CompareResultType compareResultType;
+    private CompareCriticalType compareCriticalType = CompareCriticalType.NONE;
+    private ComponentsCompareResult componentsCompareResult;
 
-    public CompareResult(PathsCompareResult pathsCompareResult) {
+    public CompareResult(PathsCompareResult pathsCompareResult, ComponentsCompareResult componentsCompareResult) {
         this.pathsCompareResult = pathsCompareResult;
+        this.componentsCompareResult = componentsCompareResult;
         this.compareResultType = pathsCompareResult.getCompareResultType();
-        this.compareCriticalType = pathsCompareResult.getCompareCriticalType();
+        if(this.compareResultType == CompareResultType.UNCHANGED){
+            this.compareResultType = this.componentsCompareResult.getCompareResultType();
+        }
+        this.compareCriticalType = this.compareCriticalType
+                .greater(this.pathsCompareResult.getCompareCriticalType())
+                .greater(this.componentsCompareResult.getCompareCriticalType());
+
+
     }
 
     public PathsCompareResult getPathsCompareResult() {
         return pathsCompareResult;
+    }
+
+    public ComponentsCompareResult getComponentsCompareResult() {
+        return componentsCompareResult;
     }
 
     public CompareResultType getCompareResultType() {
