@@ -6,82 +6,51 @@ export interface CompareResult {
   compareCriticalType: CompareCriticalType;
 }
 
-export interface PathsCompareResult {
-  unchanged: { [index: string]: any };
-  changed: { [index: string]: PathItemCompareResult };
-  created: { [index: string]: any };
-  deleted: { [index: string]: any };
-  compareResultType: CompareResultType;
-  compareCriticalType: CompareCriticalType;
-}
+export interface PathsCompareResult extends ReferableCompareResult<any, PathItemCompareResult>{}
 
-export interface PathItemCompareResult {
+export interface PathItemCompareResult extends BasicCompareResult{
   parametersCompareResult: ParametersCompareResult;
   refCompareResult: RefCompareResult;
   createdOperations: { [index: string]: any };
   deletedOperations: { [index: string]: any };
   unchangedOperations: { [index: string]: any };
   changedOperations: { [index: string]: OperationCompareResult };
-  compareResultType: CompareResultType;
-  compareCriticalType: CompareCriticalType;
 }
 
-export interface ComponentsCompareResult {
+export interface ResponsesCompareResult extends ReferableCompareResult<any, ResponseCompareResult>{}
+
+export interface ComponentsCompareResult extends BasicCompareResult{
   componentsSchemaCompareResult: ComponentsSchemaCompareResult;
-  compareResultType: CompareResultType;
-  compareCriticalType: CompareCriticalType;
+  responsesCompareResult: ResponsesCompareResult;
 }
 
-export interface ComponentsSchemaCompareResult {
-  changed: { [index: string]: SchemaCompareResult };
-  unchanged: { [index: string]: any };
-  created: { [index: string]: any };
-  deleted: { [index: string]: any };
-  compareCriticalType: CompareCriticalType;
-  compareResultType: CompareResultType;
-}
+export interface ComponentsSchemaCompareResult extends ReferableCompareResult<any, SchemaCompareResult>{}
 
 export interface SchemaCompareResult extends Leaf<any>{}
 
-export interface ParametersCompareResult {
+export interface ParametersCompareResult extends BasicCompareResult{
   unchanged: any[];
   created: any[];
   deleted: any[];
-  compareCriticalType: CompareCriticalType;
-  compareResultType: CompareResultType;
 }
 
-export interface RefCompareResult {
-  left: string;
-  right: string;
-  compareResultType: CompareResultType;
-  compareCriticalType: CompareCriticalType;
-}
+export interface RefCompareResult extends Leaf<string>{}
 
-export interface OperationCompareResult {
-  compareCriticalType: CompareCriticalType;
-  compareResultType: CompareResultType;
+export interface OperationCompareResult extends BasicCompareResult{
   parametersCompareResult: ParametersCompareResult;
   deprecatedCompareResult: DeprecatedCompareResult;
   requestBodyCompareResult: RequestBodyCompareResult;
-  apiResponsesCompareResult: ApiResponsesCompareResult;
+  responsesCompareResult: ResponsesCompareResult;
 }
 
-export interface DeprecatedCompareResult {
-  compareResultType: CompareResultType;
-  compareCriticalType: CompareCriticalType;
+export interface DeprecatedCompareResult extends BasicCompareResult{
   left: boolean;
   right: boolean;
 }
 
 export interface RequestBodyCompareResult extends Leaf<any>{}
 
-export interface ApiResponsesCompareResult {
-  left: any;
-  right: any;
-  compareResultType: CompareResultType;
-  compareCriticalType: CompareCriticalType;
-}
+export interface ResponseCompareResult extends Leaf<any>{}
 
 export enum CompareResultType {
   CREATED="CREATED",
@@ -97,9 +66,19 @@ export enum CompareCriticalType {
   NONE="NONE"
 }
 
-export interface Leaf<T> {
+export interface Leaf<T> extends BasicCompareResult{
   left: T;
   right: T;
+}
+
+export interface BasicCompareResult {
   compareResultType: CompareResultType;
   compareCriticalType: CompareCriticalType;
+}
+
+export interface ReferableCompareResult<BasicType, CompareType> extends BasicCompareResult{
+  unchanged: { [index: string]: BasicType };
+  changed: { [index: string]: CompareType };
+  created: { [index: string]: BasicType };
+  deleted: { [index: string]: BasicType };
 }

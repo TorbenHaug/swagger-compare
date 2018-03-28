@@ -1,0 +1,47 @@
+<ngb-accordion #acc="ngbAccordion">
+  <ngb-panel [title]="'(' + (responsesCompareResult.created | keys).length  + ')' + ' Created'" [type]="(responsesCompareResult.created | keys).length > 0 ? 'success' : ''">
+    <ng-template ngbPanelContent>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel [title]="key" *ngFor="let key of responsesCompareResult.created | keys">
+          <ng-template ngbPanelContent>
+            <pre>{{responsesCompareResult.created[key] | stringify}}</pre>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel [title]="'(' + (responsesCompareResult.deleted | keys).length  + ')' + ' Deleted'" [type]="(responsesCompareResult.deleted | keys).length > 0 ? 'danger' : ''">
+    <ng-template ngbPanelContent>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel [title]="key" *ngFor="let key of responsesCompareResult.deleted | keys">
+          <ng-template ngbPanelContent>
+            <pre>{{responsesCompareResult.deleted[key] | stringify}}</pre>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel [title]="'(' + (responsesCompareResult.changed | keys).length  + ')' + ' Changed'" [type]="(responsesCompareResult.changed | getHighestCompareCriticalType) | compareCriticalTypeToBootstrapType">
+    <ng-template ngbPanelContent>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel [title]="key" [type]="responsesCompareResult.changed[key].compareCriticalType | compareCriticalTypeToBootstrapType" *ngFor="let key of responsesCompareResult.changed | keys">
+          <ng-template ngbPanelContent>
+            <compare-result-leaf [leaf]="responsesCompareResult.changed[key]"></compare-result-leaf>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel [title]="'(' + (responsesCompareResult.unchanged | keys).length  + ')' + ' Unchanged'">
+    <ng-template ngbPanelContent>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel [title]="key" *ngFor="let key of responsesCompareResult.unchanged | keys">
+          <ng-template ngbPanelContent>
+            <pre>{{responsesCompareResult.unchanged[key] | stringify}}</pre>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+

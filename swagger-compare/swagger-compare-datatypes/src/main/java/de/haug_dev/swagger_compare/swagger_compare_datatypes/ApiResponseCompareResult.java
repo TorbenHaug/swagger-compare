@@ -1,13 +1,9 @@
 package de.haug_dev.swagger_compare.swagger_compare_datatypes;
 
-import io.swagger.v3.oas.models.parameters.RequestBody;
-import io.swagger.v3.oas.models.responses.ApiResponses;
+import io.swagger.v3.oas.models.responses.ApiResponse;
 
-import java.util.Objects;
-
-public class ApiResponsesCompareResult extends AbstractLeafCompareResult<ApiResponses>{
-
-    public ApiResponsesCompareResult(ApiResponses left, ApiResponses right) {
+public class ApiResponseCompareResult extends AbstractLeafCompareResult<ApiResponse>{
+    public ApiResponseCompareResult(ApiResponse left, ApiResponse right) {
         super(
                 left,
                 right,
@@ -17,5 +13,4 @@ public class ApiResponsesCompareResult extends AbstractLeafCompareResult<ApiResp
                 CompareCriticalType.CRITICAL
         );
     }
-
 }

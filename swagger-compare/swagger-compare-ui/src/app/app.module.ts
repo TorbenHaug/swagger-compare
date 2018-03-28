@@ -22,6 +22,7 @@ import { ComponentsSchemaCompareResultComponent } from './components-schema-comp
 import { CompareResultLeafComponent } from './compare-result-leaf/compare-result-leaf.component';
 import { CompareCriticalTypeToBootstrapTypePipe } from './compare-critical-type-to-bootstrap-type.pipe';
 import { GetHighestCompareCriticalTypePipe } from './get-highest-compare-critical-type.pipe';
+import { ResponsesCompareResultComponent } from './responses-compare-result/responses-compare-result.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { GetHighestCompareCriticalTypePipe } from './get-highest-compare-critica
     ComponentsSchemaCompareResultComponent,
     CompareResultLeafComponent,
     CompareCriticalTypeToBootstrapTypePipe,
-    GetHighestCompareCriticalTypePipe
+    GetHighestCompareCriticalTypePipe,
+    ResponsesCompareResultComponent
   ],
   imports: [
     NgbModule.forRoot(),

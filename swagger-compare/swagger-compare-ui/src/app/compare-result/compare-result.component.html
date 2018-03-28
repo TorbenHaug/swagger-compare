@@ -105,14 +105,14 @@
                                                 <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].deprecatedCompareResult | stringify}}</pre>
                                               </ng-template>
                                             </ngb-panel>
-                                            <ngb-panel title="RequestBody">
+                                            <ngb-panel title="RequestBody" >
                                               <ng-template ngbPanelContent>
                                                 <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].requestBodyCompareResult | stringify}}</pre>
                                               </ng-template>
                                             </ngb-panel>
-                                            <ngb-panel title="Responses">
+                                            <ngb-panel title="Responses" [type]="result.pathsCompareResult.changed[key].changedOperations[operationKey].responsesCompareResult.compareCriticalType | compareCriticalTypeToBootstrapType">
                                               <ng-template ngbPanelContent>
-                                                <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].apiResponsesCompareResult | stringify}}</pre>
+                                                <responses-compare-result [responsesCompareResult]="result.pathsCompareResult.changed[key].changedOperations[operationKey].responsesCompareResult"></responses-compare-result>
                                               </ng-template>
                                             </ngb-panel>
                                           </ngb-accordion>

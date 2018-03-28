@@ -13,11 +13,11 @@ public class ComponentsCompareResultTest {
         Mockito.when(componentsSchemaCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
         Mockito.when(componentsSchemaCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
 
-        ComponentsResponsesCompareResult componentsResponsesCompareResult = Mockito.mock(ComponentsResponsesCompareResult.class);
-        Mockito.when(componentsResponsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
-        Mockito.when(componentsResponsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
+        ResponsesCompareResult responsesCompareResult = Mockito.mock(ResponsesCompareResult.class);
+        Mockito.when(responsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
+        Mockito.when(responsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
 
-        ComponentsCompareResult result = new ComponentsCompareResult(componentsSchemaCompareResult, componentsResponsesCompareResult);
+        ComponentsCompareResult result = new ComponentsCompareResult(componentsSchemaCompareResult, responsesCompareResult);
 
         assertEquals(componentsSchemaCompareResult, result.getComponentsSchemaCompareResult());
         assertEquals(CompareCriticalType.NONE, result.getCompareCriticalType());
@@ -30,11 +30,11 @@ public class ComponentsCompareResultTest {
         Mockito.when(componentsSchemaCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.WARNING);
         Mockito.when(componentsSchemaCompareResult.getCompareResultType()).thenReturn(CompareResultType.CHANGED);
 
-        ComponentsResponsesCompareResult componentsResponsesCompareResult = Mockito.mock(ComponentsResponsesCompareResult.class);
-        Mockito.when(componentsResponsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
-        Mockito.when(componentsResponsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
+        ResponsesCompareResult responsesCompareResult = Mockito.mock(ResponsesCompareResult.class);
+        Mockito.when(responsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
+        Mockito.when(responsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
 
-        ComponentsCompareResult result = new ComponentsCompareResult(componentsSchemaCompareResult, componentsResponsesCompareResult);
+        ComponentsCompareResult result = new ComponentsCompareResult(componentsSchemaCompareResult, responsesCompareResult);
 
         assertEquals(componentsSchemaCompareResult, result.getComponentsSchemaCompareResult());
         assertEquals(CompareCriticalType.WARNING, result.getCompareCriticalType());
@@ -47,11 +47,11 @@ public class ComponentsCompareResultTest {
         Mockito.when(componentsSchemaCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
         Mockito.when(componentsSchemaCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
 
-        ComponentsResponsesCompareResult componentsResponsesCompareResult = Mockito.mock(ComponentsResponsesCompareResult.class);
-        Mockito.when(componentsResponsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.WARNING);
-        Mockito.when(componentsResponsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.CHANGED);
+        ResponsesCompareResult responsesCompareResult = Mockito.mock(ResponsesCompareResult.class);
+        Mockito.when(responsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.WARNING);
+        Mockito.when(responsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.CHANGED);
 
-        ComponentsCompareResult result = new ComponentsCompareResult(componentsSchemaCompareResult, componentsResponsesCompareResult);
+        ComponentsCompareResult result = new ComponentsCompareResult(componentsSchemaCompareResult, responsesCompareResult);
 
         assertEquals(componentsSchemaCompareResult, result.getComponentsSchemaCompareResult());
         assertEquals(CompareCriticalType.WARNING, result.getCompareCriticalType());

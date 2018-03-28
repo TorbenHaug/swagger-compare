@@ -4,21 +4,25 @@ import java.util.Objects;
 
 public class ComponentsCompareResult extends AbstractBasicCompareResult{
     private ComponentsSchemaCompareResult componentsSchemaCompareResult;
-    private ComponentsResponsesCompareResult componentsResponsesCompareResult;
+    private ResponsesCompareResult responsesCompareResult;
 
-    public ComponentsCompareResult(ComponentsSchemaCompareResult componentsSchemaCompareResult, ComponentsResponsesCompareResult componentsResponsesCompareResult) {
+    public ComponentsCompareResult(ComponentsSchemaCompareResult componentsSchemaCompareResult, ResponsesCompareResult responsesCompareResult) {
         this.componentsSchemaCompareResult = componentsSchemaCompareResult;
-        this.componentsResponsesCompareResult = componentsResponsesCompareResult;
+        this.responsesCompareResult = responsesCompareResult;
         if(!this.componentsSchemaCompareResult.getCompareResultType().equals(CompareResultType.UNCHANGED) ||
-                !this.componentsResponsesCompareResult.getCompareResultType().equals(CompareResultType.UNCHANGED)){
+                !this.responsesCompareResult.getCompareResultType().equals(CompareResultType.UNCHANGED)){
             setCompareResultType(CompareResultType.CHANGED);
         }
         setHighestCompareCriticalType(this.componentsSchemaCompareResult.getCompareCriticalType());
-        setHighestCompareCriticalType(this.componentsResponsesCompareResult.getCompareCriticalType());
+        setHighestCompareCriticalType(this.responsesCompareResult.getCompareCriticalType());
     }
 
     public ComponentsSchemaCompareResult getComponentsSchemaCompareResult() {
         return componentsSchemaCompareResult;
+    }
+
+    public ResponsesCompareResult getResponsesCompareResult() {
+        return responsesCompareResult;
     }
 
     @Override
@@ -28,20 +32,20 @@ public class ComponentsCompareResult extends AbstractBasicCompareResult{
         if (!super.equals(o)) return false;
         ComponentsCompareResult that = (ComponentsCompareResult) o;
         return Objects.equals(getComponentsSchemaCompareResult(), that.getComponentsSchemaCompareResult()) &&
-                Objects.equals(componentsResponsesCompareResult, that.componentsResponsesCompareResult);
+                Objects.equals(responsesCompareResult, that.responsesCompareResult);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), getComponentsSchemaCompareResult(), componentsResponsesCompareResult);
+        return Objects.hash(super.hashCode(), getComponentsSchemaCompareResult(), responsesCompareResult);
     }
 
     @Override
     public String toString() {
         return "ComponentsCompareResult{" +
                 "componentsSchemaCompareResult=" + componentsSchemaCompareResult +
-                ", componentsResponsesCompareResult=" + componentsResponsesCompareResult +
+                ", responsesCompareResult=" + responsesCompareResult +
                 ", compareCriticalType=" + getCompareCriticalType() +
                 ", compareResultType=" + getCompareResultType() +
                 '}';

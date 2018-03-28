@@ -18,15 +18,15 @@ public class OperationCompareResultTest {
         RequestBodyCompareResult requestBodyCompareResult = Mockito.mock(RequestBodyCompareResult.class);
         Mockito.when(requestBodyCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
         Mockito.when(requestBodyCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
-        ApiResponsesCompareResult apiResponsesCompareResult = Mockito.mock(ApiResponsesCompareResult.class);
-        Mockito.when(apiResponsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
-        Mockito.when(apiResponsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
+        ResponsesCompareResult responsesCompareResult = Mockito.mock(ResponsesCompareResult.class);
+        Mockito.when(responsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
+        Mockito.when(responsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
 
         OperationCompareResult operationCompareResult = new OperationCompareResult(
                 parametersCompareResult,
                 deprecatedCompareResult,
                 requestBodyCompareResult,
-                apiResponsesCompareResult);
+                responsesCompareResult);
         assertEquals(CompareResultType.UNCHANGED, operationCompareResult.getCompareResultType());
         assertEquals(CompareCriticalType.NONE, operationCompareResult.getCompareCriticalType());
     }
@@ -42,15 +42,15 @@ public class OperationCompareResultTest {
         RequestBodyCompareResult requestBodyCompareResult = Mockito.mock(RequestBodyCompareResult.class);
         Mockito.when(requestBodyCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
         Mockito.when(requestBodyCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
-        ApiResponsesCompareResult apiResponsesCompareResult = Mockito.mock(ApiResponsesCompareResult.class);
-        Mockito.when(apiResponsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
-        Mockito.when(apiResponsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
+        ResponsesCompareResult responsesCompareResult = Mockito.mock(ResponsesCompareResult.class);
+        Mockito.when(responsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
+        Mockito.when(responsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
 
         OperationCompareResult operationCompareResult = new OperationCompareResult(
                 parametersCompareResult,
                 deprecatedCompareResult,
                 requestBodyCompareResult,
-                apiResponsesCompareResult);
+                responsesCompareResult);
         assertEquals(CompareResultType.CHANGED, operationCompareResult.getCompareResultType());
         assertEquals(CompareCriticalType.CRITICAL, operationCompareResult.getCompareCriticalType());
     }
@@ -66,15 +66,15 @@ public class OperationCompareResultTest {
         RequestBodyCompareResult requestBodyCompareResult = Mockito.mock(RequestBodyCompareResult.class);
         Mockito.when(requestBodyCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
         Mockito.when(requestBodyCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
-        ApiResponsesCompareResult apiResponsesCompareResult = Mockito.mock(ApiResponsesCompareResult.class);
-        Mockito.when(apiResponsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
-        Mockito.when(apiResponsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
+        ResponsesCompareResult responsesCompareResult = Mockito.mock(ResponsesCompareResult.class);
+        Mockito.when(responsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
+        Mockito.when(responsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
 
         OperationCompareResult operationCompareResult = new OperationCompareResult(
                 parametersCompareResult,
                 deprecatedCompareResult,
                 requestBodyCompareResult,
-                apiResponsesCompareResult);
+                responsesCompareResult);
         assertEquals(CompareResultType.CHANGED, operationCompareResult.getCompareResultType());
         assertEquals(CompareCriticalType.CRITICAL, operationCompareResult.getCompareCriticalType());
     }
@@ -90,15 +90,15 @@ public class OperationCompareResultTest {
         RequestBodyCompareResult requestBodyCompareResult = Mockito.mock(RequestBodyCompareResult.class);
         Mockito.when(requestBodyCompareResult.getCompareResultType()).thenReturn(CompareResultType.CHANGED);
         Mockito.when(requestBodyCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.CRITICAL);
-        ApiResponsesCompareResult apiResponsesCompareResult = Mockito.mock(ApiResponsesCompareResult.class);
-        Mockito.when(apiResponsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
-        Mockito.when(apiResponsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
+        ResponsesCompareResult responsesCompareResult = Mockito.mock(ResponsesCompareResult.class);
+        Mockito.when(responsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
+        Mockito.when(responsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
 
         OperationCompareResult operationCompareResult = new OperationCompareResult(
                 parametersCompareResult,
                 deprecatedCompareResult,
                 requestBodyCompareResult,
-                apiResponsesCompareResult);
+                responsesCompareResult);
         assertEquals(CompareResultType.CHANGED, operationCompareResult.getCompareResultType());
         assertEquals(CompareCriticalType.CRITICAL, operationCompareResult.getCompareCriticalType());
     }
@@ -114,15 +114,15 @@ public class OperationCompareResultTest {
         RequestBodyCompareResult requestBodyCompareResult = Mockito.mock(RequestBodyCompareResult.class);
         Mockito.when(requestBodyCompareResult.getCompareResultType()).thenReturn(CompareResultType.UNCHANGED);
         Mockito.when(requestBodyCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.NONE);
-        ApiResponsesCompareResult apiResponsesCompareResult = Mockito.mock(ApiResponsesCompareResult.class);
-        Mockito.when(apiResponsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.CHANGED);
-        Mockito.when(apiResponsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.CRITICAL);
+        ResponsesCompareResult responsesCompareResult = Mockito.mock(ResponsesCompareResult.class);
+        Mockito.when(responsesCompareResult.getCompareResultType()).thenReturn(CompareResultType.CHANGED);
+        Mockito.when(responsesCompareResult.getCompareCriticalType()).thenReturn(CompareCriticalType.CRITICAL);
 
         OperationCompareResult operationCompareResult = new OperationCompareResult(
                 parametersCompareResult,
                 deprecatedCompareResult,
                 requestBodyCompareResult,
-                apiResponsesCompareResult);
+                responsesCompareResult);
         assertEquals(CompareResultType.CHANGED, operationCompareResult.getCompareResultType());
         assertEquals(CompareCriticalType.CRITICAL, operationCompareResult.getCompareCriticalType());
     }

@@ -7,16 +7,16 @@ public class OperationCompareResult extends AbstractBasicCompareResult{
     private final ParametersCompareResult parametersCompareResult;
     private final DeprecatedCompareResult deprecatedCompareResult;
     private final RequestBodyCompareResult requestBodyCompareResult;
-    private final ApiResponsesCompareResult apiResponsesCompareResult;
+    private final ResponsesCompareResult responsesCompareResult;
 
     public OperationCompareResult(ParametersCompareResult parametersCompareResult,
                                   DeprecatedCompareResult deprecatedCompareResult,
                                   RequestBodyCompareResult requestBodyCompareResult,
-                                  ApiResponsesCompareResult apiResponsesCompareResult) {
+                                  ResponsesCompareResult apiResponsesCompareResult) {
         this.parametersCompareResult = parametersCompareResult;
         this.deprecatedCompareResult = deprecatedCompareResult;
         this.requestBodyCompareResult = requestBodyCompareResult;
-        this.apiResponsesCompareResult = apiResponsesCompareResult;
+        this.responsesCompareResult = apiResponsesCompareResult;
         if(parametersCompareResult.getCompareResultType() != CompareResultType.UNCHANGED ||
                 deprecatedCompareResult.getCompareResultType() != CompareResultType.UNCHANGED ||
                 requestBodyCompareResult.getCompareResultType() != CompareResultType.UNCHANGED ||
@@ -28,7 +28,7 @@ public class OperationCompareResult extends AbstractBasicCompareResult{
         setHighestCompareCriticalType(this.parametersCompareResult.getCompareCriticalType());
         setHighestCompareCriticalType(this.deprecatedCompareResult.getCompareCriticalType());
         setHighestCompareCriticalType(this.requestBodyCompareResult.getCompareCriticalType());
-        setHighestCompareCriticalType(this.apiResponsesCompareResult.getCompareCriticalType());
+        setHighestCompareCriticalType(this.responsesCompareResult.getCompareCriticalType());
     }
 
 
@@ -44,8 +44,8 @@ public class OperationCompareResult extends AbstractBasicCompareResult{
         return requestBodyCompareResult;
     }
 
-    public ApiResponsesCompareResult getApiResponsesCompareResult() {
-        return apiResponsesCompareResult;
+    public ResponsesCompareResult getResponsesCompareResult() {
+        return responsesCompareResult;
     }
 
     @Override
@@ -57,13 +57,13 @@ public class OperationCompareResult extends AbstractBasicCompareResult{
         return Objects.equals(getParametersCompareResult(), that.getParametersCompareResult()) &&
                 Objects.equals(getDeprecatedCompareResult(), that.getDeprecatedCompareResult()) &&
                 Objects.equals(getRequestBodyCompareResult(), that.getRequestBodyCompareResult()) &&
-                Objects.equals(getApiResponsesCompareResult(), that.getApiResponsesCompareResult());
+                Objects.equals(getResponsesCompareResult(), that.getResponsesCompareResult());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), getParametersCompareResult(), getDeprecatedCompareResult(), getRequestBodyCompareResult(), getApiResponsesCompareResult());
+        return Objects.hash(super.hashCode(), getParametersCompareResult(), getDeprecatedCompareResult(), getRequestBodyCompareResult(), getResponsesCompareResult());
     }
 
     @Override
@@ -72,7 +72,7 @@ public class OperationCompareResult extends AbstractBasicCompareResult{
                 "parametersCompareResult=" + parametersCompareResult +
                 ", deprecatedCompareResult=" + deprecatedCompareResult +
                 ", requestBodyCompareResult=" + requestBodyCompareResult +
-                ", apiResponsesCompareResult=" + apiResponsesCompareResult +
+                ", responsesCompareResult=" + responsesCompareResult +
                 ", compareCriticalType=" + getCompareCriticalType() +
                 ", compareResultType=" + getCompareResultType() +
                 '}';

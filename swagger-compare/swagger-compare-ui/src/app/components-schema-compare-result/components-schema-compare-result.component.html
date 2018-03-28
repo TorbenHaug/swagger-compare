@@ -10,7 +10,7 @@
       </ngb-accordion>
     </ng-template>
   </ngb-panel>
-  <ngb-panel [title]="'(' + (componentsSchemaCompareResult.deleted | keys).length  + ')' + ' Deleted'" [type]="(componentsSchemaCompareResult.created | keys).length > 0 ? 'danger' : ''">
+  <ngb-panel [title]="'(' + (componentsSchemaCompareResult.deleted | keys).length  + ')' + ' Deleted'" [type]="(componentsSchemaCompareResult.deleted | keys).length > 0 ? 'danger' : ''">
     <ng-template ngbPanelContent>
       <ngb-accordion #acc="ngbAccordion">
         <ngb-panel [title]="key" *ngFor="let key of componentsSchemaCompareResult.deleted | keys">
