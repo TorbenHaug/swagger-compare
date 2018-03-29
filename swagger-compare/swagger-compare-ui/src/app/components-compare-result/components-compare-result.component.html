@@ -20,5 +20,15 @@
         <responses-compare-result [responsesCompareResult]="componentsCompareResult.responsesCompareResult"></responses-compare-result>
       </ng-template>
     </ngb-tab>
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <div [class]="'bg-'+ ((componentsCompareResult.parametersCompareResult.compareCriticalType) | compareCriticalTypeToBootstrapType)">
+          Responses
+        </div>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <parameters-compare-result [parametersCompareResult]="componentsCompareResult.parametersCompareResult"></parameters-compare-result>
+      </ng-template>
+    </ngb-tab>
   </ngb-tabset>
 </div>

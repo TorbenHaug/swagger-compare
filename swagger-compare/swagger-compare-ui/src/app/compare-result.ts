@@ -22,17 +22,14 @@ export interface ResponsesCompareResult extends ReferableCompareResult<any, Resp
 export interface ComponentsCompareResult extends BasicCompareResult{
   componentsSchemaCompareResult: ComponentsSchemaCompareResult;
   responsesCompareResult: ResponsesCompareResult;
+  parametersCompareResult: ParametersCompareResult;
 }
 
 export interface ComponentsSchemaCompareResult extends ReferableCompareResult<any, SchemaCompareResult>{}
 
 export interface SchemaCompareResult extends Leaf<any>{}
 
-export interface ParametersCompareResult extends BasicCompareResult{
-  unchanged: any[];
-  created: any[];
-  deleted: any[];
-}
+export interface ParametersCompareResult extends ReferableCompareResult<any, ParameterCompareResult>{}
 
 export interface RefCompareResult extends Leaf<string>{}
 
@@ -51,6 +48,8 @@ export interface DeprecatedCompareResult extends BasicCompareResult{
 export interface RequestBodyCompareResult extends Leaf<any>{}
 
 export interface ResponseCompareResult extends Leaf<any>{}
+
+export interface ParameterCompareResult extends Leaf<any>{}
 
 export enum CompareResultType {
   CREATED="CREATED",

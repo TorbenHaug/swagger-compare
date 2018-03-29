@@ -41,23 +41,7 @@
                       <ngb-accordion #acc="ngbAccordion">
                         <ngb-panel title="Parameters">
                           <ng-template ngbPanelContent>
-                            <ngb-accordion #acc="ngbAccordion">
-                              <ngb-panel title="Created">
-                                <ng-template ngbPanelContent>
-                                  <pre>{{result.pathsCompareResult.changed[key].parametersCompareResult.created | stringify}}</pre>
-                                </ng-template>
-                              </ngb-panel>
-                              <ngb-panel title="Deleted">
-                                <ng-template ngbPanelContent>
-                                  <pre>{{result.pathsCompareResult.changed[key].parametersCompareResult.deleted | stringify}}</pre>
-                                </ng-template>
-                              </ngb-panel>
-                              <ngb-panel title="Unchanged">
-                                <ng-template ngbPanelContent>
-                                  <pre>{{result.pathsCompareResult.changed[key].parametersCompareResult.unchanged | stringify}}</pre>
-                                </ng-template>
-                              </ngb-panel>
-                            </ngb-accordion>
+                            <parameters-compare-result [parametersCompareResult]="result.pathsCompareResult.changed[key].parametersCompareResult"></parameters-compare-result>
                           </ng-template>
                         </ngb-panel>
                       </ngb-accordion>
@@ -81,23 +65,7 @@
                                           <ngb-accordion #acc="ngbAccordion">
                                             <ngb-panel title="Parameters">
                                               <ng-template ngbPanelContent>
-                                                <ngb-accordion #acc="ngbAccordion">
-                                                  <ngb-panel title="Created">
-                                                    <ng-template ngbPanelContent>
-                                                      <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].parametersCompareResult.created | stringify}}</pre>
-                                                    </ng-template>
-                                                  </ngb-panel>
-                                                  <ngb-panel title="Deleted">
-                                                    <ng-template ngbPanelContent>
-                                                      <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].parametersCompareResult.deleted | stringify}}</pre>
-                                                    </ng-template>
-                                                  </ngb-panel>
-                                                  <ngb-panel title="Unchanged">
-                                                    <ng-template ngbPanelContent>
-                                                      <pre>{{result.pathsCompareResult.changed[key].changedOperations[operationKey].parametersCompareResult.unchanged | stringify}}</pre>
-                                                    </ng-template>
-                                                  </ngb-panel>
-                                                </ngb-accordion>
+                                                <parameters-compare-result [parametersCompareResult]="result.pathsCompareResult.changed[key].changedOperations[operationKey].parametersCompareResult"></parameters-compare-result>
                                               </ng-template>
                                             </ngb-panel>
                                             <ngb-panel title="Deprecated">
