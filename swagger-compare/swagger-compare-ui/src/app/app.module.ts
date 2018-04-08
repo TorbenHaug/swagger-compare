@@ -19,8 +19,8 @@ import { StringifyPipe } from './stringify.pipe';
 import { LoadFromFileComponent } from './load-from-file/load-from-file.component';
 import { CompareCriticalTypeToBootstrapTypePipe } from './compare-critical-type-to-bootstrap-type.pipe';
 import { GetHighestCompareCriticalTypePipe } from './get-highest-compare-critical-type.pipe';
-import { LeafCompareResultComponent } from './leaf-compare-result/leaf-compare-result.component';
-import { NodeCompareResultComponent } from './node-compare-result/node-compare-result.component';
+import {LeafCompareResultComponent} from "./leaf-compare-result/leaf-compare-result.component";
+import {NodeCompareResultComponent} from "./node-compare-result/node-compare-result.component";
 
 @NgModule({
   declarations: [
