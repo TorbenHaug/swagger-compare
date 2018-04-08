@@ -65,5 +65,6 @@ buildNumber.properties
 **/fabric.properties
 
 # Node and Npm
-**/node*/
+**/node/
+**/node_modules/
 **/package-lock.json

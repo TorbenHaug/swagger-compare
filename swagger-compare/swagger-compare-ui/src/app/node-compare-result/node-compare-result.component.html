@@ -1,0 +1,14 @@
+<div>
+  <ngb-accordion #acc="ngbAccordion">
+    <ngb-panel [title]="key + ' (' + nodeValue.values[key].compareResultType + ')'" [type]="nodeValue.values[key].compareCriticalType | compareCriticalTypeToBootstrapType" *ngFor="let key of nodeValue.values | keys">
+      <ng-template ngbPanelContent>
+        <div *ngIf="nodeValue.values[key].compareType == compareType.NODE">
+          <node-compare-result [nodeValue]="nodeValue.values[key]"></node-compare-result>
+        </div>
+        <div *ngIf="nodeValue.values[key].compareType == compareType.LEAF">
+          <leaf-compare-result [leaf]="nodeValue.values[key]"></leaf-compare-result>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>
