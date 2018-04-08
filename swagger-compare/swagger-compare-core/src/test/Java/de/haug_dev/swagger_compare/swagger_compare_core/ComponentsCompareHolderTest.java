@@ -1,5 +1,7 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.callbacks.CallbacksCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.examples.ExamplesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.callbacks.Callback;
 import io.swagger.v3.oas.models.examples.Example;
