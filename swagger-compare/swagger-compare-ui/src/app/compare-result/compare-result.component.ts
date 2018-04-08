@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CompareResultDataService} from "./compare-result.data.service";
-import {CompareResult} from "../compare-result";
+import {INodeCompareResult} from "../compare-result";
 
 
 
@@ -12,7 +12,7 @@ import {CompareResult} from "../compare-result";
 })
 export class CompareResultComponent implements OnInit {
 
-  result: CompareResult;
+  result: INodeCompareResult;
   isCompareResult: boolean;
   resultText: any;
 
@@ -21,16 +21,14 @@ export class CompareResultComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentResult.subscribe(result => {
-      let tmpResult = (result as CompareResult);
-      if(!(typeof tmpResult.pathsCompareResult === "undefined")){
+      let tmpResult = (result as INodeCompareResult);
+      if(!(typeof tmpResult.values === "undefined")){
         this.isCompareResult = true;
         this.result = tmpResult;
       }else {
         this.isCompareResult = false;
         this.resultText = result;
       }
-
-
     });
   }
 

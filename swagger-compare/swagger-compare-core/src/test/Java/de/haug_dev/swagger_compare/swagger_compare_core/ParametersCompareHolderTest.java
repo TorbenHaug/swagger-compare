@@ -1,94 +1,119 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResultType;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.ParametersCompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.parameters.Parameter;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.junit.Test;
+import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class ParametersCompareHolderTest {
 
     @Test
-    public void testUnchanged() {
-        Parameter parameterLeft1 = new Parameter();
-        parameterLeft1.$ref("/test1");
-        Parameter parameterLeft2 = new Parameter();
-        parameterLeft2.$ref("/test2");
-        Parameter parameterLeft3 = new Parameter();
-        parameterLeft3.$ref("/test3");
-        ArrayList<Parameter> parametersLeft = new ArrayList<>(Arrays.asList(parameterLeft1, parameterLeft2, parameterLeft3));
-        ParametersCompareHolder left = new ParametersCompareHolder(parametersLeft);
+    public void compareWithEqualValues() {
+        String parameterNameLeft = "var1";
+        Parameter parameterLeft = new Parameter();
+        Map<String, Parameter> parametersLeft = new HashMap<>();
+        parametersLeft.put(parameterNameLeft, parameterLeft);
 
-        Parameter parameterRight1 = new Parameter();
-        parameterRight1.$ref("/test1");
-        Parameter parameterRight2 = new Parameter();
-        parameterRight2.$ref("/test2");
-        Parameter parameterRight3 = new Parameter();
-        parameterRight3.$ref("/test3");
-        ArrayList<Parameter> parametersRight = new ArrayList<>(Arrays.asList(parameterRight1, parameterRight2, parameterRight3));
-        ParametersCompareHolder right = new ParametersCompareHolder(parametersRight);
+        String parameterNameRight = "var1";
+        Parameter parameterRight = new Parameter();
+        Map<String, Parameter> parametersRight = new HashMap<>();
+        parametersRight.put(parameterNameRight, parameterRight);
 
-        ParametersCompareResult actual = left.compare(right);
+        ICompareResult compareResult1 = new LeafCompareResult(parameterLeft, parameterRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
+        ParameterCompareHolder parameterCompareHolder = Mockito.mock(ParameterCompareHolder.class);
+        Mockito.when(parameterCompareHolder.compare(parameterLeft, parameterRight)).thenReturn(compareResult1);
 
-        assertEquals(CompareResultType.UNCHANGED, actual.getCompareResultType());
-        assertEquals(3, actual.getUnchanged().size());
-        assertEquals(0, actual.getDeleted().size());
-        assertEquals(0, actual.getCreated().size());
+        BidiMap<String, String> normalizedNamesLeft = new DualHashBidiMap<>();
+        normalizedNamesLeft.put("var1", "nameLeft");
+
+        BidiMap<String, String> normalizedNamesRight = new DualHashBidiMap<>();
+        normalizedNamesRight.put("var1", "nameRight");
+
+        ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(parameterCompareHolder);
+        parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
+
+        NodeCompareResult expected = new NodeCompareResult();
+        expected.put("nameRight", compareResult1);
+
+        ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight);
+
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testDeleted() {
-        Parameter parameterLeft1 = new Parameter();
-        parameterLeft1.$ref("/test1");
-        Parameter parameterLeft2 = new Parameter();
-        parameterLeft2.$ref("/test2");
-        Parameter parameterLeft3 = new Parameter();
-        parameterLeft3.$ref("/test3");
-        ArrayList<Parameter> parametersLeft = new ArrayList<>(Arrays.asList(parameterLeft1, parameterLeft2, parameterLeft3));
-        ParametersCompareHolder left = new ParametersCompareHolder(parametersLeft);
+    public void compareCreatedDeletedValues() {
+        String parameterNameLeft = "var1";
+        Parameter parameterLeft = new Parameter();
+        Map<String, Parameter> parametersLeft = new HashMap<>();
+        parametersLeft.put(parameterNameLeft, parameterLeft);
 
-        Parameter parameterRight1 = new Parameter();
-        parameterRight1.$ref("/test1");
-        Parameter parameterRight2 = new Parameter();
-        parameterRight2.$ref("/test2");
-        ArrayList<Parameter> parametersRight = new ArrayList<>(Arrays.asList(parameterRight1, parameterRight2));
-        ParametersCompareHolder right = new ParametersCompareHolder(parametersRight);
+        String parameterNameRight = "var2";
+        Parameter parameterRight = new Parameter();
+        Map<String, Parameter> parametersRight = new HashMap<>();
+        parametersRight.put(parameterNameRight, parameterRight);
 
-        ParametersCompareResult actual = left.compare(right);
+        ICompareResult compareResult1 = new LeafCompareResult(parameterLeft, null, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
+        ICompareResult compareResult2 = new LeafCompareResult(null, parameterRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
+        ParameterCompareHolder parameterCompareHolder = Mockito.mock(ParameterCompareHolder.class);
+        Mockito.when(parameterCompareHolder.compare(parameterLeft, null)).thenReturn(compareResult1);
+        Mockito.when(parameterCompareHolder.compare(null, parameterRight)).thenReturn(compareResult2);
 
-        assertEquals(CompareResultType.CHANGED, actual.getCompareResultType());
-        assertEquals(2, actual.getUnchanged().size());
-        assertEquals(1, actual.getDeleted().size());
-        assertEquals(0, actual.getCreated().size());
+        BidiMap<String, String> normalizedNamesLeft = new DualHashBidiMap<>();
+        normalizedNamesLeft.put("var1", "nameLeft");
+
+        BidiMap<String, String> normalizedNamesRight = new DualHashBidiMap<>();
+        normalizedNamesRight.put("var2", "nameRight");
+
+        ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(parameterCompareHolder);
+        parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
+
+        NodeCompareResult expected = new NodeCompareResult();
+        expected.put("nameLeft", compareResult1);
+        expected.put("nameRight", compareResult2);
+
+        ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight);
+
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testCreated() {
-        Parameter parameterLeft1 = new Parameter();
-        parameterLeft1.$ref("/test1");
-        Parameter parameterLeft2 = new Parameter();
-        parameterLeft2.$ref("/test2");
-        ArrayList<Parameter> parametersLeft = new ArrayList<>(Arrays.asList(parameterLeft1, parameterLeft2));
-        ParametersCompareHolder left = new ParametersCompareHolder(parametersLeft);
+    public void compareCreatedDeletedWithoutTranslationValues() {
+        String parameterNameLeft = "var1";
+        Parameter parameterLeft = new Parameter();
+        Map<String, Parameter> parametersLeft = new HashMap<>();
+        parametersLeft.put(parameterNameLeft, parameterLeft);
 
-        Parameter parameterRight1 = new Parameter();
-        parameterRight1.$ref("/test1");
-        Parameter parameterRight2 = new Parameter();
-        parameterRight2.$ref("/test2");
-        Parameter parameterRight3 = new Parameter();
-        parameterRight3.$ref("/test3");
-        ArrayList<Parameter> parametersRight = new ArrayList<>(Arrays.asList(parameterRight1, parameterRight2, parameterRight3));
-        ParametersCompareHolder right = new ParametersCompareHolder(parametersRight);
+        String parameterNameRight = "var2";
+        Parameter parameterRight = new Parameter();
+        Map<String, Parameter> parametersRight = new HashMap<>();
+        parametersRight.put(parameterNameRight, parameterRight);
 
-        ParametersCompareResult actual = left.compare(right);
+        ICompareResult compareResult1 = new LeafCompareResult(parameterLeft, null, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
+        ICompareResult compareResult2 = new LeafCompareResult(null, parameterRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
+        ParameterCompareHolder parameterCompareHolder = Mockito.mock(ParameterCompareHolder.class);
+        Mockito.when(parameterCompareHolder.compare(parameterLeft, null)).thenReturn(compareResult1);
+        Mockito.when(parameterCompareHolder.compare(null, parameterRight)).thenReturn(compareResult2);
 
-        assertEquals(CompareResultType.CHANGED, actual.getCompareResultType());
-        assertEquals(2, actual.getUnchanged().size());
-        assertEquals(0, actual.getDeleted().size());
-        assertEquals(1, actual.getCreated().size());
+        BidiMap<String, String> normalizedNamesLeft = new DualHashBidiMap<>();
+
+        BidiMap<String, String> normalizedNamesRight = new DualHashBidiMap<>();
+
+        ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(parameterCompareHolder);
+        parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
+
+        NodeCompareResult expected = new NodeCompareResult();
+        expected.put("var1", compareResult1);
+        expected.put("var2", compareResult2);
+
+        ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight);
+
+        assertEquals(expected, actual);
     }
 }

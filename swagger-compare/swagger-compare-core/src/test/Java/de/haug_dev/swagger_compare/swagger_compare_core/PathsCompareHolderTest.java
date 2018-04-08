@@ -1,108 +1,78 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResultType;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.PathsCompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
 import org.junit.Test;
+import org.mockito.Mockito;
+
 
 import static org.junit.Assert.*;
 
 public class PathsCompareHolderTest {
-    @Test
-    public void testPathes() {
-        Paths pathsLeft = new Paths();
-        PathItem pathItemLeft = new PathItem();
-        pathsLeft.put("/unchanged/", pathItemLeft);
-        pathsLeft.put("/unchanged/{unchangedVarName}/", pathItemLeft);
-        pathsLeft.put("/unchanged2/{changedVarNameLeft}/", pathItemLeft);
-        pathsLeft.put("/deleted/", pathItemLeft);
-        pathsLeft.put("/changed/", pathItemLeft);
-        PathsCompareHolder left = new PathsCompareHolder(pathsLeft);
 
+    @Test
+    public void testEqualPaths() {
+        Paths pathsLeft = new Paths();
         Paths pathsRight = new Paths();
+
+        PathItem pathItemLeft = new PathItem();
         PathItem pathItemRight = new PathItem();
-        PathItem pathItemRightChanged = new PathItem();
-        pathItemRightChanged.set$ref("Test");
-        pathsRight.put("/unchanged/", pathItemRight);
-        pathsRight.put("/unchanged/{unchangedVarName}/", pathItemRight);
-        pathsRight.put("/unchanged2/{changedVarNameRight}/", pathItemRight);
-        pathsRight.put("/created/", pathItemRight);
-        pathsRight.put("/changed/", pathItemRightChanged);
-        PathsCompareHolder right = new PathsCompareHolder(pathsRight);
-        PathsCompareResult actual = left.compare(right);
-        assertEquals(3, actual.getUnchanged().size());
-        assertEquals(1, actual.getDeleted().size());
-        assertEquals(1, actual.getCreated().size());
-        assertEquals(1, actual.getChanged().size());
+
+        pathsLeft.put("/test/{test1}", pathItemLeft);
+        pathsRight.put("/test/{test2}", pathItemRight);
+
+        ICompareResult result1 = new LeafCompareResult(pathItemLeft, pathItemRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
+
+        PathItemCompareHolder pathItemCompareHolder = Mockito.mock(PathItemCompareHolder.class);
+        Mockito.when(pathItemCompareHolder.compare(pathItemLeft, pathItemRight)).thenReturn(result1);
+
+        PathsCompareHolder pathsCompareHolder = new PathsCompareHolder(pathItemCompareHolder);
+
+        NodeCompareResult actual = (NodeCompareResult) pathsCompareHolder.compare(pathsLeft, pathsRight);
+        assertEquals(result1, actual.getValues().get("/test/{test2}"));
+
     }
 
     @Test
-    public void testPathesUnchanged() {
+    public void testCreatedPaths() {
         Paths pathsLeft = new Paths();
-        PathItem pathItemLeft = new PathItem();
-        pathsLeft.put("/unchanged/", pathItemLeft);
-        pathsLeft.put("/unchanged/{unchangedVarName}/", pathItemLeft);
-        pathsLeft.put("/unchanged2/{changedVarNameLeft}/", pathItemLeft);
-        PathsCompareHolder left = new PathsCompareHolder(pathsLeft);
-
         Paths pathsRight = new Paths();
+
         PathItem pathItemRight = new PathItem();
-        PathItem pathItemRightChanged = new PathItem();
-        pathItemRightChanged.set$ref("Test");
-        pathsRight.put("/unchanged/", pathItemRight);
-        pathsRight.put("/unchanged/{unchangedVarName}/", pathItemRight);
-        pathsRight.put("/unchanged2/{changedVarNameRight}/", pathItemRight);
-        PathsCompareHolder right = new PathsCompareHolder(pathsRight);
-        PathsCompareResult actual = left.compare(right);
 
-        assertEquals(CompareResultType.UNCHANGED, actual.getCompareResultType());
+        pathsRight.put("/test/{test2}", pathItemRight);
+
+        ICompareResult result1 = new LeafCompareResult(null, pathItemRight, CompareResultType.CREATED, CompareCriticalType.INFO);
+
+        PathItemCompareHolder pathItemCompareHolder = Mockito.mock(PathItemCompareHolder.class);
+        Mockito.when(pathItemCompareHolder.compare(null, pathItemRight)).thenReturn(result1);
+
+        PathsCompareHolder pathsCompareHolder = new PathsCompareHolder(pathItemCompareHolder);
+
+        NodeCompareResult actual = (NodeCompareResult) pathsCompareHolder.compare(pathsLeft, pathsRight);
+        assertEquals(result1, actual.getValues().get("/test/{test2}"));
+
     }
 
     @Test
-    public void testPathesCreated() {
+    public void testDeletedPaths() {
         Paths pathsLeft = new Paths();
-        PathsCompareHolder left = new PathsCompareHolder(pathsLeft);
-
         Paths pathsRight = new Paths();
-        PathItem pathItemRight = new PathItem();
-        pathsRight.put("/created/", pathItemRight);
-        PathsCompareHolder right = new PathsCompareHolder(pathsRight);
-        PathsCompareResult actual = left.compare(right);
 
-        assertEquals(CompareResultType.CHANGED, actual.getCompareResultType());
-    }
+        PathItem pathItem = new PathItem();
 
-    @Test
-    public void testPathesDeleted() {
-        Paths pathsLeft = new Paths();
-        PathItem pathItemLeft = new PathItem();
-        pathsLeft.put("/deleted/", pathItemLeft);
-        PathsCompareHolder left = new PathsCompareHolder(pathsLeft);
+        pathsLeft.put("/test/{test2}", pathItem);
 
-        Paths pathsRight = new Paths();
-        PathsCompareHolder right = new PathsCompareHolder(pathsRight);
-        PathsCompareResult actual = left.compare(right);
+        ICompareResult result1 = new LeafCompareResult(pathItem, null, CompareResultType.CREATED, CompareCriticalType.INFO);
 
-        assertEquals(CompareResultType.CHANGED, actual.getCompareResultType());
-    }
+        PathItemCompareHolder pathItemCompareHolder = Mockito.mock(PathItemCompareHolder.class);
+        Mockito.when(pathItemCompareHolder.compare(pathItem, null)).thenReturn(result1);
 
-    @Test
-    public void testPathesChanged() {
-        Paths pathsLeft = new Paths();
-        PathItem pathItemLeft = new PathItem();
-        pathsLeft.put("/changed/", pathItemLeft);
-        PathsCompareHolder left = new PathsCompareHolder(pathsLeft);
+        PathsCompareHolder pathsCompareHolder = new PathsCompareHolder(pathItemCompareHolder);
 
-        Paths pathsRight = new Paths();
-        PathItem pathItemRightChanged = new PathItem();
-        pathItemRightChanged.set$ref("Test");
-        pathsRight.put("/changed/", pathItemRightChanged);
-        PathsCompareHolder right = new PathsCompareHolder(pathsRight);
-        PathsCompareResult actual = left.compare(right);
-
-        assertEquals(CompareResultType.CHANGED, actual.getCompareResultType());
+        NodeCompareResult actual = (NodeCompareResult) pathsCompareHolder.compare(pathsLeft, pathsRight);
+        assertEquals(result1, actual.getValues().get("/test/{test2}"));
 
     }
-
 }

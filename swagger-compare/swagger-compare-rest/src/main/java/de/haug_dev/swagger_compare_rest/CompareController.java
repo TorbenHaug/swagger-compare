@@ -1,6 +1,6 @@
 package de.haug_dev.swagger_compare_rest;
 
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_facade.SwaggerCompareFacade;
 import de.haug_dev.swagger_compare.swagger_compare_reader.InvalidOpenAPIFileException;
 import org.slf4j.Logger;
@@ -27,16 +27,16 @@ public class CompareController {
     }
 
     @PostMapping(value = "/compare")
-    public CompareResult compare(@RequestBody CompareRequest value) throws MalformedURLException, InvalidOpenAPIFileException {
-        CompareResult compareResult = facade.compare(value.urlLeft, value.urlRigth);
+    public ICompareResult compare(@RequestBody CompareRequest value) throws MalformedURLException, InvalidOpenAPIFileException {
+        ICompareResult compareResult = facade.compare(value.urlLeft, value.urlRigth);
         return compareResult;
     }
 
     @PostMapping(value = "/compareFiles")
-    public CompareResult compareFiles(@RequestParam("fileLeft") MultipartFile fileLeft, @RequestParam("fileRight") MultipartFile fileRight) throws IOException, InvalidOpenAPIFileException {
+    public ICompareResult compareFiles(@RequestParam("fileLeft") MultipartFile fileLeft, @RequestParam("fileRight") MultipartFile fileRight) throws IOException, InvalidOpenAPIFileException {
         logger.info("Left: " + new String(fileLeft.getBytes()));
         logger.info("Right: " + new String(fileRight.getBytes()));
-        CompareResult compareResult = facade.compareFiles(new String(fileLeft.getBytes()), new String(fileRight.getBytes()));
+        ICompareResult compareResult = facade.compareFiles(new String(fileLeft.getBytes()), new String(fileRight.getBytes()));
         return compareResult;
     }
 

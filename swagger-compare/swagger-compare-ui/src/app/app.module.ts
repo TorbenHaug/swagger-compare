@@ -17,13 +17,10 @@ import {CompareResultDataService} from "./compare-result/compare-result.data.ser
 import { KeysPipe } from './keys.pipe';
 import { StringifyPipe } from './stringify.pipe';
 import { LoadFromFileComponent } from './load-from-file/load-from-file.component';
-import { ComponentsCompareResultComponent } from './components-compare-result/components-compare-result.component';
-import { ComponentsSchemaCompareResultComponent } from './components-schema-compare-result/components-schema-compare-result.component';
-import { CompareResultLeafComponent } from './compare-result-leaf/compare-result-leaf.component';
 import { CompareCriticalTypeToBootstrapTypePipe } from './compare-critical-type-to-bootstrap-type.pipe';
 import { GetHighestCompareCriticalTypePipe } from './get-highest-compare-critical-type.pipe';
-import { ResponsesCompareResultComponent } from './responses-compare-result/responses-compare-result.component';
-import { ParametersCompareResultComponent } from './parameters-compare-result/parameters-compare-result.component';
+import { LeafCompareResultComponent } from './leaf-compare-result/leaf-compare-result.component';
+import { NodeCompareResultComponent } from './node-compare-result/node-compare-result.component';
 
 @NgModule({
   declarations: [
@@ -35,13 +32,10 @@ import { ParametersCompareResultComponent } from './parameters-compare-result/pa
     KeysPipe,
     StringifyPipe,
     LoadFromFileComponent,
-    ComponentsCompareResultComponent,
-    ComponentsSchemaCompareResultComponent,
-    CompareResultLeafComponent,
     CompareCriticalTypeToBootstrapTypePipe,
     GetHighestCompareCriticalTypePipe,
-    ResponsesCompareResultComponent,
-    ParametersCompareResultComponent
+    LeafCompareResultComponent,
+    NodeCompareResultComponent
   ],
   imports: [
     NgbModule.forRoot(),

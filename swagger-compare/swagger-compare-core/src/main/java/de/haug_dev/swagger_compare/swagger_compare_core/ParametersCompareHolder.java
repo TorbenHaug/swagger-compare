@@ -1,61 +1,46 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResultType;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.ParameterCompareResult;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.ParametersCompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.parameters.Parameter;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Map;
 
-public class ParametersCompareHolder {
-    private Map<String, Parameter> parameters;
+@Component
+public class ParametersCompareHolder implements ICompareHolder<Map<String, Parameter>>{
 
-    public ParametersCompareHolder(Collection<Parameter> parameters) {
-        this.parameters = new TreeMap<>();
-        if(parameters != null){
-            parameters.forEach((p) -> {
-                this.parameters.put(p.getName(), p);
-            });
-        }
+    private ParameterCompareHolder parameterCompareHolder;
+    private BidiMap<String, String> normalizedParameterNamesLeft = new DualHashBidiMap<>();
+    private BidiMap<String, String> normalizedParameterNamesRight = new DualHashBidiMap<>();
+
+    @Autowired
+    public ParametersCompareHolder(ParameterCompareHolder parameterCompareHolder){
+        this.parameterCompareHolder = parameterCompareHolder;
     }
 
-    public ParametersCompareHolder(Map<String,Parameter> parameters) {
-        this.parameters = new TreeMap<>();
-        if(parameters != null){
-            this.parameters.putAll(parameters);
-        }
-    }
-
-    public ParametersCompareResult compare(ParametersCompareHolder other) {
-        ParametersCompareResult result = new ParametersCompareResult();
-        Set<String> deleted = diffKeys(this.parameters.keySet(), other.parameters.keySet());
-        deleted.forEach((k) -> {
-            result.putDeleted(k, this.parameters.get(k));
-        });
-
-        Set<String> created = diffKeys(other.parameters.keySet(), this.parameters.keySet());
-        created.forEach((k) -> {
-            result.putCreated(k, other.parameters.get(k));
-        });
-
-        Set<String> parametersToCompare = diffKeys(this.parameters.keySet(), deleted);
-        parametersToCompare.forEach((k) -> {
-            ParameterCompareHolder left = new ParameterCompareHolder(this.parameters.get(k));
-            ParameterCompareHolder right = new ParameterCompareHolder(other.parameters.get(k));
-            ParameterCompareResult schemaCompareResult = left.compare(right);
-            if(schemaCompareResult.getCompareResultType().equals(CompareResultType.UNCHANGED)){
-                result.putUnchanged(k, this.parameters.get(k));
-            } else {
-                result.putChanged(k, schemaCompareResult);
+    @Override
+    public ICompareResult compare(Map<String, Parameter> left, Map<String, Parameter> right) {
+        NodeCompareResult result = new NodeCompareResult();
+        NodeCompareResult compareResult = compare(left, right, parameterCompareHolder);
+        compareResult.getValues().forEach((k, v) -> {
+            String name = k;
+            if(normalizedParameterNamesLeft.get(k) != null){
+                name = normalizedParameterNamesLeft.get(k);
             }
+            if(normalizedParameterNamesRight.get(k) != null){
+                name = normalizedParameterNamesRight.get(k);
+            }
+            result.put(name, v);
         });
-
         return result;
     }
 
-    protected Set<String> diffKeys(Set<String> left, Set<String> right){
-        Set<String> keys = new HashSet<>(left);
-        keys.removeAll(right);
-        return keys;
+    public void setNormalizedParameterNames(BidiMap<String, String> normalizedParameterNamesLeft, BidiMap<String, String> normalizedParameterNamesRight) {
+        this.normalizedParameterNamesLeft = normalizedParameterNamesLeft;
+        this.normalizedParameterNamesRight = normalizedParameterNamesRight;
     }
 }

@@ -1,33 +1,74 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResultType;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.PathItemCompareResult;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.PathsCompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
+import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PathsCompareHolder extends LinkedHashMap<String,PathItemCompareHolder>{
+@Component
+public class PathsCompareHolder implements ICompareHolder<Paths> {
 
-    private final Paths paths;
-    private final BidiMap<String,String> normailzedMap = new DualHashBidiMap<>();
 
-    public PathsCompareHolder(Paths paths) {
-        this.paths = paths;
-        this.paths.forEach((k,v) -> {
+    private PathItemCompareHolder pathItemCompareHolder;
+
+    @Autowired
+    public PathsCompareHolder(PathItemCompareHolder pathItemCompareHolder){
+        this.pathItemCompareHolder = pathItemCompareHolder;
+    }
+
+    @Override
+    public ICompareResult compare(Paths left, Paths right) {
+        BidiMap<String,String> normalizedMapLeft = new DualHashBidiMap<>();
+        BidiMap<String,String> normalizedMapRight = new DualHashBidiMap<>();
+        Paths pathsLeft = left == null ? new Paths() : left;
+        Paths pathsLeftNormalized = new Paths();
+        pathsLeft.forEach((k,v) -> {
             String normalizePath = normalizePath(k);
-            this.normailzedMap.put(normalizePath, k);
-            this.put(normalizePath, new PathItemCompareHolder(v));
+            normalizedMapLeft.put(normalizePath, k);
+            pathsLeftNormalized.put(normalizePath, v);
         });
-        if(normailzedMap.size() != paths.size()){
-            throw new RuntimeException("Invalid OpenAPI specification");
-        }
+
+        Paths pathsRight = right == null ? new Paths() : right;
+        Paths pathsRightNormalized = new Paths();
+        pathsRight.forEach((k,v) -> {
+            String normalizePath = normalizePath(k);
+            normalizedMapRight.put(normalizePath, k);
+            pathsRightNormalized.put(normalizePath, v);
+        });
+
+        NodeCompareResult normalizedResult = this.compare(pathsLeftNormalized, pathsRightNormalized, pathItemCompareHolder, normalizedMapLeft, normalizedMapRight);
+        BidiMap<String,String> normailzedMap = new DualHashBidiMap<>(normalizedMapLeft);
+        normailzedMap.putAll(normalizedMapRight);
+        NodeCompareResult result = new NodeCompareResult();
+        normalizedResult.getValues().forEach((k,v) -> {
+            result.put(normailzedMap.get(k), v);
+        });
+        return result;
+    }
+
+    protected NodeCompareResult compare(Map<String, PathItem> left, Map<String, PathItem> right, ICompareHolder<PathItem> compareHolder, BidiMap<String,String> normailzedMapLeft, BidiMap<String,String> normailzedMapRight){
+        NodeCompareResult result = new NodeCompareResult();
+        Set<String> keys = new HashSet<>(left.keySet());
+        keys.addAll(right.keySet());
+        keys.forEach((k) -> {
+            pathItemCompareHolder.setNormalizedParameterNames(normalizeParameterNames(normailzedMapLeft.get(k)), normalizeParameterNames(normailzedMapRight.get(k)));
+            PathItem leftValue = left.get(k);
+            PathItem rightValue = right.get(k);
+            if(!(leftValue == null && rightValue == null)) {
+                result.put(k, compareHolder.compare(leftValue, rightValue));
+            }
+        });
+        return result;
     }
 
     private String normalizePath(String path) {
@@ -48,33 +89,20 @@ public class PathsCompareHolder extends LinkedHashMap<String,PathItemCompareHold
         return sb.toString();
     }
 
-    public PathsCompareResult compare(PathsCompareHolder other) {
-        PathsCompareResult result = new PathsCompareResult();
+    private BidiMap<String, String> normalizeParameterNames(String path) {
+        BidiMap<String, String> result = new DualHashBidiMap<>();
+        String rx = "(\\{[^}]+\\})";
+        int count = 0;
 
-        Set<String> deleted = new HashSet<>(this.keySet());
-        deleted.removeAll(other.keySet());
-        deleted.forEach((k) -> {
-            result.putDeleted(this.normailzedMap.get(k), this.paths.get(this.normailzedMap.get(k)));
-        });
+        if(path != null) {
+            Pattern p1 = Pattern.compile(rx);
+            Matcher m1 = p1.matcher(path);
 
-        Set<String> created = new HashSet<>(other.keySet());
-        created.removeAll(this.keySet());
-        created.forEach((k) -> {
-            result.putCreated(other.normailzedMap.get(k), other.paths.get(other.normailzedMap.get(k)));
-        });
-
-        Set<String> pathesToCompare = new HashSet<>(this.keySet());
-        pathesToCompare.removeAll(deleted);
-
-        pathesToCompare.forEach((k) -> {
-            PathItemCompareResult pathItemCompareResult = this.get(k).compare(other.get(k));
-            if(pathItemCompareResult.getCompareResultType() == CompareResultType.UNCHANGED){
-                result.putUnchanged(this.normailzedMap.get(k), this.paths.get(this.normailzedMap.get(k)));
-            }else{
-                result.putChanged(other.normailzedMap.get(k), pathItemCompareResult);
+            while (m1.find()) {
+                String value = m1.group();
+                result.put(value, "var" + count++);
             }
-
-        });
+        }
 
         return result;
     }

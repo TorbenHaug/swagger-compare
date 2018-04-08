@@ -1,8 +1,8 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
-
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import io.swagger.v3.oas.models.OpenAPI;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -10,14 +10,19 @@ import org.springframework.util.Assert;
 @Component
 public class SwaggerCompareCore {
 
-    public SwaggerCompareCore() { }
+    private CompareHolder openAPICompareHolder;
 
-    public CompareResult compare(OpenAPI left, OpenAPI right){
+    @Autowired
+    public SwaggerCompareCore(CompareHolder openAPICompareHolder) {
+        this.openAPICompareHolder = openAPICompareHolder;
+    }
+
+
+    public ICompareResult compare(OpenAPI left, OpenAPI right){
         Assert.notNull(left, "Left API must be set");
         Assert.notNull(right, "Right API must be set");
-        CompareHolder leftCompareHolder = new CompareHolder(left);
-        CompareHolder rightCompareHolder = new CompareHolder(right);
-        CompareResult compareResult = leftCompareHolder.compare(rightCompareHolder);
+
+        ICompareResult compareResult = openAPICompareHolder.compare(left, right);
 
         return compareResult;
     }

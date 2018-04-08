@@ -1,27 +1,37 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResult;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.ComponentsCompareResult;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.PathsCompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.OpenAPI;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class CompareHolder {
+@Component
+public class CompareHolder implements ICompareHolder<OpenAPI> {
 
-    private final OpenAPI api;
-    private final PathsCompareHolder pathsCompareHolder;
-    private final ComponentsCompareHolder componentsCompareHolder;
+    private PathsCompareHolder pathsCompareHolder;
+    private ComponentsCompareHolder componentsCompareHolder;
 
-    public CompareHolder(OpenAPI api){
-        this.api = api;
-        this.pathsCompareHolder = new PathsCompareHolder(api.getPaths());
-        this.componentsCompareHolder = new ComponentsCompareHolder(api.getComponents());
+    @Autowired
+    public CompareHolder(PathsCompareHolder pathsCompareHolder, ComponentsCompareHolder componentsCompareHolder){
+        this.pathsCompareHolder = pathsCompareHolder;
+        this.componentsCompareHolder = componentsCompareHolder;
     }
 
-    public CompareResult compare(CompareHolder other){
-        PathsCompareResult pathsCompareResult = pathsCompareHolder.compare(other.pathsCompareHolder);
-        ComponentsCompareResult componentsCompareResult = componentsCompareHolder.compare(other.componentsCompareHolder);
-        return new CompareResult(pathsCompareResult, componentsCompareResult);
+    @Override
+    public ICompareResult compare(OpenAPI left, OpenAPI right) {
+        OpenAPI leftToCompare = left == null ? new OpenAPI() : left;
+        OpenAPI rightToCompare = right == null ? new OpenAPI() : right;
+        NodeCompareResult result = new NodeCompareResult();
+        if(!(leftToCompare.getPaths() == null && rightToCompare.getPaths() == null)){
+            ICompareResult compareResult = pathsCompareHolder.compare(leftToCompare.getPaths(), rightToCompare.getPaths());
+            result.put("Paths", compareResult);
+        }
+        if(!(leftToCompare.getPaths() == null && rightToCompare.getPaths() == null)){
+            ICompareResult compareResult = componentsCompareHolder.compare(leftToCompare.getComponents(), rightToCompare.getComponents());
+            result.put("Components", compareResult);
+        }
+
+        return result;
     }
-
-
 }
