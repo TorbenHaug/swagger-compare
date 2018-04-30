@@ -1,5 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.paths.PathsCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

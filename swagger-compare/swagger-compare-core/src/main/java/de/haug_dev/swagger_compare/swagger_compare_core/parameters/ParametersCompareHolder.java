@@ -1,5 +1,6 @@
-package de.haug_dev.swagger_compare.swagger_compare_core;
+package de.haug_dev.swagger_compare.swagger_compare_core.parameters;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.AbstractCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.parameters.Parameter;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-public class ParametersCompareHolder implements ICompareHolder<Map<String, Parameter>>{
+public class ParametersCompareHolder extends AbstractCompareHolder<Map<String, Parameter>> {
 
     private ParameterCompareHolder parameterCompareHolder;
     private BidiMap<String, String> normalizedParameterNamesLeft = new DualHashBidiMap<>();
@@ -25,7 +26,7 @@ public class ParametersCompareHolder implements ICompareHolder<Map<String, Param
     @Override
     public ICompareResult compare(Map<String, Parameter> left, Map<String, Parameter> right) {
         NodeCompareResult result = new NodeCompareResult();
-        NodeCompareResult compareResult = compare(left, right, parameterCompareHolder);
+        NodeCompareResult compareResult = referableCompare(left, right, parameterCompareHolder);
         compareResult.getValues().forEach((k, v) -> {
             String name = k;
             if(normalizedParameterNamesLeft.get(k) != null){

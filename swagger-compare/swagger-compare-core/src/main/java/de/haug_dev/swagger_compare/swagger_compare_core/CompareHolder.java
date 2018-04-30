@@ -1,5 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.paths.PathsCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -7,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CompareHolder implements ICompareHolder<OpenAPI> {
+public class CompareHolder extends AbstractCompareHolder<OpenAPI> {
 
     private PathsCompareHolder pathsCompareHolder;
     private ComponentsCompareHolder componentsCompareHolder;

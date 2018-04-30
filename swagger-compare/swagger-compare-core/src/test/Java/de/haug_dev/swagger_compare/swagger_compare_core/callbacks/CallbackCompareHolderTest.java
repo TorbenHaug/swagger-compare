@@ -1,14 +1,11 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.callbacks;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.PathItemCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.paths.PathItemCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.callbacks.Callback;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 

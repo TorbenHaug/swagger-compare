@@ -1,11 +1,13 @@
-package de.haug_dev.swagger_compare.swagger_compare_core;
+package de.haug_dev.swagger_compare.swagger_compare_core.paths;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.*;
+import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.paths.PathItemCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 

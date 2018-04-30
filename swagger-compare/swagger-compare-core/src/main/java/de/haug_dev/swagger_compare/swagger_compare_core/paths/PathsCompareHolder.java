@@ -1,5 +1,7 @@
-package de.haug_dev.swagger_compare.swagger_compare_core;
+package de.haug_dev.swagger_compare.swagger_compare_core.paths;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.AbstractCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.ICompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.PathItem;
@@ -16,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
-public class PathsCompareHolder implements ICompareHolder<Paths> {
+public class PathsCompareHolder extends AbstractCompareHolder<Paths> {
 
 
     private PathItemCompareHolder pathItemCompareHolder;

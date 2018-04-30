@@ -1,5 +1,7 @@
-package de.haug_dev.swagger_compare.swagger_compare_core;
+package de.haug_dev.swagger_compare.swagger_compare_core.paths;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.paths.PathItemCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.paths.PathsCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;

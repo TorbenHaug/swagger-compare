@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-public class ServersCompareHolder implements ICompareHolder<Map<String, Server>> {
+public class ServersCompareHolder extends AbstractCompareHolder<Map<String, Server>> {
 }

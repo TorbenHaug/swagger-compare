@@ -61,7 +61,7 @@ public class SwaggerCompareFacade {
     }
 
     public ICompareResult compare(String urlLeftString, String urlRightString) throws MalformedURLException, InvalidOpenAPIFileException {
-        logger.debug("Urls to compare: \"" + urlLeftString + ", \"" + urlRightString + "\"");
+        logger.debug("Urls to leafCompare: \"" + urlLeftString + ", \"" + urlRightString + "\"");
         URL urlLeft;
         URL urlRight;
         try {

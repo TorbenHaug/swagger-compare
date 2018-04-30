@@ -1,5 +1,7 @@
-package de.haug_dev.swagger_compare.swagger_compare_core;
+package de.haug_dev.swagger_compare.swagger_compare_core.parameters;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParameterCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import org.apache.commons.collections4.BidiMap;

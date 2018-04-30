@@ -1,7 +1,9 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.security_schemes.SecuritySchemesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.callbacks.CallbacksCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.examples.ExamplesCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.callbacks.Callback;
 import io.swagger.v3.oas.models.examples.Example;
@@ -142,8 +144,8 @@ public class ComponentsCompareHolderTest {
         Mockito.when(requestBodiesCompareHolder.compare(requestBodiesLeft,requestBodiesRight)).thenReturn(requestBodiesCompareResult);
         HeadersCompareHolder headersCompareHolder = Mockito.mock(HeadersCompareHolder.class);
         Mockito.when(headersCompareHolder.compare(headersLeft,headersRight)).thenReturn(headersCompareResult);
-        SecuritySchemesComparHolder securitySchemesComparHolder = Mockito.mock(SecuritySchemesComparHolder.class);
-        Mockito.when(securitySchemesComparHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
+        SecuritySchemesCompareHolder securitySchemesCompareHolder = Mockito.mock(SecuritySchemesCompareHolder.class);
+        Mockito.when(securitySchemesCompareHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
         LinksCompareHolder linksCompareHolder = Mockito.mock(LinksCompareHolder.class);
         Mockito.when(linksCompareHolder.compare(linksLeft,linksRight)).thenReturn(linksCompareResult);
         CallbacksCompareHolder callbacksCompareHolder = Mockito.mock(CallbacksCompareHolder.class);
@@ -167,7 +169,7 @@ public class ComponentsCompareHolderTest {
                 examplesCompareHolder,
                 requestBodiesCompareHolder,
                 headersCompareHolder,
-                securitySchemesComparHolder,
+                securitySchemesCompareHolder,
                 linksCompareHolder,
                 callbacksCompareHolder);
 
@@ -278,8 +280,8 @@ public class ComponentsCompareHolderTest {
         Mockito.when(requestBodiesCompareHolder.compare(requestBodiesLeft,requestBodiesRight)).thenReturn(requestBodiesCompareResult);
         HeadersCompareHolder headersCompareHolder = Mockito.mock(HeadersCompareHolder.class);
         Mockito.when(headersCompareHolder.compare(headersLeft,headersRight)).thenReturn(headersCompareResult);
-        SecuritySchemesComparHolder securitySchemesComparHolder = Mockito.mock(SecuritySchemesComparHolder.class);
-        Mockito.when(securitySchemesComparHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
+        SecuritySchemesCompareHolder securitySchemesCompareHolder = Mockito.mock(SecuritySchemesCompareHolder.class);
+        Mockito.when(securitySchemesCompareHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
         LinksCompareHolder linksCompareHolder = Mockito.mock(LinksCompareHolder.class);
         Mockito.when(linksCompareHolder.compare(linksLeft,linksRight)).thenReturn(linksCompareResult);
         CallbacksCompareHolder callbacksCompareHolder = Mockito.mock(CallbacksCompareHolder.class);
@@ -303,7 +305,7 @@ public class ComponentsCompareHolderTest {
                 examplesCompareHolder,
                 requestBodiesCompareHolder,
                 headersCompareHolder,
-                securitySchemesComparHolder,
+                securitySchemesCompareHolder,
                 linksCompareHolder,
                 callbacksCompareHolder);
 
@@ -414,8 +416,8 @@ public class ComponentsCompareHolderTest {
         Mockito.when(requestBodiesCompareHolder.compare(requestBodiesLeft,requestBodiesRight)).thenReturn(requestBodiesCompareResult);
         HeadersCompareHolder headersCompareHolder = Mockito.mock(HeadersCompareHolder.class);
         Mockito.when(headersCompareHolder.compare(headersLeft,headersRight)).thenReturn(headersCompareResult);
-        SecuritySchemesComparHolder securitySchemesComparHolder = Mockito.mock(SecuritySchemesComparHolder.class);
-        Mockito.when(securitySchemesComparHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
+        SecuritySchemesCompareHolder securitySchemesCompareHolder = Mockito.mock(SecuritySchemesCompareHolder.class);
+        Mockito.when(securitySchemesCompareHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
         LinksCompareHolder linksCompareHolder = Mockito.mock(LinksCompareHolder.class);
         Mockito.when(linksCompareHolder.compare(linksLeft,linksRight)).thenReturn(linksCompareResult);
         CallbacksCompareHolder callbacksCompareHolder = Mockito.mock(CallbacksCompareHolder.class);
@@ -439,7 +441,7 @@ public class ComponentsCompareHolderTest {
                 examplesCompareHolder,
                 requestBodiesCompareHolder,
                 headersCompareHolder,
-                securitySchemesComparHolder,
+                securitySchemesCompareHolder,
                 linksCompareHolder,
                 callbacksCompareHolder);
 
@@ -550,8 +552,8 @@ public class ComponentsCompareHolderTest {
         Mockito.when(requestBodiesCompareHolder.compare(requestBodiesLeft,requestBodiesRight)).thenReturn(requestBodiesCompareResult);
         HeadersCompareHolder headersCompareHolder = Mockito.mock(HeadersCompareHolder.class);
         Mockito.when(headersCompareHolder.compare(headersLeft,headersRight)).thenReturn(headersCompareResult);
-        SecuritySchemesComparHolder securitySchemesComparHolder = Mockito.mock(SecuritySchemesComparHolder.class);
-        Mockito.when(securitySchemesComparHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
+        SecuritySchemesCompareHolder securitySchemesCompareHolder = Mockito.mock(SecuritySchemesCompareHolder.class);
+        Mockito.when(securitySchemesCompareHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
         LinksCompareHolder linksCompareHolder = Mockito.mock(LinksCompareHolder.class);
         Mockito.when(linksCompareHolder.compare(linksLeft,linksRight)).thenReturn(linksCompareResult);
         CallbacksCompareHolder callbacksCompareHolder = Mockito.mock(CallbacksCompareHolder.class);
@@ -575,7 +577,7 @@ public class ComponentsCompareHolderTest {
                 examplesCompareHolder,
                 requestBodiesCompareHolder,
                 headersCompareHolder,
-                securitySchemesComparHolder,
+                securitySchemesCompareHolder,
                 linksCompareHolder,
                 callbacksCompareHolder);
 
@@ -686,8 +688,8 @@ public class ComponentsCompareHolderTest {
         Mockito.when(requestBodiesCompareHolder.compare(requestBodiesLeft,requestBodiesRight)).thenReturn(requestBodiesCompareResult);
         HeadersCompareHolder headersCompareHolder = Mockito.mock(HeadersCompareHolder.class);
         Mockito.when(headersCompareHolder.compare(headersLeft,headersRight)).thenReturn(headersCompareResult);
-        SecuritySchemesComparHolder securitySchemesComparHolder = Mockito.mock(SecuritySchemesComparHolder.class);
-        Mockito.when(securitySchemesComparHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
+        SecuritySchemesCompareHolder securitySchemesCompareHolder = Mockito.mock(SecuritySchemesCompareHolder.class);
+        Mockito.when(securitySchemesCompareHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
         LinksCompareHolder linksCompareHolder = Mockito.mock(LinksCompareHolder.class);
         Mockito.when(linksCompareHolder.compare(linksLeft,linksRight)).thenReturn(linksCompareResult);
         CallbacksCompareHolder callbacksCompareHolder = Mockito.mock(CallbacksCompareHolder.class);
@@ -711,7 +713,7 @@ public class ComponentsCompareHolderTest {
                 examplesCompareHolder,
                 requestBodiesCompareHolder,
                 headersCompareHolder,
-                securitySchemesComparHolder,
+                securitySchemesCompareHolder,
                 linksCompareHolder,
                 callbacksCompareHolder);
 
@@ -804,8 +806,8 @@ public class ComponentsCompareHolderTest {
         Mockito.when(requestBodiesCompareHolder.compare(requestBodiesLeft,requestBodiesRight)).thenReturn(requestBodiesCompareResult);
         HeadersCompareHolder headersCompareHolder = Mockito.mock(HeadersCompareHolder.class);
         Mockito.when(headersCompareHolder.compare(headersLeft,headersRight)).thenReturn(headersCompareResult);
-        SecuritySchemesComparHolder securitySchemesComparHolder = Mockito.mock(SecuritySchemesComparHolder.class);
-        Mockito.when(securitySchemesComparHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
+        SecuritySchemesCompareHolder securitySchemesCompareHolder = Mockito.mock(SecuritySchemesCompareHolder.class);
+        Mockito.when(securitySchemesCompareHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
         LinksCompareHolder linksCompareHolder = Mockito.mock(LinksCompareHolder.class);
         Mockito.when(linksCompareHolder.compare(linksLeft,linksRight)).thenReturn(linksCompareResult);
         CallbacksCompareHolder callbacksCompareHolder = Mockito.mock(CallbacksCompareHolder.class);
@@ -820,7 +822,7 @@ public class ComponentsCompareHolderTest {
                 examplesCompareHolder,
                 requestBodiesCompareHolder,
                 headersCompareHolder,
-                securitySchemesComparHolder,
+                securitySchemesCompareHolder,
                 linksCompareHolder,
                 callbacksCompareHolder);
 
@@ -913,8 +915,8 @@ public class ComponentsCompareHolderTest {
         Mockito.when(requestBodiesCompareHolder.compare(requestBodiesLeft,requestBodiesRight)).thenReturn(requestBodiesCompareResult);
         HeadersCompareHolder headersCompareHolder = Mockito.mock(HeadersCompareHolder.class);
         Mockito.when(headersCompareHolder.compare(headersLeft,headersRight)).thenReturn(headersCompareResult);
-        SecuritySchemesComparHolder securitySchemesComparHolder = Mockito.mock(SecuritySchemesComparHolder.class);
-        Mockito.when(securitySchemesComparHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
+        SecuritySchemesCompareHolder securitySchemesCompareHolder = Mockito.mock(SecuritySchemesCompareHolder.class);
+        Mockito.when(securitySchemesCompareHolder.compare(securitySchemesLeft,securitySchemesRight)).thenReturn(securitySchemesCompareResult);
         LinksCompareHolder linksCompareHolder = Mockito.mock(LinksCompareHolder.class);
         Mockito.when(linksCompareHolder.compare(linksLeft,linksRight)).thenReturn(linksCompareResult);
         CallbacksCompareHolder callbacksCompareHolder = Mockito.mock(CallbacksCompareHolder.class);
@@ -929,7 +931,7 @@ public class ComponentsCompareHolderTest {
                 examplesCompareHolder,
                 requestBodiesCompareHolder,
                 headersCompareHolder,
-                securitySchemesComparHolder,
+                securitySchemesCompareHolder,
                 linksCompareHolder,
                 callbacksCompareHolder);
 

@@ -3,5 +3,5 @@ package de.haug_dev.swagger_compare.swagger_compare_core;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SummaryCompareHolder implements ICompareHolder<String> {
+public class SummaryCompareHolder extends AbstractCompareHolder<String> {
 }

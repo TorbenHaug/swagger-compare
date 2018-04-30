@@ -1,5 +1,7 @@
-package de.haug_dev.swagger_compare.swagger_compare_core;
+package de.haug_dev.swagger_compare.swagger_compare_core.paths;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.*;
+import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.PathItem;
@@ -14,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class PathItemCompareHolder implements ICompareHolder<PathItem> {
+public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
     private BidiMap<String, String> normalizedParameterNamesLeft = new DualHashBidiMap<>();
     private BidiMap<String, String> normalizedParameterNamesRight = new DualHashBidiMap<>();
     private final RefCompareHolder refCompareHolder;
@@ -50,17 +52,17 @@ public class PathItemCompareHolder implements ICompareHolder<PathItem> {
         NodeCompareResult result = new NodeCompareResult();
         PathItem pathItemLeft = left == null ? new PathItem() : left;
         PathItem pathItemRight = right == null ? new PathItem() : right;
-        this.compare(pathItemLeft.get$ref(), pathItemRight.get$ref(), "Ref", refCompareHolder, result);
-        this.compare(pathItemLeft.getSummary(), pathItemRight.getSummary(), "Summary", summaryCompareHolder, result);
-        this.compare(pathItemLeft.getDescription(), pathItemRight.getDescription(), "Description", descriptionCompareHolder, result);
-        this.compare(pathItemLeft.getGet(), pathItemRight.getGet(), "Get", operationCompareHolder, result);
-        this.compare(pathItemLeft.getPut(), pathItemRight.getPut(), "Put", operationCompareHolder, result);
-        this.compare(pathItemLeft.getPost(), pathItemRight.getPost(), "Post", operationCompareHolder, result);
-        this.compare(pathItemLeft.getDelete(), pathItemRight.getDelete(), "Delete", operationCompareHolder, result);
-        this.compare(pathItemLeft.getOptions(), pathItemRight.getOptions(), "Options", operationCompareHolder, result);
-        this.compare(pathItemLeft.getHead(), pathItemRight.getHead(), "Head", operationCompareHolder, result);
-        this.compare(pathItemLeft.getPatch(), pathItemRight.getPatch(), "Patch", operationCompareHolder, result);
-        this.compare(pathItemLeft.getTrace(), pathItemRight.getTrace(), "Trace", operationCompareHolder, result);
+        this.nodeCompare(pathItemLeft.get$ref(), pathItemRight.get$ref(), "Ref", refCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getSummary(), pathItemRight.getSummary(), "Summary", summaryCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getDescription(), pathItemRight.getDescription(), "Description", descriptionCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getGet(), pathItemRight.getGet(), "Get", operationCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getPut(), pathItemRight.getPut(), "Put", operationCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getPost(), pathItemRight.getPost(), "Post", operationCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getDelete(), pathItemRight.getDelete(), "Delete", operationCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getOptions(), pathItemRight.getOptions(), "Options", operationCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getHead(), pathItemRight.getHead(), "Head", operationCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getPatch(), pathItemRight.getPatch(), "Patch", operationCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getTrace(), pathItemRight.getTrace(), "Trace", operationCompareHolder, result);
 
         Map<String, Server> serversLeft = new HashMap<>();
         if(pathItemLeft.getServers() != null) {
@@ -74,7 +76,7 @@ public class PathItemCompareHolder implements ICompareHolder<PathItem> {
                 serversRight.put(v.getUrl(), v);
             });
         }
-        this.compare(serversLeft, serversRight, "Servers", serversCompareHolder, result);
+        this.nodeCompare(serversLeft, serversRight, "Servers", serversCompareHolder, result);
 
         Map<String, Parameter> parametersLeft = new HashMap<>();
         if(pathItemLeft.getParameters() != null) {
@@ -93,7 +95,7 @@ public class PathItemCompareHolder implements ICompareHolder<PathItem> {
             });
         }
         parametersCompareHolder.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
-        this.compare(parametersLeft, parametersRight, "Parameters", parametersCompareHolder, result);
+        this.nodeCompare(parametersLeft, parametersRight, "Parameters", parametersCompareHolder, result);
         return result;
     }
 }

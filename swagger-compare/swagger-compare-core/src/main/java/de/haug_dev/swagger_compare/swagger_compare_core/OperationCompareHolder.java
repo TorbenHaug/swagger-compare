@@ -4,5 +4,5 @@ import io.swagger.v3.oas.models.Operation;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OperationCompareHolder implements ICompareHolder<Operation> {
+public class OperationCompareHolder extends AbstractCompareHolder<Operation> {
 }
