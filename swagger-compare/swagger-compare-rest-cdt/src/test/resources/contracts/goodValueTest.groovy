@@ -3,7 +3,7 @@ package contracts
 org.springframework.cloud.contract.spec.Contract.make {
     request {
         method 'POST'
-        url '/api/leafCompare'
+        url '/api/compare'
         body("""
     {
       "urlLeft":"http://goodValue/left.yaml",
