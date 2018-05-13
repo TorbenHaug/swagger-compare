@@ -2,6 +2,7 @@ package de.haug_dev.swagger_compare.swagger_compare_core.paths;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.*;
 import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.PathItem;
@@ -19,24 +20,15 @@ import java.util.Map;
 public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
     private BidiMap<String, String> normalizedParameterNamesLeft = new DualHashBidiMap<>();
     private BidiMap<String, String> normalizedParameterNamesRight = new DualHashBidiMap<>();
-    private final RefCompareHolder refCompareHolder;
-    private final SummaryCompareHolder summaryCompareHolder;
-    private DescriptionCompareHolder descriptionCompareHolder;
     private final OperationCompareHolder operationCompareHolder;
     private final ServersCompareHolder serversCompareHolder;
     private final ParametersCompareHolder parametersCompareHolder;
 
     @Autowired
     public PathItemCompareHolder(
-            RefCompareHolder refCompareHolder,
-            SummaryCompareHolder summaryCompareHolder,
-            DescriptionCompareHolder descriptionCompareHolder,
             OperationCompareHolder operationCompareHolder,
             ServersCompareHolder serversCompareHolder,
             ParametersCompareHolder parametersCompareHolder){
-        this.refCompareHolder = refCompareHolder;
-        this.summaryCompareHolder = summaryCompareHolder;
-        this.descriptionCompareHolder = descriptionCompareHolder;
         this.operationCompareHolder = operationCompareHolder;
         this.serversCompareHolder = serversCompareHolder;
         this.parametersCompareHolder = parametersCompareHolder;
@@ -52,9 +44,9 @@ public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
         NodeCompareResult result = new NodeCompareResult();
         PathItem pathItemLeft = left == null ? new PathItem() : left;
         PathItem pathItemRight = right == null ? new PathItem() : right;
-        this.nodeCompare(pathItemLeft.get$ref(), pathItemRight.get$ref(), "Ref", refCompareHolder, result);
-        this.nodeCompare(pathItemLeft.getSummary(), pathItemRight.getSummary(), "Summary", summaryCompareHolder, result);
-        this.nodeCompare(pathItemLeft.getDescription(), pathItemRight.getDescription(), "Description", descriptionCompareHolder, result);
+        this.leafCompare(pathItemLeft.get$ref(), pathItemRight.get$ref(), "Ref", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL,CompareCriticalType.CRITICAL, result);
+        this.leafCompare(pathItemLeft.getSummary(), pathItemRight.getSummary(), "Summary", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO,CompareCriticalType.INFO, result);
+        this.leafCompare(pathItemLeft.getDescription(), pathItemRight.getDescription(), "Description", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO,CompareCriticalType.INFO, result);
         this.nodeCompare(pathItemLeft.getGet(), pathItemRight.getGet(), "Get", operationCompareHolder, result);
         this.nodeCompare(pathItemLeft.getPut(), pathItemRight.getPut(), "Put", operationCompareHolder, result);
         this.nodeCompare(pathItemLeft.getPost(), pathItemRight.getPost(), "Post", operationCompareHolder, result);

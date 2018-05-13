@@ -1,7 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.security_schemes;
 
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -21,6 +20,6 @@ public class ScopeCompareHolderTest {
 
         spyScopesCompareHolder.compare(leftValue, rightValue);
 
-        verify(spyScopesCompareHolder).leafCompare(eq(leftValue), eq(rightValue), CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
+        verify(spyScopesCompareHolder).leafCompare(eq(leftValue), eq(rightValue), eq(CompareCriticalType.NONE), eq(CompareCriticalType.INFO), eq(CompareCriticalType.WARNING), eq(CompareCriticalType.CRITICAL));
     }
 }

@@ -24,21 +24,15 @@ public class PathItemCompareHolderTest {
     public void compareWithAllValues() {
         String refLeft = "refLeft";
         String refRight = "refRight";
-        ICompareResult refResult = new LeafCompareResult(refLeft, refRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
-        RefCompareHolder refCompareHolder = Mockito.mock(RefCompareHolder.class);
-        Mockito.when(refCompareHolder.compare(refLeft, refRight)).thenReturn(refResult);
+        ICompareResult refResult = new LeafCompareResult(refLeft, refRight, CompareResultType.CHANGED, CompareCriticalType.CRITICAL);
 
         String summaryLeft = "summaryLeft";
         String summaryRight = "summaryRight";
-        ICompareResult summaryResult = new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
-        SummaryCompareHolder summaryCompareHolder = Mockito.mock(SummaryCompareHolder.class);
-        Mockito.when(summaryCompareHolder.compare(summaryLeft, summaryRight)).thenReturn(summaryResult);
+        ICompareResult summaryResult = new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.CHANGED, CompareCriticalType.INFO);
 
         String descriptionLeft = "descriptionLeft";
         String descriptionRight = "descriptionRight";
-        ICompareResult descriptionResult = new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
-        DescriptionCompareHolder descriptionCompareHolder = Mockito.mock(DescriptionCompareHolder.class);
-        Mockito.when(descriptionCompareHolder.compare(descriptionLeft, descriptionRight)).thenReturn(descriptionResult);
+        ICompareResult descriptionResult = new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.CHANGED, CompareCriticalType.INFO);
 
         Operation operationLeft = new Operation();
         Operation operationRight = new Operation();
@@ -109,9 +103,6 @@ public class PathItemCompareHolderTest {
         pathItemRight.setParameters(parametersRight);
 
         PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(
-                refCompareHolder,
-                summaryCompareHolder,
-                descriptionCompareHolder,
                 operationCompareHolder,
                 serversCompareHolder,
                 parametersCompareHolder);
@@ -142,21 +133,15 @@ public class PathItemCompareHolderTest {
     public void compareWithLeftValues() {
         String refLeft = "refLeft";
         String refRight = null;
-        ICompareResult refResult = new LeafCompareResult(refLeft, refRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
-        RefCompareHolder refCompareHolder = Mockito.mock(RefCompareHolder.class);
-        Mockito.when(refCompareHolder.compare(refLeft, refRight)).thenReturn(refResult);
+        ICompareResult refResult = new LeafCompareResult(refLeft, refRight, CompareResultType.DELETED, CompareCriticalType.CRITICAL);
 
         String summaryLeft = "summaryLeft";
         String summaryRight = null;
-        ICompareResult summaryResult = new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
-        SummaryCompareHolder summaryCompareHolder = Mockito.mock(SummaryCompareHolder.class);
-        Mockito.when(summaryCompareHolder.compare(summaryLeft, summaryRight)).thenReturn(summaryResult);
+        ICompareResult summaryResult = new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.DELETED, CompareCriticalType.INFO);
 
         String descriptionLeft = "descriptionLeft";
         String descriptionRight = null;
-        ICompareResult descriptionResult = new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
-        DescriptionCompareHolder descriptionCompareHolder = Mockito.mock(DescriptionCompareHolder.class);
-        Mockito.when(descriptionCompareHolder.compare(descriptionLeft, descriptionRight)).thenReturn(descriptionResult);
+        ICompareResult descriptionResult = new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.DELETED, CompareCriticalType.INFO);
 
         Operation operationLeft = new Operation();
         Operation operationRight = null;
@@ -223,9 +208,6 @@ public class PathItemCompareHolderTest {
         pathItemRight.setParameters(parametersRight);
 
         PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(
-                refCompareHolder,
-                summaryCompareHolder,
-                descriptionCompareHolder,
                 operationCompareHolder,
                 serversCompareHolder,
                 parametersCompareHolder);
@@ -257,21 +239,15 @@ public class PathItemCompareHolderTest {
     public void compareWithRightValues() {
         String refLeft = null;
         String refRight = "refRight";
-        ICompareResult refResult = new LeafCompareResult(refLeft, refRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
-        RefCompareHolder refCompareHolder = Mockito.mock(RefCompareHolder.class);
-        Mockito.when(refCompareHolder.compare(refLeft, refRight)).thenReturn(refResult);
+        ICompareResult refResult = new LeafCompareResult(refLeft, refRight, CompareResultType.CREATED, CompareCriticalType.CRITICAL);
 
         String summaryLeft = null;
         String summaryRight = "summaryRight";
-        ICompareResult summaryResult = new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
-        SummaryCompareHolder summaryCompareHolder = Mockito.mock(SummaryCompareHolder.class);
-        Mockito.when(summaryCompareHolder.compare(summaryLeft, summaryRight)).thenReturn(summaryResult);
+        ICompareResult summaryResult = new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.CREATED, CompareCriticalType.INFO);
 
         String descriptionLeft = null;
         String descriptionRight = "descriptionRight";
-        ICompareResult descriptionResult = new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
-        DescriptionCompareHolder descriptionCompareHolder = Mockito.mock(DescriptionCompareHolder.class);
-        Mockito.when(descriptionCompareHolder.compare(descriptionLeft, descriptionRight)).thenReturn(descriptionResult);
+        ICompareResult descriptionResult = new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.CREATED, CompareCriticalType.INFO);
 
         Operation operationLeft = null;
         Operation operationRight = new Operation();
@@ -334,9 +310,6 @@ public class PathItemCompareHolderTest {
         pathItemRight.setParameters(parametersRight);
 
         PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(
-                refCompareHolder,
-                summaryCompareHolder,
-                descriptionCompareHolder,
                 operationCompareHolder,
                 serversCompareHolder,
                 parametersCompareHolder);
@@ -365,9 +338,6 @@ public class PathItemCompareHolderTest {
 
     @Test
     public void compareWithNoValues() {
-        RefCompareHolder refCompareHolder = Mockito.mock(RefCompareHolder.class);
-        SummaryCompareHolder summaryCompareHolder = Mockito.mock(SummaryCompareHolder.class);
-        DescriptionCompareHolder descriptionCompareHolder = Mockito.mock(DescriptionCompareHolder.class);
         OperationCompareHolder operationCompareHolder = Mockito.mock(OperationCompareHolder.class);
         ServersCompareHolder serversCompareHolder = Mockito.mock(ServersCompareHolder.class);
         ParametersCompareHolder parametersCompareHolder = Mockito.mock(ParametersCompareHolder.class);
@@ -377,9 +347,6 @@ public class PathItemCompareHolderTest {
         PathItem pathItemRight = new PathItem();
 
         PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(
-                refCompareHolder,
-                summaryCompareHolder,
-                descriptionCompareHolder,
                 operationCompareHolder,
                 serversCompareHolder,
                 parametersCompareHolder);
