@@ -92,7 +92,7 @@ public class NodeCompareResultTest {
 
         assertEquals(expectedValues, actual.getValues());
         assertEquals(CompareResultType.CHANGED, actual.getCompareResultType());
-        assertEquals(CompareCriticalType.INFO, actual.getCompareCriticalType());
+        assertEquals(CompareCriticalType.WARNING, actual.getCompareCriticalType());
         assertEquals(CompareType.NODE, actual.getCompareType());
     }
 
