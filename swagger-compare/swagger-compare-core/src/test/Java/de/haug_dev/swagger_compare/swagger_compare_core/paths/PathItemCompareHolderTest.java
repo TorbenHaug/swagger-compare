@@ -60,16 +60,18 @@ public class PathItemCompareHolderTest {
 
         Parameter parameterLeft = new Parameter();
         parameterLeft.setName("test");
+        parameterLeft.setIn("test");
         List<Parameter> parametersLeft = new ArrayList<>();
         parametersLeft.add(parameterLeft);
         Map<String, Parameter> parameterMapLeft = new HashMap<>();
-        parameterMapLeft.put("test", parameterLeft);
+        parameterMapLeft.put("test:test", parameterLeft);
         Parameter parameterRight = new Parameter();
         parameterRight.setName("test");
+        parameterRight.setIn("test");
         List<Parameter> parametersRight = new ArrayList<>();
         parametersRight.add(parameterRight);
         Map<String, Parameter> parameterMapRight = new HashMap<>();
-        parameterMapRight.put("test", parameterRight);
+        parameterMapRight.put("test:test", parameterRight);
         ICompareResult parametersResult = new LeafCompareResult(parameterMapLeft, parameterMapRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
         ParametersCompareHolder parametersCompareHolder = Mockito.mock(ParametersCompareHolder.class);
         Mockito.when(parametersCompareHolder.compare(eq(parameterMapLeft), eq(parameterMapRight), any(), any())).thenReturn(parametersResult);
@@ -167,12 +169,14 @@ public class PathItemCompareHolderTest {
 
         Parameter parameterLeft = new Parameter();
         parameterLeft.setName("test");
+        parameterLeft.setIn("test");
         List<Parameter> parametersLeft = new ArrayList<>();
         parametersLeft.add(parameterLeft);
         Map<String, Parameter> parameterMapLeft = new HashMap<>();
-        parameterMapLeft.put("test", parameterLeft);
+        parameterMapLeft.put("test:test", parameterLeft);
         Parameter parameterRight = new Parameter();
         parameterRight.setName("test");
+        parameterRight.setIn("test");
         List<Parameter> parametersRight = null;
         Map<String, Parameter> parameterMapRight = new HashMap<>();
         ICompareResult parametersResult = new LeafCompareResult(parameterMapLeft, parameterMapRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
@@ -273,10 +277,11 @@ public class PathItemCompareHolderTest {
         Map<String, Parameter> parameterMapLeft = new HashMap<>();
         Parameter parameterRight = new Parameter();
         parameterRight.setName("test");
+        parameterRight.setIn("test");
         List<Parameter> parametersRight = new ArrayList<>();
         parametersRight.add(parameterRight);
         Map<String, Parameter> parameterMapRight = new HashMap<>();
-        parameterMapRight.put("test", parameterRight);
+        parameterMapRight.put("test:test", parameterRight);
         ICompareResult parametersResult = new LeafCompareResult(parameterMapLeft, parameterMapRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
         ParametersCompareHolder parametersCompareHolder = Mockito.mock(ParametersCompareHolder.class);
         Mockito.when(parametersCompareHolder.compare(eq(parameterMapLeft), eq(parameterMapRight), any(), any())).thenReturn(parametersResult);

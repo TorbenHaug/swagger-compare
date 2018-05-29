@@ -74,16 +74,16 @@ public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
         if(pathItemLeft.getParameters() != null) {
             pathItemLeft.getParameters().forEach((v) -> {
                 String normalizedName = normalizedParameterNamesLeft.getKey(v.getName());
-                String name = normalizedName == null ? v.getName() : normalizedName;
-                parametersLeft.put(name, v);
+                String name = (normalizedName == null && !"path".equals(v.getIn())) ? v.getName() : normalizedName;
+                parametersLeft.put(v.getIn() + ":" + name, v);
             });
         }
         Map<String, Parameter> parametersRight = new HashMap<>();
         if(pathItemRight.getParameters() != null) {
             pathItemRight.getParameters().forEach((v) -> {
                 String normalizedName = normalizedParameterNamesRight.getKey(v.getName());
-                String name = normalizedName == null ? v.getName() : normalizedName;
-                parametersRight.put(name, v);
+                String name = (normalizedName == null && !"path".equals(v.getIn())) ? v.getName() : normalizedName;
+                parametersRight.put(v.getIn() + ":" + name, v);
             });
         }
         parametersCompareHolder.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
