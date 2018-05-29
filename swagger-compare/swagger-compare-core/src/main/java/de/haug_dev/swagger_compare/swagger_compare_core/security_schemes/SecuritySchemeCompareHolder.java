@@ -18,10 +18,10 @@ public class SecuritySchemeCompareHolder extends AbstractCompareHolder<SecurityS
     }
 
     @Override
-    public ICompareResult compare(SecurityScheme left, SecurityScheme right) {
+    public ICompareResult compare(SecurityScheme left, SecurityScheme right, CompareCriticalType created, CompareCriticalType deleted) {
         SecurityScheme leftValue = left == null ? new SecurityScheme() : left;
         SecurityScheme rightValue = right == null ? new SecurityScheme() : right;
-        NodeCompareResult result = new NodeCompareResult();
+        NodeCompareResult result = new NodeCompareResult(created, deleted);
         this.leafCompare(leftValue.get$ref(), rightValue.get$ref(), "Ref", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL,CompareCriticalType.CRITICAL, result);
         this.leafCompare(leftValue.getType(), rightValue.getType(), "Type", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL,CompareCriticalType.CRITICAL, result);
         this.leafCompare(leftValue.getDescription(), rightValue.getDescription(), "Description", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO,CompareCriticalType.INFO, result);
@@ -29,7 +29,7 @@ public class SecuritySchemeCompareHolder extends AbstractCompareHolder<SecurityS
         this.leafCompare(leftValue.getIn(), rightValue.getIn(), "In", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL,CompareCriticalType.CRITICAL, result);
         this.leafCompare(leftValue.getScheme(), rightValue.getScheme(), "Scheme", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL,CompareCriticalType.CRITICAL, result);
         this.leafCompare(leftValue.getBearerFormat(), rightValue.getBearerFormat(), "BearerFormat", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO,CompareCriticalType.INFO, result);
-        this.nodeCompare(leftValue.getFlows(), rightValue.getFlows(), "Flows", oAuthFlowsObjectCompareHolder, result);
+        this.nodeCompare(leftValue.getFlows(), rightValue.getFlows(), "Flows", oAuthFlowsObjectCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         this.leafCompare(leftValue.getOpenIdConnectUrl(), rightValue.getOpenIdConnectUrl(), "OpenIdConnectUrl", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL,CompareCriticalType.CRITICAL, result);
         return result;
     }

@@ -1,6 +1,7 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.parameters;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.AbstractCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.parameters.Parameter;
@@ -24,9 +25,9 @@ public class ParametersCompareHolder extends AbstractCompareHolder<Map<String, P
     }
 
     @Override
-    public ICompareResult compare(Map<String, Parameter> left, Map<String, Parameter> right) {
-        NodeCompareResult result = new NodeCompareResult();
-        NodeCompareResult compareResult = referableCompare(left, right, parameterCompareHolder);
+    public ICompareResult compare(Map<String, Parameter> left, Map<String, Parameter> right, CompareCriticalType created, CompareCriticalType deleted) {
+        NodeCompareResult result = new NodeCompareResult(created, deleted);
+        NodeCompareResult compareResult = referableCompare(left, right, parameterCompareHolder, created, deleted);
         compareResult.getValues().forEach((k, v) -> {
             String name = k;
             if(normalizedParameterNamesLeft.get(k) != null){

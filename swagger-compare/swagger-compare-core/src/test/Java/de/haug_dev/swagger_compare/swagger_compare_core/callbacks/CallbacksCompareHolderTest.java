@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 
 public class CallbacksCompareHolderTest {
 
@@ -31,18 +33,18 @@ public class CallbacksCompareHolderTest {
         LeafCompareResult compareResult3 = new LeafCompareResult(callbackLeft2, null, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
 
         CallbackCompareHolder callbackCompareHolder = Mockito.mock(CallbackCompareHolder.class);
-        Mockito.when(callbackCompareHolder.compare(callbackLeft1, callbackRight1)).thenReturn(compareResult1);
-        Mockito.when(callbackCompareHolder.compare(null, callbackRight2)).thenReturn(compareResult2);
-        Mockito.when(callbackCompareHolder.compare(callbackLeft2, null)).thenReturn(compareResult3);
+        Mockito.when(callbackCompareHolder.compare(eq(callbackLeft1), eq(callbackRight1), any(), any())).thenReturn(compareResult1);
+        Mockito.when(callbackCompareHolder.compare(eq(null), eq(callbackRight2), any(), any())).thenReturn(compareResult2);
+        Mockito.when(callbackCompareHolder.compare(eq(callbackLeft2), eq(null), any(), any())).thenReturn(compareResult3);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("callback1", compareResult1);
         expected.put("callbackRight2", compareResult2);
         expected.put("callbackLeft2", compareResult3);
 
 
         CallbacksCompareHolder callbacksCompareHolder = new CallbacksCompareHolder(callbackCompareHolder);
-        ICompareResult actual = callbacksCompareHolder.compare(callbacksLeft, callbacksRight);
+        ICompareResult actual = callbacksCompareHolder.compare(callbacksLeft, callbacksRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }

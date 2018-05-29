@@ -1,6 +1,7 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.security_schemes;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.AbstractCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import io.swagger.v3.oas.models.security.Scopes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,9 @@ public class ScopesCompareHolder extends AbstractCompareHolder<Scopes> {
     }
 
     @Override
-    public ICompareResult compare(Scopes left, Scopes right) {
+    public ICompareResult compare(Scopes left, Scopes right, CompareCriticalType created, CompareCriticalType deleted) {
         Scopes leftValue = left == null ? new Scopes() : left;
         Scopes rightValue = right == null ? new Scopes() : right;
-        return this.referableCompare(leftValue,rightValue, scopeCompareHolder);
+        return this.referableCompare(leftValue,rightValue, scopeCompareHolder, created, deleted);
     }
 }

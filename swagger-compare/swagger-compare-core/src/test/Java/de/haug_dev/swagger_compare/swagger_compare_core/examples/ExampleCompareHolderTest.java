@@ -34,7 +34,7 @@ public class ExampleCompareHolderTest {
         rightExample.setValue(valueRight);
         rightExample.setExternalValue(externalValueRight);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("Ref", new LeafCompareResult(refLeft, refRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE));
         expected.put("Summary", new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE));
         expected.put("Description", new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE));
@@ -43,7 +43,7 @@ public class ExampleCompareHolderTest {
 
         ExampleCompareHolder exampleCompareHolder = new ExampleCompareHolder();
 
-        ICompareResult actual = exampleCompareHolder.compare(leftExample, rightExample);
+        ICompareResult actual = exampleCompareHolder.compare(leftExample, rightExample, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -74,7 +74,7 @@ public class ExampleCompareHolderTest {
         rightExample.setValue(valueRight);
         rightExample.setExternalValue(externalValueRight);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("Ref", new LeafCompareResult(refLeft, refRight, CompareResultType.CHANGED, CompareCriticalType.CRITICAL));
         expected.put("Summary", new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.CHANGED, CompareCriticalType.INFO));
         expected.put("Description", new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.CHANGED, CompareCriticalType.INFO));
@@ -83,7 +83,7 @@ public class ExampleCompareHolderTest {
 
         ExampleCompareHolder exampleCompareHolder = new ExampleCompareHolder();
 
-        ICompareResult actual = exampleCompareHolder.compare(leftExample, rightExample);
+        ICompareResult actual = exampleCompareHolder.compare(leftExample, rightExample, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -114,7 +114,7 @@ public class ExampleCompareHolderTest {
         rightExample.setValue(valueRight);
         rightExample.setExternalValue(externalValueRight);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("Ref", new LeafCompareResult(refLeft, refRight, CompareResultType.DELETED, CompareCriticalType.CRITICAL));
         expected.put("Summary", new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.DELETED, CompareCriticalType.INFO));
         expected.put("Description", new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.DELETED, CompareCriticalType.INFO));
@@ -123,7 +123,7 @@ public class ExampleCompareHolderTest {
 
         ExampleCompareHolder exampleCompareHolder = new ExampleCompareHolder();
 
-        ICompareResult actual = exampleCompareHolder.compare(leftExample, rightExample);
+        ICompareResult actual = exampleCompareHolder.compare(leftExample, rightExample, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -154,7 +154,7 @@ public class ExampleCompareHolderTest {
         rightExample.setValue(valueRight);
         rightExample.setExternalValue(externalValueRight);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("Ref", new LeafCompareResult(refLeft, refRight, CompareResultType.CREATED, CompareCriticalType.CRITICAL));
         expected.put("Summary", new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.CREATED, CompareCriticalType.INFO));
         expected.put("Description", new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.CREATED, CompareCriticalType.INFO));
@@ -163,7 +163,7 @@ public class ExampleCompareHolderTest {
 
         ExampleCompareHolder exampleCompareHolder = new ExampleCompareHolder();
 
-        ICompareResult actual = exampleCompareHolder.compare(leftExample, rightExample);
+        ICompareResult actual = exampleCompareHolder.compare(leftExample, rightExample, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }

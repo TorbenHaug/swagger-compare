@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 
 public class ParametersCompareHolderTest {
 
@@ -30,7 +32,7 @@ public class ParametersCompareHolderTest {
 
         ICompareResult compareResult1 = new LeafCompareResult(parameterLeft, parameterRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
         ParameterCompareHolder parameterCompareHolder = Mockito.mock(ParameterCompareHolder.class);
-        Mockito.when(parameterCompareHolder.compare(parameterLeft, parameterRight)).thenReturn(compareResult1);
+        Mockito.when(parameterCompareHolder.compare(eq(parameterLeft), eq(parameterRight), any(), any())).thenReturn(compareResult1);
 
         BidiMap<String, String> normalizedNamesLeft = new DualHashBidiMap<>();
         normalizedNamesLeft.put("var1", "nameLeft");
@@ -41,10 +43,10 @@ public class ParametersCompareHolderTest {
         ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(parameterCompareHolder);
         parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("nameRight", compareResult1);
 
-        ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight);
+        ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -64,8 +66,8 @@ public class ParametersCompareHolderTest {
         ICompareResult compareResult1 = new LeafCompareResult(parameterLeft, null, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
         ICompareResult compareResult2 = new LeafCompareResult(null, parameterRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
         ParameterCompareHolder parameterCompareHolder = Mockito.mock(ParameterCompareHolder.class);
-        Mockito.when(parameterCompareHolder.compare(parameterLeft, null)).thenReturn(compareResult1);
-        Mockito.when(parameterCompareHolder.compare(null, parameterRight)).thenReturn(compareResult2);
+        Mockito.when(parameterCompareHolder.compare(eq(parameterLeft), eq(null), any(), any())).thenReturn(compareResult1);
+        Mockito.when(parameterCompareHolder.compare(eq(null), eq(parameterRight), any(), any())).thenReturn(compareResult2);
 
         BidiMap<String, String> normalizedNamesLeft = new DualHashBidiMap<>();
         normalizedNamesLeft.put("var1", "nameLeft");
@@ -76,11 +78,11 @@ public class ParametersCompareHolderTest {
         ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(parameterCompareHolder);
         parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("nameLeft", compareResult1);
         expected.put("nameRight", compareResult2);
 
-        ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight);
+        ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -100,8 +102,8 @@ public class ParametersCompareHolderTest {
         ICompareResult compareResult1 = new LeafCompareResult(parameterLeft, null, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
         ICompareResult compareResult2 = new LeafCompareResult(null, parameterRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
         ParameterCompareHolder parameterCompareHolder = Mockito.mock(ParameterCompareHolder.class);
-        Mockito.when(parameterCompareHolder.compare(parameterLeft, null)).thenReturn(compareResult1);
-        Mockito.when(parameterCompareHolder.compare(null, parameterRight)).thenReturn(compareResult2);
+        Mockito.when(parameterCompareHolder.compare(eq(parameterLeft), eq(null), any(), any())).thenReturn(compareResult1);
+        Mockito.when(parameterCompareHolder.compare(eq(null), eq(parameterRight), any(), any())).thenReturn(compareResult2);
 
         BidiMap<String, String> normalizedNamesLeft = new DualHashBidiMap<>();
 
@@ -110,11 +112,11 @@ public class ParametersCompareHolderTest {
         ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(parameterCompareHolder);
         parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("var1", compareResult1);
         expected.put("var2", compareResult2);
 
-        ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight);
+        ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }

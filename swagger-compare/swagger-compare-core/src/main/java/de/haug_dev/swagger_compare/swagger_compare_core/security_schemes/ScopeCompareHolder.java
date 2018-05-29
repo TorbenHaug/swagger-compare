@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScopeCompareHolder extends AbstractCompareHolder<String> {
     @Override
-    public ICompareResult compare(String left, String right) {
-        return this.leafCompare(left, right, CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
+    public ICompareResult compare(String left, String right, CompareCriticalType created, CompareCriticalType deleted) {
+        return this.leafCompare(left, right, CompareCriticalType.NONE, created, deleted, CompareCriticalType.CRITICAL);
     }
 }

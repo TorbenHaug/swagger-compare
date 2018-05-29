@@ -18,7 +18,7 @@ public class ScopeCompareHolderTest {
         ScopeCompareHolder scopesCompareHolder = new ScopeCompareHolder();
         ScopeCompareHolder spyScopesCompareHolder = spy(scopesCompareHolder);
 
-        spyScopesCompareHolder.compare(leftValue, rightValue);
+        spyScopesCompareHolder.compare(leftValue, rightValue, CompareCriticalType.INFO, CompareCriticalType.WARNING);
 
         verify(spyScopesCompareHolder).leafCompare(eq(leftValue), eq(rightValue), eq(CompareCriticalType.NONE), eq(CompareCriticalType.INFO), eq(CompareCriticalType.WARNING), eq(CompareCriticalType.CRITICAL));
     }

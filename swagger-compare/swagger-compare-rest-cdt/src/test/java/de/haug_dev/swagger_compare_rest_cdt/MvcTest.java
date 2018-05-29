@@ -25,8 +25,8 @@ public class MvcTest {
     @Before
     public void setup() {
 
-        NodeCompareResult goodValue0_0 = new NodeCompareResult();
-        NodeCompareResult goodValue1_0 = new NodeCompareResult();
+        NodeCompareResult goodValue0_0 = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        NodeCompareResult goodValue1_0 = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         LeafCompareResult goodValue1_1 = new LeafCompareResult("goodValue1_1_left", "goodValue1_1_right", CompareResultType.CHANGED, CompareCriticalType.INFO);
         LeafCompareResult goodValue2_0 = new LeafCompareResult("goodValue2_0_left", "goodValue2_0_right", CompareResultType.CHANGED, CompareCriticalType.INFO);
         goodValue0_0.put("goodValue1_0", goodValue1_0);

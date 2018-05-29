@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 
 public class ExamplesCompareHolderTest {
 
@@ -31,18 +33,18 @@ public class ExamplesCompareHolderTest {
         LeafCompareResult compareResult3 = new LeafCompareResult(exampleLeft2, null, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
 
         ExampleCompareHolder exampleCompareHolder = Mockito.mock(ExampleCompareHolder.class);
-        Mockito.when(exampleCompareHolder.compare(exampleLeft1, exampleRight1)).thenReturn(compareResult1);
-        Mockito.when(exampleCompareHolder.compare(null, exampleRight2)).thenReturn(compareResult2);
-        Mockito.when(exampleCompareHolder.compare(exampleLeft2, null)).thenReturn(compareResult3);
+        Mockito.when(exampleCompareHolder.compare(eq(exampleLeft1), eq(exampleRight1), any(), any())).thenReturn(compareResult1);
+        Mockito.when(exampleCompareHolder.compare(eq(null), eq(exampleRight2), any(), any())).thenReturn(compareResult2);
+        Mockito.when(exampleCompareHolder.compare(eq(exampleLeft2), eq(null), any(), any())).thenReturn(compareResult3);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("example1", compareResult1);
         expected.put("exampleRight2", compareResult2);
         expected.put("exampleLeft2", compareResult3);
 
 
         ExamplesCompareHolder examplesCompareHolder = new ExamplesCompareHolder(exampleCompareHolder);
-        ICompareResult actual = examplesCompareHolder.compare(examplesLeft, examplesRight);
+        ICompareResult actual = examplesCompareHolder.compare(examplesLeft, examplesRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
 

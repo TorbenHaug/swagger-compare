@@ -2,6 +2,7 @@ package de.haug_dev.swagger_compare.swagger_compare_core.paths;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.AbstractCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.ICompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.PathItem;
@@ -29,7 +30,7 @@ public class PathsCompareHolder extends AbstractCompareHolder<Paths> {
     }
 
     @Override
-    public ICompareResult compare(Paths left, Paths right) {
+    public ICompareResult compare(Paths left, Paths right, CompareCriticalType created, CompareCriticalType deleted) {
         BidiMap<String,String> normalizedMapLeft = new DualHashBidiMap<>();
         BidiMap<String,String> normalizedMapRight = new DualHashBidiMap<>();
         Paths pathsLeft = left == null ? new Paths() : left;
@@ -48,18 +49,18 @@ public class PathsCompareHolder extends AbstractCompareHolder<Paths> {
             pathsRightNormalized.put(normalizePath, v);
         });
 
-        NodeCompareResult normalizedResult = this.compare(pathsLeftNormalized, pathsRightNormalized, pathItemCompareHolder, normalizedMapLeft, normalizedMapRight);
+        NodeCompareResult normalizedResult = this.compare(pathsLeftNormalized, pathsRightNormalized, pathItemCompareHolder, normalizedMapLeft, normalizedMapRight, created, deleted);
         BidiMap<String,String> normailzedMap = new DualHashBidiMap<>(normalizedMapLeft);
         normailzedMap.putAll(normalizedMapRight);
-        NodeCompareResult result = new NodeCompareResult();
+        NodeCompareResult result = new NodeCompareResult(created, deleted);
         normalizedResult.getValues().forEach((k,v) -> {
             result.put(normailzedMap.get(k), v);
         });
         return result;
     }
 
-    protected NodeCompareResult compare(Map<String, PathItem> left, Map<String, PathItem> right, ICompareHolder<PathItem> compareHolder, BidiMap<String,String> normailzedMapLeft, BidiMap<String,String> normailzedMapRight){
-        NodeCompareResult result = new NodeCompareResult();
+    protected NodeCompareResult compare(Map<String, PathItem> left, Map<String, PathItem> right, ICompareHolder<PathItem> compareHolder, BidiMap<String,String> normailzedMapLeft, BidiMap<String,String> normailzedMapRight, CompareCriticalType created, CompareCriticalType deleted){
+        NodeCompareResult result = new NodeCompareResult(created, deleted);
         Set<String> keys = new HashSet<>(left.keySet());
         keys.addAll(right.keySet());
         keys.forEach((k) -> {
@@ -67,7 +68,7 @@ public class PathsCompareHolder extends AbstractCompareHolder<Paths> {
             PathItem leftValue = left.get(k);
             PathItem rightValue = right.get(k);
             if(!(leftValue == null && rightValue == null)) {
-                result.put(k, compareHolder.compare(leftValue, rightValue));
+                result.put(k, compareHolder.compare(leftValue, rightValue, created, deleted));
             }
         });
         return result;

@@ -21,6 +21,10 @@ public class AbstractCompareResult implements ICompareResult {
         this.compareCriticalType = this.compareCriticalType.greater(compareCriticalType);
     }
 
+    protected void setCompareCriticalType(CompareCriticalType compareCriticalType) {
+        this.compareCriticalType = compareCriticalType;
+    }
+
     @Override
     public CompareResultType getCompareResultType() {
         return this.compareResultType;

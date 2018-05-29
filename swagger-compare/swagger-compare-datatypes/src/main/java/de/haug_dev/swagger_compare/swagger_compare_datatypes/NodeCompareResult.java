@@ -7,9 +7,13 @@ import java.util.TreeMap;
 public class NodeCompareResult extends AbstractCompareResult implements INodeCompareResult {
 
     private final Map<String, ICompareResult> values;
+    private final CompareCriticalType created;
+    private final CompareCriticalType deleted;
 
-    public NodeCompareResult(){
+    public NodeCompareResult(CompareCriticalType created, CompareCriticalType deleted){
         super(CompareType.NODE);
+        this.created = created;
+        this.deleted = deleted;
         this.values = new TreeMap<>();
     }
 
@@ -22,12 +26,20 @@ public class NodeCompareResult extends AbstractCompareResult implements INodeCom
                 allMatch((v) ->
                         v.getCompareResultType().equals(value.getCompareResultType())
                 );
-        if(allResultTypesAreEqual){
+        if(allResultTypesAreEqual && (value.getCompareResultType().equals(CompareResultType.CREATED) || value.getCompareResultType().equals(CompareResultType.DELETED))){
             setCompareResultType(value.getCompareResultType());
-        }else {
+            if(value.getCompareResultType().equals(CompareResultType.CREATED)){
+                this.setCompareCriticalType(created);
+            }else if(value.getCompareResultType().equals(CompareResultType.DELETED)){
+                this.setCompareCriticalType(deleted);
+            }
+        }else if((allResultTypesAreEqual && value.getCompareResultType().equals(CompareResultType.CHANGED) || !allResultTypesAreEqual)) {
             setCompareResultType(CompareResultType.CHANGED);
+            this.setCompareCriticalType(CompareCriticalType.NONE);
+            this.values.values().forEach(v -> {
+                this.setHighestCompareCriticalType(v.getCompareCriticalType());
+            });
         }
-        this.setHighestCompareCriticalType(value.getCompareCriticalType());
     }
 
     @Override

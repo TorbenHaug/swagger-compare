@@ -12,7 +12,7 @@ public class NodeCompareResultTest {
     @Test
     public void testEmptyNode() {
 
-        NodeCompareResult actual = new NodeCompareResult();
+        NodeCompareResult actual = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.WARNING);
 
         TreeMap<String, ICompareResult> expectedValues = new TreeMap<>();
 
@@ -30,7 +30,7 @@ public class NodeCompareResultTest {
         Mockito.when(compareResult1.getCompareResultType()).thenReturn(CompareResultType.CREATED);
         Mockito.when(compareResult1.getCompareType()).thenReturn(CompareType.LEAF);
 
-        NodeCompareResult actual = new NodeCompareResult();
+        NodeCompareResult actual = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.WARNING);
         actual.put("compareResult1", compareResult1);
 
         TreeMap<String, ICompareResult> expectedValues = new TreeMap<>();
@@ -55,7 +55,7 @@ public class NodeCompareResultTest {
         Mockito.when(compareResult2.getCompareResultType()).thenReturn(CompareResultType.CHANGED);
         Mockito.when(compareResult2.getCompareType()).thenReturn(CompareType.LEAF);
 
-        NodeCompareResult actual = new NodeCompareResult();
+        NodeCompareResult actual = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.WARNING);
         actual.put("compareResult1", compareResult1);
         actual.put("compareResult2", compareResult2);
 
@@ -82,7 +82,7 @@ public class NodeCompareResultTest {
         Mockito.when(compareResult2.getCompareResultType()).thenReturn(CompareResultType.CHANGED);
         Mockito.when(compareResult2.getCompareType()).thenReturn(CompareType.LEAF);
 
-        NodeCompareResult actual = new NodeCompareResult();
+        NodeCompareResult actual = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.WARNING);
         actual.put("compareResult2", compareResult2);
         actual.put("compareResult1", compareResult1);
 
@@ -92,7 +92,7 @@ public class NodeCompareResultTest {
 
         assertEquals(expectedValues, actual.getValues());
         assertEquals(CompareResultType.CHANGED, actual.getCompareResultType());
-        assertEquals(CompareCriticalType.WARNING, actual.getCompareCriticalType());
+        assertEquals(CompareCriticalType.INFO, actual.getCompareCriticalType());
         assertEquals(CompareType.NODE, actual.getCompareType());
     }
 
@@ -109,7 +109,7 @@ public class NodeCompareResultTest {
         Mockito.when(compareResult2.getCompareResultType()).thenReturn(CompareResultType.CREATED);
         Mockito.when(compareResult2.getCompareType()).thenReturn(CompareType.LEAF);
 
-        NodeCompareResult actual = new NodeCompareResult();
+        NodeCompareResult actual = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.WARNING);
         actual.put("compareResult2", compareResult2);
         actual.put("compareResult1", compareResult1);
 
@@ -119,7 +119,7 @@ public class NodeCompareResultTest {
 
         assertEquals(expectedValues, actual.getValues());
         assertEquals(CompareResultType.CREATED, actual.getCompareResultType());
-        assertEquals(CompareCriticalType.WARNING, actual.getCompareCriticalType());
+        assertEquals(CompareCriticalType.INFO, actual.getCompareCriticalType());
         assertEquals(CompareType.NODE, actual.getCompareType());
     }
 }

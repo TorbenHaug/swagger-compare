@@ -19,14 +19,14 @@ public class OAuthFlowObjectCompareHolder extends AbstractCompareHolder<OAuthFlo
     }
 
     @Override
-    public ICompareResult compare(OAuthFlow left, OAuthFlow right) {
+    public ICompareResult compare(OAuthFlow left, OAuthFlow right, CompareCriticalType created, CompareCriticalType deleted) {
         OAuthFlow leftValue = left == null ? new OAuthFlow() : left;
         OAuthFlow rightValue = right == null ? new OAuthFlow() : right;
-        NodeCompareResult result = new NodeCompareResult();
+        NodeCompareResult result = new NodeCompareResult(created, deleted);
         this.leafCompare(leftValue.getAuthorizationUrl(), rightValue.getAuthorizationUrl(), "AuthorizationUrl", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
         this.leafCompare(leftValue.getTokenUrl(), rightValue.getTokenUrl(), "TokenUrl", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
         this.leafCompare(leftValue.getRefreshUrl(), rightValue.getRefreshUrl(), "RefreshUrl", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
-        this.nodeCompare(leftValue.getScopes(), rightValue.getScopes(), "Scopes", scopesCompareHolder, result);
+        this.nodeCompare(leftValue.getScopes(), rightValue.getScopes(), "Scopes", scopesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         return result;
     }
 }

@@ -19,12 +19,12 @@ public class OAuthFlowObjectCompareHolderTest {
         OAuthFlow rightValue = null;
 
         ScopesCompareHolder scopesCompareHolder = mock(ScopesCompareHolder.class);
-        when(scopesCompareHolder.compare(any(), any())).thenReturn(new NodeCompareResult());
+        when(scopesCompareHolder.compare(any(), any(), any(), any())).thenReturn(new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL));
         OAuthFlowObjectCompareHolder oAuthFlowObjectCompareHolder = new OAuthFlowObjectCompareHolder(scopesCompareHolder);
         OAuthFlowObjectCompareHolder spyOAuthFlowsObjectCompareHolder = spy(oAuthFlowObjectCompareHolder);
 
-        NodeCompareResult expected = new NodeCompareResult();
-        ICompareResult actual = spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue);
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        ICompareResult actual = spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -44,16 +44,16 @@ public class OAuthFlowObjectCompareHolderTest {
         rightValue.setScopes(mock(Scopes.class));
 
         ScopesCompareHolder scopesCompareHolder = mock(ScopesCompareHolder.class);
-        when(scopesCompareHolder.compare(any(), any())).thenReturn(new NodeCompareResult());
+        when(scopesCompareHolder.compare(any(), any(), any(), any())).thenReturn(new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL));
         OAuthFlowObjectCompareHolder oAuthFlowObjectCompareHolder = new OAuthFlowObjectCompareHolder(scopesCompareHolder);
         OAuthFlowObjectCompareHolder spyOAuthFlowsObjectCompareHolder = spy(oAuthFlowObjectCompareHolder);
 
-        spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue);
+        spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         verify(spyOAuthFlowsObjectCompareHolder).leafCompare(eq(leftValue.getAuthorizationUrl()), eq(rightValue.getAuthorizationUrl()), eq("AuthorizationUrl"), eq(CompareCriticalType.NONE), eq(CompareCriticalType.CRITICAL), eq(CompareCriticalType.CRITICAL), eq(CompareCriticalType.CRITICAL), any());
         verify(spyOAuthFlowsObjectCompareHolder).leafCompare(eq(leftValue.getTokenUrl()), eq(rightValue.getTokenUrl()), eq("TokenUrl"), eq(CompareCriticalType.NONE), eq(CompareCriticalType.CRITICAL), eq(CompareCriticalType.CRITICAL), eq(CompareCriticalType.CRITICAL), any());
         verify(spyOAuthFlowsObjectCompareHolder).leafCompare(eq(leftValue.getRefreshUrl()), eq(rightValue.getRefreshUrl()), eq("RefreshUrl"), eq(CompareCriticalType.NONE), eq(CompareCriticalType.CRITICAL), eq(CompareCriticalType.CRITICAL), eq(CompareCriticalType.CRITICAL), any());
-        verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getScopes()), eq(rightValue.getScopes()), eq("Scopes"), eq(scopesCompareHolder), any());
+        verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getScopes()), eq(rightValue.getScopes()), eq("Scopes"), eq(scopesCompareHolder), any(), any(), any());
 
 
     }

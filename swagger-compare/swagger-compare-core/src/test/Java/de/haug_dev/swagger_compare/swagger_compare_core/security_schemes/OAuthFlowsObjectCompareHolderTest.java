@@ -1,5 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.security_schemes;
 
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.security.OAuthFlow;
@@ -22,12 +23,12 @@ public class OAuthFlowsObjectCompareHolderTest {
         OAuthFlows rightValue = null;
 
         OAuthFlowObjectCompareHolder oAuthFlowObjectCompareHolder = mock(OAuthFlowObjectCompareHolder.class);
-        when(oAuthFlowObjectCompareHolder.compare(any(), any())).thenReturn(new NodeCompareResult());
+        when(oAuthFlowObjectCompareHolder.compare(any(), any(), any(), any())).thenReturn(new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL));
         OAuthFlowsObjectCompareHolder oAuthFlowsObjectCompareHolder = new OAuthFlowsObjectCompareHolder(oAuthFlowObjectCompareHolder);
         OAuthFlowsObjectCompareHolder spyOAuthFlowsObjectCompareHolder = spy(oAuthFlowsObjectCompareHolder);
 
-        NodeCompareResult expected = new NodeCompareResult();
-        ICompareResult actual = spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue);
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        ICompareResult actual = spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue,CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -46,16 +47,16 @@ public class OAuthFlowsObjectCompareHolderTest {
         rightValue.setPassword(mock(OAuthFlow.class));
 
         OAuthFlowObjectCompareHolder oAuthFlowObjectCompareHolder = mock(OAuthFlowObjectCompareHolder.class);
-        when(oAuthFlowObjectCompareHolder.compare(any(), any())).thenReturn(new NodeCompareResult());
+        when(oAuthFlowObjectCompareHolder.compare(any(), any(), any(), any())).thenReturn(new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL));
         OAuthFlowsObjectCompareHolder oAuthFlowsObjectCompareHolder = new OAuthFlowsObjectCompareHolder(oAuthFlowObjectCompareHolder);
         OAuthFlowsObjectCompareHolder spyOAuthFlowsObjectCompareHolder = spy(oAuthFlowsObjectCompareHolder);
         
-        spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue);
+        spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
-        Mockito.verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getImplicit()), eq(rightValue.getImplicit()), eq("Implicit"), eq(oAuthFlowObjectCompareHolder), any());
-        Mockito.verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getPassword()), eq(rightValue.getPassword()), eq("Password"), eq(oAuthFlowObjectCompareHolder), any());
-        Mockito.verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getClientCredentials()), eq(rightValue.getClientCredentials()), eq("ClientCredentials"), eq(oAuthFlowObjectCompareHolder), any());
-        Mockito.verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getAuthorizationCode()), eq(rightValue.getAuthorizationCode()), eq("AuthorizationCode"), eq(oAuthFlowObjectCompareHolder), any());
+        Mockito.verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getImplicit()), eq(rightValue.getImplicit()), eq("Implicit"), eq(oAuthFlowObjectCompareHolder), any(), any(), any());
+        Mockito.verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getPassword()), eq(rightValue.getPassword()), eq("Password"), eq(oAuthFlowObjectCompareHolder), any(), any(), any());
+        Mockito.verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getClientCredentials()), eq(rightValue.getClientCredentials()), eq("ClientCredentials"), eq(oAuthFlowObjectCompareHolder), any(), any(), any());
+        Mockito.verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getAuthorizationCode()), eq(rightValue.getAuthorizationCode()), eq("AuthorizationCode"), eq(oAuthFlowObjectCompareHolder), any(), any(), any());
 
     }
 }

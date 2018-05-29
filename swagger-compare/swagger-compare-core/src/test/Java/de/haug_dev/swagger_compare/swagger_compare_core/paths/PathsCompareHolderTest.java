@@ -27,11 +27,11 @@ public class PathsCompareHolderTest {
         ICompareResult result1 = new LeafCompareResult(pathItemLeft, pathItemRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
 
         PathItemCompareHolder pathItemCompareHolder = Mockito.mock(PathItemCompareHolder.class);
-        Mockito.when(pathItemCompareHolder.compare(pathItemLeft, pathItemRight)).thenReturn(result1);
+        Mockito.when(pathItemCompareHolder.compare(pathItemLeft, pathItemRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(result1);
 
         PathsCompareHolder pathsCompareHolder = new PathsCompareHolder(pathItemCompareHolder);
 
-        NodeCompareResult actual = (NodeCompareResult) pathsCompareHolder.compare(pathsLeft, pathsRight);
+        NodeCompareResult actual = (NodeCompareResult) pathsCompareHolder.compare(pathsLeft, pathsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         assertEquals(result1, actual.getValues().get("/test/{test2}"));
 
     }
@@ -48,11 +48,11 @@ public class PathsCompareHolderTest {
         ICompareResult result1 = new LeafCompareResult(null, pathItemRight, CompareResultType.CREATED, CompareCriticalType.INFO);
 
         PathItemCompareHolder pathItemCompareHolder = Mockito.mock(PathItemCompareHolder.class);
-        Mockito.when(pathItemCompareHolder.compare(null, pathItemRight)).thenReturn(result1);
+        Mockito.when(pathItemCompareHolder.compare(null, pathItemRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(result1);
 
         PathsCompareHolder pathsCompareHolder = new PathsCompareHolder(pathItemCompareHolder);
 
-        NodeCompareResult actual = (NodeCompareResult) pathsCompareHolder.compare(pathsLeft, pathsRight);
+        NodeCompareResult actual = (NodeCompareResult) pathsCompareHolder.compare(pathsLeft, pathsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         assertEquals(result1, actual.getValues().get("/test/{test2}"));
 
     }
@@ -69,11 +69,11 @@ public class PathsCompareHolderTest {
         ICompareResult result1 = new LeafCompareResult(pathItem, null, CompareResultType.CREATED, CompareCriticalType.INFO);
 
         PathItemCompareHolder pathItemCompareHolder = Mockito.mock(PathItemCompareHolder.class);
-        Mockito.when(pathItemCompareHolder.compare(pathItem, null)).thenReturn(result1);
+        Mockito.when(pathItemCompareHolder.compare(pathItem, null, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(result1);
 
         PathsCompareHolder pathsCompareHolder = new PathsCompareHolder(pathItemCompareHolder);
 
-        NodeCompareResult actual = (NodeCompareResult) pathsCompareHolder.compare(pathsLeft, pathsRight);
+        NodeCompareResult actual = (NodeCompareResult) pathsCompareHolder.compare(pathsLeft, pathsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         assertEquals(result1, actual.getValues().get("/test/{test2}"));
 
     }

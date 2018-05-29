@@ -1,5 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.security_schemes;
 
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.security.SecurityScheme;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 
 public class SecuritySchemesCompareHolderTest {
@@ -22,9 +24,9 @@ public class SecuritySchemesCompareHolderTest {
         SecuritySchemeCompareHolder securitySchemeCompareHolder = Mockito.mock(SecuritySchemeCompareHolder.class);
         SecuritySchemesCompareHolder securitySchemesCompareHolder = new SecuritySchemesCompareHolder(securitySchemeCompareHolder);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
-        ICompareResult actual = securitySchemesCompareHolder.compare(left, right);
+        ICompareResult actual = securitySchemesCompareHolder.compare(left, right, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
 
@@ -39,11 +41,11 @@ public class SecuritySchemesCompareHolderTest {
         SecuritySchemesCompareHolder securitySchemesCompareHolder = new SecuritySchemesCompareHolder(securitySchemeCompareHolder);
         SecuritySchemesCompareHolder spySecuritySchemesCompareHolder = Mockito.spy(securitySchemesCompareHolder);
 
-        NodeCompareResult expected = new NodeCompareResult();
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
-        ICompareResult actual = spySecuritySchemesCompareHolder.compare(left, right);
+        ICompareResult actual = spySecuritySchemesCompareHolder.compare(left, right, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
-        Mockito.verify(spySecuritySchemesCompareHolder).referableCompare(eq(left), eq(right), eq(securitySchemeCompareHolder));
+        Mockito.verify(spySecuritySchemesCompareHolder).referableCompare(eq(left), eq(right), eq(securitySchemeCompareHolder), any(), any());
         assertEquals(expected, actual);
     }
 

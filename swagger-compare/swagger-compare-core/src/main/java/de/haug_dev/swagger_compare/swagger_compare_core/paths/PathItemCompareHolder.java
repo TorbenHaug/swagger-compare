@@ -40,21 +40,21 @@ public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
     }
 
     @Override
-    public ICompareResult compare(PathItem left, PathItem right) {
-        NodeCompareResult result = new NodeCompareResult();
+    public ICompareResult compare(PathItem left, PathItem right, CompareCriticalType created, CompareCriticalType deleted) {
+        NodeCompareResult result = new NodeCompareResult(created, deleted);
         PathItem pathItemLeft = left == null ? new PathItem() : left;
         PathItem pathItemRight = right == null ? new PathItem() : right;
         this.leafCompare(pathItemLeft.get$ref(), pathItemRight.get$ref(), "Ref", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL,CompareCriticalType.CRITICAL, result);
         this.leafCompare(pathItemLeft.getSummary(), pathItemRight.getSummary(), "Summary", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO,CompareCriticalType.INFO, result);
         this.leafCompare(pathItemLeft.getDescription(), pathItemRight.getDescription(), "Description", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO,CompareCriticalType.INFO, result);
-        this.nodeCompare(pathItemLeft.getGet(), pathItemRight.getGet(), "Get", operationCompareHolder, result);
-        this.nodeCompare(pathItemLeft.getPut(), pathItemRight.getPut(), "Put", operationCompareHolder, result);
-        this.nodeCompare(pathItemLeft.getPost(), pathItemRight.getPost(), "Post", operationCompareHolder, result);
-        this.nodeCompare(pathItemLeft.getDelete(), pathItemRight.getDelete(), "Delete", operationCompareHolder, result);
-        this.nodeCompare(pathItemLeft.getOptions(), pathItemRight.getOptions(), "Options", operationCompareHolder, result);
-        this.nodeCompare(pathItemLeft.getHead(), pathItemRight.getHead(), "Head", operationCompareHolder, result);
-        this.nodeCompare(pathItemLeft.getPatch(), pathItemRight.getPatch(), "Patch", operationCompareHolder, result);
-        this.nodeCompare(pathItemLeft.getTrace(), pathItemRight.getTrace(), "Trace", operationCompareHolder, result);
+        this.nodeCompare(pathItemLeft.getGet(), pathItemRight.getGet(), "Get", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(pathItemLeft.getPut(), pathItemRight.getPut(), "Put", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(pathItemLeft.getPost(), pathItemRight.getPost(), "Post", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(pathItemLeft.getDelete(), pathItemRight.getDelete(), "Delete", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(pathItemLeft.getOptions(), pathItemRight.getOptions(), "Options", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(pathItemLeft.getHead(), pathItemRight.getHead(), "Head", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(pathItemLeft.getPatch(), pathItemRight.getPatch(), "Patch", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(pathItemLeft.getTrace(), pathItemRight.getTrace(), "Trace", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         Map<String, Server> serversLeft = new HashMap<>();
         if(pathItemLeft.getServers() != null) {
@@ -68,7 +68,7 @@ public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
                 serversRight.put(v.getUrl(), v);
             });
         }
-        this.nodeCompare(serversLeft, serversRight, "Servers", serversCompareHolder, result);
+        this.nodeCompare(serversLeft, serversRight, "Servers", serversCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         Map<String, Parameter> parametersLeft = new HashMap<>();
         if(pathItemLeft.getParameters() != null) {
@@ -87,7 +87,7 @@ public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
             });
         }
         parametersCompareHolder.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
-        this.nodeCompare(parametersLeft, parametersRight, "Parameters", parametersCompareHolder, result);
+        this.nodeCompare(parametersLeft, parametersRight, "Parameters", parametersCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         return result;
     }
 }
