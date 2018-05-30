@@ -7,7 +7,6 @@ import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.examples.Example;
 import org.springframework.stereotype.Component;
 
-@Component
 public class ExampleCompareHolder extends AbstractCompareHolder<Example> {
 
     @Override
@@ -18,7 +17,7 @@ public class ExampleCompareHolder extends AbstractCompareHolder<Example> {
         this.leafCompare(leftValue.get$ref(), rightValue.get$ref(), "Ref", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
         this.leafCompare(leftValue.getSummary(), rightValue.getSummary(), "Summary", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
         this.leafCompare(leftValue.getDescription(), rightValue.getDescription(), "Description", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
-        this.leafCompare(leftValue.getValue(), rightValue.getValue(),"Value", CompareCriticalType.NONE, CompareCriticalType.WARNING, CompareCriticalType.WARNING, CompareCriticalType.WARNING, result);
+        this.leafCompare(leftValue.getValue(), rightValue.getValue(), "Value", CompareCriticalType.NONE, CompareCriticalType.WARNING, CompareCriticalType.WARNING, CompareCriticalType.WARNING, result);
         this.leafCompare(leftValue.getExternalValue(), rightValue.getExternalValue(), "ExternalValue", CompareCriticalType.NONE, CompareCriticalType.WARNING, CompareCriticalType.WARNING, CompareCriticalType.WARNING, result);
         return result;
     }

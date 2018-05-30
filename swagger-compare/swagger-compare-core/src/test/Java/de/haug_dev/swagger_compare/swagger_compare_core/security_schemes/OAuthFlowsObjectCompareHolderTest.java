@@ -1,5 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.security_schemes;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
@@ -8,12 +9,10 @@ import io.swagger.v3.oas.models.security.OAuthFlows;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class OAuthFlowsObjectCompareHolderTest {
 
@@ -24,11 +23,13 @@ public class OAuthFlowsObjectCompareHolderTest {
 
         OAuthFlowObjectCompareHolder oAuthFlowObjectCompareHolder = mock(OAuthFlowObjectCompareHolder.class);
         when(oAuthFlowObjectCompareHolder.compare(any(), any(), any(), any())).thenReturn(new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL));
-        OAuthFlowsObjectCompareHolder oAuthFlowsObjectCompareHolder = new OAuthFlowsObjectCompareHolder(oAuthFlowObjectCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getOAuthFlowObjectCompareHolder()).thenReturn(oAuthFlowObjectCompareHolder);
+        OAuthFlowsObjectCompareHolder oAuthFlowsObjectCompareHolder = new OAuthFlowsObjectCompareHolder(compareHolderFactory);
         OAuthFlowsObjectCompareHolder spyOAuthFlowsObjectCompareHolder = spy(oAuthFlowsObjectCompareHolder);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        ICompareResult actual = spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue,CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        ICompareResult actual = spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -48,9 +49,11 @@ public class OAuthFlowsObjectCompareHolderTest {
 
         OAuthFlowObjectCompareHolder oAuthFlowObjectCompareHolder = mock(OAuthFlowObjectCompareHolder.class);
         when(oAuthFlowObjectCompareHolder.compare(any(), any(), any(), any())).thenReturn(new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL));
-        OAuthFlowsObjectCompareHolder oAuthFlowsObjectCompareHolder = new OAuthFlowsObjectCompareHolder(oAuthFlowObjectCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getOAuthFlowObjectCompareHolder()).thenReturn(oAuthFlowObjectCompareHolder);
+        OAuthFlowsObjectCompareHolder oAuthFlowsObjectCompareHolder = new OAuthFlowsObjectCompareHolder(compareHolderFactory);
         OAuthFlowsObjectCompareHolder spyOAuthFlowsObjectCompareHolder = spy(oAuthFlowsObjectCompareHolder);
-        
+
         spyOAuthFlowsObjectCompareHolder.compare(leftValue, rightValue, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         Mockito.verify(spyOAuthFlowsObjectCompareHolder).nodeCompare(eq(leftValue.getImplicit()), eq(rightValue.getImplicit()), eq("Implicit"), eq(oAuthFlowObjectCompareHolder), any(), any(), any());

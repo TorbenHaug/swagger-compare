@@ -1,5 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.callbacks;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.callbacks.Callback;
 import org.junit.Test;
@@ -8,9 +9,11 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CallbacksCompareHolderTest {
 
@@ -43,7 +46,10 @@ public class CallbacksCompareHolderTest {
         expected.put("callbackLeft2", compareResult3);
 
 
-        CallbacksCompareHolder callbacksCompareHolder = new CallbacksCompareHolder(callbackCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getCallbackCompareHolder()).thenReturn(callbackCompareHolder);
+
+        CallbacksCompareHolder callbacksCompareHolder = new CallbacksCompareHolder(compareHolderFactory);
         ICompareResult actual = callbacksCompareHolder.compare(callbacksLeft, callbacksRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);

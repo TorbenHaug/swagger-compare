@@ -1,61 +1,48 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.security_schemes.SecuritySchemesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.callbacks.CallbacksCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.examples.ExamplesCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.headers.HeadersCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.links.LinksCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.request_bodies.RequestBodiesCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.responses.ResponsesCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.schemas.SchemasCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.security_schemes.SecuritySchemesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.Components;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
-@Component
 public class ComponentsCompareHolder extends AbstractCompareHolder<Components> {
 
-    private final SchemasCompareHolder schemasCompareHolder;
-    private final ResponsesCompareHolder responsesCompareHolder;
-    private final ParametersCompareHolder parametersCompareHolder;
-    private final ExamplesCompareHolder examplesCompareHolder;
-    private final RequestBodiesCompareHolder requestBodiesCompareHolder;
-    private final HeadersCompareHolder headersCompareHolder;
-    private final SecuritySchemesCompareHolder securitySchemesCompareHolder;
-    private final LinksCompareHolder linksCompareHolder;
-    private final CallbacksCompareHolder callbacksCompareHolder;
+    private CompareHolderFactory compareHolderFactory;
 
-    @Autowired
-    public ComponentsCompareHolder(
-            SchemasCompareHolder schemasCompareHolder,
-            ResponsesCompareHolder responsesCompareHolder,
-            ParametersCompareHolder parametersCompareHolder,
-            ExamplesCompareHolder examplesCompareHolder,
-            RequestBodiesCompareHolder requestBodiesCompareHolder,
-            HeadersCompareHolder headersCompareHolder,
-            SecuritySchemesCompareHolder securitySchemesCompareHolder,
-            LinksCompareHolder linksCompareHolder,
-            CallbacksCompareHolder callbacksCompareHolder
-    ){
-
-        this.schemasCompareHolder = schemasCompareHolder;
-        this.responsesCompareHolder = responsesCompareHolder;
-        this.parametersCompareHolder = parametersCompareHolder;
-        this.examplesCompareHolder = examplesCompareHolder;
-        this.requestBodiesCompareHolder = requestBodiesCompareHolder;
-        this.headersCompareHolder = headersCompareHolder;
-        this.securitySchemesCompareHolder = securitySchemesCompareHolder;
-        this.linksCompareHolder = linksCompareHolder;
-        this.callbacksCompareHolder = callbacksCompareHolder;
+    public ComponentsCompareHolder(CompareHolderFactory compareHolderFactory) {
+        this.compareHolderFactory = compareHolderFactory;
     }
 
     @Override
     public ICompareResult compare(Components left, Components right, CompareCriticalType created, CompareCriticalType deleted) {
         Components leftValue = left == null ? new Components() : left;
         Components rightValue = right == null ? new Components() : right;
+
+        SchemasCompareHolder schemasCompareHolder = compareHolderFactory.getSchemasCompareHolder();
+        ResponsesCompareHolder responsesCompareHolder = compareHolderFactory.getResponsesCompareHolder();
+        ParametersCompareHolder parametersCompareHolder = compareHolderFactory.getParametersCompareHolder();
+        ExamplesCompareHolder examplesCompareHolder = compareHolderFactory.getExamplesCompareHolder();
+        RequestBodiesCompareHolder requestBodiesCompareHolder = compareHolderFactory.getRequestBodiesCompareHolder();
+        HeadersCompareHolder headersCompareHolder = compareHolderFactory.getHeadersCompareHolder();
+        SecuritySchemesCompareHolder securitySchemesCompareHolder = compareHolderFactory.getSecuritySchemesCompareHolder();
+        LinksCompareHolder linksCompareHolder = compareHolderFactory.getLinksCompareHolder();
+        CallbacksCompareHolder callbacksCompareHolder = compareHolderFactory.getCallbacksCompareHolder();
+
         NodeCompareResult result = new NodeCompareResult(created, deleted);
 
         this.nodeCompare(leftValue.getSchemas(), rightValue.getSchemas(), "Schemas", schemasCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getResponses(), rightValue.getResponses(), "Responses", responsesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        parametersCompareHolder.setNormalizedParameterNames(new DualHashBidiMap<>(), new DualHashBidiMap<>());
         this.nodeCompare(leftValue.getParameters(), rightValue.getParameters(), "Parameters", parametersCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getExamples(), rightValue.getExamples(), "Examples", examplesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getRequestBodies(), rightValue.getRequestBodies(), "RequestBodies", requestBodiesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);

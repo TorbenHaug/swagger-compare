@@ -2,37 +2,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>de.haug-dev.swagger-compare</groupId>
-        <artifactId>swagger-compare-root</artifactId>
-        <version>0.2.0-SNAPSHOT</version>
-    </parent>
-    
-    <artifactId>swagger-compare-core</artifactId>
-    <packaging>jar</packaging>
+  <parent>
+    <groupId>de.haug-dev.swagger-compare</groupId>
+    <artifactId>swagger-compare-root</artifactId>
+    <version>0.2.0-SNAPSHOT</version>
+  </parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>io.swagger.parser.v3</groupId>
-            <artifactId>swagger-parser</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>4.1</version>
-        </dependency>
-        <dependency>
-            <groupId>de.haug-dev.swagger-compare</groupId>
-            <artifactId>swagger-compare-datatypes</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+  <artifactId>swagger-compare-core</artifactId>
+  <packaging>jar</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.swagger.parser.v3</groupId>
+      <artifactId>swagger-parser</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>de.haug-dev.swagger-compare</groupId>
+      <artifactId>swagger-compare-datatypes</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 
 </project>
 

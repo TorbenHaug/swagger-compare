@@ -1,7 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.parameters;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParameterCompareHolder;
-import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import org.apache.commons.collections4.BidiMap;
@@ -12,9 +11,11 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ParametersCompareHolderTest {
 
@@ -40,7 +41,10 @@ public class ParametersCompareHolderTest {
         BidiMap<String, String> normalizedNamesRight = new DualHashBidiMap<>();
         normalizedNamesRight.put("var1", "nameRight");
 
-        ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(parameterCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getParameterCompareHolder()).thenReturn(parameterCompareHolder);
+
+        ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(compareHolderFactory);
         parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
@@ -75,7 +79,10 @@ public class ParametersCompareHolderTest {
         BidiMap<String, String> normalizedNamesRight = new DualHashBidiMap<>();
         normalizedNamesRight.put("var2", "nameRight");
 
-        ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(parameterCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getParameterCompareHolder()).thenReturn(parameterCompareHolder);
+
+        ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(compareHolderFactory);
         parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
@@ -109,7 +116,10 @@ public class ParametersCompareHolderTest {
 
         BidiMap<String, String> normalizedNamesRight = new DualHashBidiMap<>();
 
-        ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(parameterCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getParameterCompareHolder()).thenReturn(parameterCompareHolder);
+
+        ParametersCompareHolder parametersCompareHolder = new ParametersCompareHolder(compareHolderFactory);
         parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);

@@ -4,7 +4,7 @@ import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.examples.Example;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ExampleCompareHolderTest {
 
@@ -47,7 +47,7 @@ public class ExampleCompareHolderTest {
 
         assertEquals(expected, actual);
     }
-    
+
     @Test
     public void compareChangedValues() {
         String refLeft = "#/components/examples/refLeft";

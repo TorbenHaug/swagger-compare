@@ -8,7 +8,9 @@ import io.swagger.v3.oas.models.Paths;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class OpenAPICompareHolderTest {
 
@@ -23,8 +25,8 @@ public class OpenAPICompareHolderTest {
         Mockito.when(openAPILeft.getPaths()).thenReturn(pathsLeft);
         Mockito.when(openAPIRight.getPaths()).thenReturn(pathsRight);
 
-        Components componentsLeft =  Mockito.mock(Components.class);
-        Components componentsRight =  Mockito.mock(Components.class);
+        Components componentsLeft = Mockito.mock(Components.class);
+        Components componentsRight = Mockito.mock(Components.class);
 
         Mockito.when(openAPILeft.getComponents()).thenReturn(componentsLeft);
         Mockito.when(openAPIRight.getComponents()).thenReturn(componentsRight);
@@ -38,7 +40,11 @@ public class OpenAPICompareHolderTest {
         ComponentsCompareHolder componentsCompareHolder = Mockito.mock(ComponentsCompareHolder.class);
         Mockito.when(componentsCompareHolder.compare(componentsLeft, componentsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(componentsCompareResult);
 
-        CompareHolder openAPICompareHolder = new CompareHolder(pathsCompareHolder, componentsCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getPathsCompareHolder()).thenReturn(pathsCompareHolder);
+        when(compareHolderFactory.getComponentsCompareHolder()).thenReturn(componentsCompareHolder);
+
+        CompareHolder openAPICompareHolder = new CompareHolder(compareHolderFactory);
 
         ICompareResult actual = openAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -58,8 +64,8 @@ public class OpenAPICompareHolderTest {
         Mockito.when(openAPILeft.getPaths()).thenReturn(null);
         Mockito.when(openAPIRight.getPaths()).thenReturn(pathsRight);
 
-        Components componentsLeft =  Mockito.mock(Components.class);
-        Components componentsRight =  Mockito.mock(Components.class);
+        Components componentsLeft = Mockito.mock(Components.class);
+        Components componentsRight = Mockito.mock(Components.class);
 
         Mockito.when(openAPILeft.getComponents()).thenReturn(null);
         Mockito.when(openAPIRight.getComponents()).thenReturn(componentsRight);
@@ -73,7 +79,11 @@ public class OpenAPICompareHolderTest {
         ComponentsCompareHolder componentsCompareHolder = Mockito.mock(ComponentsCompareHolder.class);
         Mockito.when(componentsCompareHolder.compare(null, componentsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(componentsCompareResult);
 
-        CompareHolder openAPICompareHolder = new CompareHolder(pathsCompareHolder, componentsCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getPathsCompareHolder()).thenReturn(pathsCompareHolder);
+        when(compareHolderFactory.getComponentsCompareHolder()).thenReturn(componentsCompareHolder);
+
+        CompareHolder openAPICompareHolder = new CompareHolder(compareHolderFactory);
 
         ICompareResult actual = openAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -93,8 +103,8 @@ public class OpenAPICompareHolderTest {
         Mockito.when(openAPILeft.getPaths()).thenReturn(pathsLeft);
         Mockito.when(openAPIRight.getPaths()).thenReturn(null);
 
-        Components componentsLeft =  Mockito.mock(Components.class);
-        Components componentsRight =  Mockito.mock(Components.class);
+        Components componentsLeft = Mockito.mock(Components.class);
+        Components componentsRight = Mockito.mock(Components.class);
 
         Mockito.when(openAPILeft.getComponents()).thenReturn(componentsLeft);
         Mockito.when(openAPIRight.getComponents()).thenReturn(null);
@@ -108,7 +118,11 @@ public class OpenAPICompareHolderTest {
         ComponentsCompareHolder componentsCompareHolder = Mockito.mock(ComponentsCompareHolder.class);
         Mockito.when(componentsCompareHolder.compare(componentsLeft, null, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(componentsCompareResult);
 
-        CompareHolder openAPICompareHolder = new CompareHolder(pathsCompareHolder, componentsCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getPathsCompareHolder()).thenReturn(pathsCompareHolder);
+        when(compareHolderFactory.getComponentsCompareHolder()).thenReturn(componentsCompareHolder);
+
+        CompareHolder openAPICompareHolder = new CompareHolder(compareHolderFactory);
 
         ICompareResult actual = openAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -128,8 +142,8 @@ public class OpenAPICompareHolderTest {
         Mockito.when(openAPILeft.getPaths()).thenReturn(null);
         Mockito.when(openAPIRight.getPaths()).thenReturn(null);
 
-        Components componentsLeft =  Mockito.mock(Components.class);
-        Components componentsRight =  Mockito.mock(Components.class);
+        Components componentsLeft = Mockito.mock(Components.class);
+        Components componentsRight = Mockito.mock(Components.class);
 
         Mockito.when(openAPILeft.getComponents()).thenReturn(null);
         Mockito.when(openAPIRight.getComponents()).thenReturn(null);
@@ -138,7 +152,11 @@ public class OpenAPICompareHolderTest {
 
         ComponentsCompareHolder componentsCompareHolder = Mockito.mock(ComponentsCompareHolder.class);
 
-        CompareHolder openAPICompareHolder = new CompareHolder(pathsCompareHolder, componentsCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getPathsCompareHolder()).thenReturn(pathsCompareHolder);
+        when(compareHolderFactory.getComponentsCompareHolder()).thenReturn(componentsCompareHolder);
+
+        CompareHolder openAPICompareHolder = new CompareHolder(compareHolderFactory);
 
         ICompareResult actual = openAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 

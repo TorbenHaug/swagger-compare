@@ -1,5 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.callbacks;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
 import de.haug_dev.swagger_compare.swagger_compare_core.paths.PathItemCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.PathItem;
@@ -10,6 +11,8 @@ import org.mockito.Mockito;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CallbackCompareHolderTest {
 
@@ -41,8 +44,9 @@ public class CallbackCompareHolderTest {
         expected.put("callbackRight2", compareResult2);
         expected.put("callbackLeft2", compareResult3);
 
-
-        CallbackCompareHolder callbackCompareHolder = new CallbackCompareHolder(pathItemCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getPathItemCompareHolder()).thenReturn(pathItemCompareHolder);
+        CallbackCompareHolder callbackCompareHolder = new CallbackCompareHolder(compareHolderFactory);
         ICompareResult actual = callbackCompareHolder.compare(callbackLeft, callbackRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);

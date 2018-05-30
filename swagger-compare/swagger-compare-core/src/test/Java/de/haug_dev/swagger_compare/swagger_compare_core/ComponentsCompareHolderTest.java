@@ -1,17 +1,22 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.security_schemes.SecuritySchemesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.callbacks.CallbacksCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.examples.ExamplesCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.headers.HeadersCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.links.LinksCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.request_bodies.RequestBodiesCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.responses.ResponsesCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.schemas.SchemasCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.security_schemes.SecuritySchemesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.callbacks.Callback;
 import io.swagger.v3.oas.models.examples.Example;
 import io.swagger.v3.oas.models.headers.Header;
 import io.swagger.v3.oas.models.links.Link;
-import io.swagger.v3.oas.models.parameters.Parameter;;
-import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.parameters.RequestBody;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.security.SecurityScheme;
@@ -21,9 +26,13 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+;
 
 public class ComponentsCompareHolderTest {
 
@@ -164,16 +173,18 @@ public class ComponentsCompareHolderTest {
         expected.put("Links", linksCompareResult);
         expected.put("Callbacks", callbacksCompareResult);
 
-        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(
-                schemasCompareHolder,
-                responsesCompareHolder,
-                parametersCompareHolder,
-                examplesCompareHolder,
-                requestBodiesCompareHolder,
-                headersCompareHolder,
-                securitySchemesCompareHolder,
-                linksCompareHolder,
-                callbacksCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getSchemasCompareHolder()).thenReturn(schemasCompareHolder);
+        when(compareHolderFactory.getResponsesCompareHolder()).thenReturn(responsesCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
+        when(compareHolderFactory.getExamplesCompareHolder()).thenReturn(examplesCompareHolder);
+        when(compareHolderFactory.getRequestBodiesCompareHolder()).thenReturn(requestBodiesCompareHolder);
+        when(compareHolderFactory.getHeadersCompareHolder()).thenReturn(headersCompareHolder);
+        when(compareHolderFactory.getSecuritySchemesCompareHolder()).thenReturn(securitySchemesCompareHolder);
+        when(compareHolderFactory.getLinksCompareHolder()).thenReturn(linksCompareHolder);
+        when(compareHolderFactory.getCallbacksCompareHolder()).thenReturn(callbacksCompareHolder);
+
+        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(compareHolderFactory);
 
         ICompareResult actual = componentsCompareHolder.compare(componentsLeft, componentsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -300,16 +311,18 @@ public class ComponentsCompareHolderTest {
         expected.put("Links", linksCompareResult);
         expected.put("Callbacks", callbacksCompareResult);
 
-        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(
-                schemasCompareHolder,
-                responsesCompareHolder,
-                parametersCompareHolder,
-                examplesCompareHolder,
-                requestBodiesCompareHolder,
-                headersCompareHolder,
-                securitySchemesCompareHolder,
-                linksCompareHolder,
-                callbacksCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getSchemasCompareHolder()).thenReturn(schemasCompareHolder);
+        when(compareHolderFactory.getResponsesCompareHolder()).thenReturn(responsesCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
+        when(compareHolderFactory.getExamplesCompareHolder()).thenReturn(examplesCompareHolder);
+        when(compareHolderFactory.getRequestBodiesCompareHolder()).thenReturn(requestBodiesCompareHolder);
+        when(compareHolderFactory.getHeadersCompareHolder()).thenReturn(headersCompareHolder);
+        when(compareHolderFactory.getSecuritySchemesCompareHolder()).thenReturn(securitySchemesCompareHolder);
+        when(compareHolderFactory.getLinksCompareHolder()).thenReturn(linksCompareHolder);
+        when(compareHolderFactory.getCallbacksCompareHolder()).thenReturn(callbacksCompareHolder);
+
+        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(compareHolderFactory);
 
         ICompareResult actual = componentsCompareHolder.compare(componentsLeft, componentsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -436,16 +449,18 @@ public class ComponentsCompareHolderTest {
         expected.put("Links", linksCompareResult);
         expected.put("Callbacks", callbacksCompareResult);
 
-        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(
-                schemasCompareHolder,
-                responsesCompareHolder,
-                parametersCompareHolder,
-                examplesCompareHolder,
-                requestBodiesCompareHolder,
-                headersCompareHolder,
-                securitySchemesCompareHolder,
-                linksCompareHolder,
-                callbacksCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getSchemasCompareHolder()).thenReturn(schemasCompareHolder);
+        when(compareHolderFactory.getResponsesCompareHolder()).thenReturn(responsesCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
+        when(compareHolderFactory.getExamplesCompareHolder()).thenReturn(examplesCompareHolder);
+        when(compareHolderFactory.getRequestBodiesCompareHolder()).thenReturn(requestBodiesCompareHolder);
+        when(compareHolderFactory.getHeadersCompareHolder()).thenReturn(headersCompareHolder);
+        when(compareHolderFactory.getSecuritySchemesCompareHolder()).thenReturn(securitySchemesCompareHolder);
+        when(compareHolderFactory.getLinksCompareHolder()).thenReturn(linksCompareHolder);
+        when(compareHolderFactory.getCallbacksCompareHolder()).thenReturn(callbacksCompareHolder);
+
+        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(compareHolderFactory);
 
         ICompareResult actual = componentsCompareHolder.compare(componentsLeft, componentsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -572,16 +587,18 @@ public class ComponentsCompareHolderTest {
         expected.put("Links", linksCompareResult);
         expected.put("Callbacks", callbacksCompareResult);
 
-        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(
-                schemasCompareHolder,
-                responsesCompareHolder,
-                parametersCompareHolder,
-                examplesCompareHolder,
-                requestBodiesCompareHolder,
-                headersCompareHolder,
-                securitySchemesCompareHolder,
-                linksCompareHolder,
-                callbacksCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getSchemasCompareHolder()).thenReturn(schemasCompareHolder);
+        when(compareHolderFactory.getResponsesCompareHolder()).thenReturn(responsesCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
+        when(compareHolderFactory.getExamplesCompareHolder()).thenReturn(examplesCompareHolder);
+        when(compareHolderFactory.getRequestBodiesCompareHolder()).thenReturn(requestBodiesCompareHolder);
+        when(compareHolderFactory.getHeadersCompareHolder()).thenReturn(headersCompareHolder);
+        when(compareHolderFactory.getSecuritySchemesCompareHolder()).thenReturn(securitySchemesCompareHolder);
+        when(compareHolderFactory.getLinksCompareHolder()).thenReturn(linksCompareHolder);
+        when(compareHolderFactory.getCallbacksCompareHolder()).thenReturn(callbacksCompareHolder);
+
+        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(compareHolderFactory);
 
         ICompareResult actual = componentsCompareHolder.compare(componentsLeft, componentsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -708,16 +725,18 @@ public class ComponentsCompareHolderTest {
         expected.put("Links", linksCompareResult);
         expected.put("Callbacks", callbacksCompareResult);
 
-        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(
-                schemasCompareHolder,
-                responsesCompareHolder,
-                parametersCompareHolder,
-                examplesCompareHolder,
-                requestBodiesCompareHolder,
-                headersCompareHolder,
-                securitySchemesCompareHolder,
-                linksCompareHolder,
-                callbacksCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getSchemasCompareHolder()).thenReturn(schemasCompareHolder);
+        when(compareHolderFactory.getResponsesCompareHolder()).thenReturn(responsesCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
+        when(compareHolderFactory.getExamplesCompareHolder()).thenReturn(examplesCompareHolder);
+        when(compareHolderFactory.getRequestBodiesCompareHolder()).thenReturn(requestBodiesCompareHolder);
+        when(compareHolderFactory.getHeadersCompareHolder()).thenReturn(headersCompareHolder);
+        when(compareHolderFactory.getSecuritySchemesCompareHolder()).thenReturn(securitySchemesCompareHolder);
+        when(compareHolderFactory.getLinksCompareHolder()).thenReturn(linksCompareHolder);
+        when(compareHolderFactory.getCallbacksCompareHolder()).thenReturn(callbacksCompareHolder);
+
+        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(compareHolderFactory);
 
         ICompareResult actual = componentsCompareHolder.compare(componentsLeft, componentsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -817,23 +836,25 @@ public class ComponentsCompareHolderTest {
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
-        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(
-                schemasCompareHolder,
-                responsesCompareHolder,
-                parametersCompareHolder,
-                examplesCompareHolder,
-                requestBodiesCompareHolder,
-                headersCompareHolder,
-                securitySchemesCompareHolder,
-                linksCompareHolder,
-                callbacksCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getSchemasCompareHolder()).thenReturn(schemasCompareHolder);
+        when(compareHolderFactory.getResponsesCompareHolder()).thenReturn(responsesCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
+        when(compareHolderFactory.getExamplesCompareHolder()).thenReturn(examplesCompareHolder);
+        when(compareHolderFactory.getRequestBodiesCompareHolder()).thenReturn(requestBodiesCompareHolder);
+        when(compareHolderFactory.getHeadersCompareHolder()).thenReturn(headersCompareHolder);
+        when(compareHolderFactory.getSecuritySchemesCompareHolder()).thenReturn(securitySchemesCompareHolder);
+        when(compareHolderFactory.getLinksCompareHolder()).thenReturn(linksCompareHolder);
+        when(compareHolderFactory.getCallbacksCompareHolder()).thenReturn(callbacksCompareHolder);
+
+        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(compareHolderFactory);
 
         ICompareResult actual = componentsCompareHolder.compare(componentsLeft, componentsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
 
     }
-    
+
     @Test
     public void compareNoValuesSet2() {
         Map<String, Schema> schemasLeft = null;
@@ -926,16 +947,18 @@ public class ComponentsCompareHolderTest {
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
-        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(
-                schemasCompareHolder,
-                responsesCompareHolder,
-                parametersCompareHolder,
-                examplesCompareHolder,
-                requestBodiesCompareHolder,
-                headersCompareHolder,
-                securitySchemesCompareHolder,
-                linksCompareHolder,
-                callbacksCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getSchemasCompareHolder()).thenReturn(schemasCompareHolder);
+        when(compareHolderFactory.getResponsesCompareHolder()).thenReturn(responsesCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
+        when(compareHolderFactory.getExamplesCompareHolder()).thenReturn(examplesCompareHolder);
+        when(compareHolderFactory.getRequestBodiesCompareHolder()).thenReturn(requestBodiesCompareHolder);
+        when(compareHolderFactory.getHeadersCompareHolder()).thenReturn(headersCompareHolder);
+        when(compareHolderFactory.getSecuritySchemesCompareHolder()).thenReturn(securitySchemesCompareHolder);
+        when(compareHolderFactory.getLinksCompareHolder()).thenReturn(linksCompareHolder);
+        when(compareHolderFactory.getCallbacksCompareHolder()).thenReturn(callbacksCompareHolder);
+
+        ComponentsCompareHolder componentsCompareHolder = new ComponentsCompareHolder(compareHolderFactory);
 
         ICompareResult actual = componentsCompareHolder.compare(componentsLeft, componentsRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 

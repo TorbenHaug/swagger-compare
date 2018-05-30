@@ -1,17 +1,19 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.security_schemes;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.LeafCompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.security.OAuthFlows;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SecuritySchemeCompareHolderTest {
 
@@ -20,7 +22,11 @@ public class SecuritySchemeCompareHolderTest {
         SecurityScheme left = null;
         SecurityScheme right = null;
         OAuthFlowsObjectCompareHolder oAuthFlowsObjectCompareHolder = Mockito.mock(OAuthFlowsObjectCompareHolder.class);
-        SecuritySchemeCompareHolder securitySchemeCompareHolder = new SecuritySchemeCompareHolder(oAuthFlowsObjectCompareHolder);
+
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getOAuthFlowsObjectCompareHolder()).thenReturn(oAuthFlowsObjectCompareHolder);
+
+        SecuritySchemeCompareHolder securitySchemeCompareHolder = new SecuritySchemeCompareHolder(compareHolderFactory);
         SecuritySchemeCompareHolder spySecuritySchemeCompareHolder = Mockito.spy(securitySchemeCompareHolder);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
@@ -42,7 +48,7 @@ public class SecuritySchemeCompareHolderTest {
         leftValue.setBearerFormat("bearLeft");
         leftValue.setFlows(new OAuthFlows());
         leftValue.setOpenIdConnectUrl("urlLeft");
-        
+
         SecurityScheme rightValue = new SecurityScheme();
         rightValue.set$ref("refRight");
         rightValue.setType(SecurityScheme.Type.OPENIDCONNECT);
@@ -55,7 +61,11 @@ public class SecuritySchemeCompareHolderTest {
         rightValue.setOpenIdConnectUrl("urlRight");
         OAuthFlowsObjectCompareHolder oAuthFlowsObjectCompareHolder = Mockito.mock(OAuthFlowsObjectCompareHolder.class);
         Mockito.when(oAuthFlowsObjectCompareHolder.compare(any(), any(), any(), any())).thenReturn(new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL));
-        SecuritySchemeCompareHolder securitySchemeCompareHolder = new SecuritySchemeCompareHolder(oAuthFlowsObjectCompareHolder);
+
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getOAuthFlowsObjectCompareHolder()).thenReturn(oAuthFlowsObjectCompareHolder);
+
+        SecuritySchemeCompareHolder securitySchemeCompareHolder = new SecuritySchemeCompareHolder(compareHolderFactory);
         SecuritySchemeCompareHolder spySecuritySchemeCompareHolder = Mockito.spy(securitySchemeCompareHolder);
 
         spySecuritySchemeCompareHolder.compare(leftValue, rightValue, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);

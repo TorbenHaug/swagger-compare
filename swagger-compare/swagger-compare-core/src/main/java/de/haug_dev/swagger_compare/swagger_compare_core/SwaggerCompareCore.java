@@ -14,12 +14,12 @@ public class SwaggerCompareCore {
     private CompareHolder openAPICompareHolder;
 
     @Autowired
-    public SwaggerCompareCore(CompareHolder openAPICompareHolder) {
-        this.openAPICompareHolder = openAPICompareHolder;
+    public SwaggerCompareCore(CompareHolderFactory compareHolderFactory) {
+        this.openAPICompareHolder = compareHolderFactory.getOpenAPICompareHolder();
     }
 
 
-    public ICompareResult compare(OpenAPI left, OpenAPI right){
+    public ICompareResult compare(OpenAPI left, OpenAPI right) {
         Assert.notNull(left, "Left API must be set");
         Assert.notNull(right, "Right API must be set");
 

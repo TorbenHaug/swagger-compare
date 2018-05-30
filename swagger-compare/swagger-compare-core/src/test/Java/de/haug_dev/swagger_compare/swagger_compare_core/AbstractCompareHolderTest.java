@@ -7,7 +7,7 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AbstractCompareHolderTest {
 
@@ -135,7 +135,7 @@ public class AbstractCompareHolderTest {
         Map<String, Object> right = new HashMap<>();
         right.put("test", testObject);
 
-        ICompareResult expectedResult = new LeafCompareResult(left,right,CompareResultType.UNCHANGED, CompareCriticalType.INFO);
+        ICompareResult expectedResult = new LeafCompareResult(left, right, CompareResultType.UNCHANGED, CompareCriticalType.INFO);
         ICompareHolder<Map<String, Object>> nodeCompareHolder = Mockito.mock(ICompareHolder.class);
         Mockito.when(nodeCompareHolder.compare(left, right, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(expectedResult);
 
@@ -155,7 +155,7 @@ public class AbstractCompareHolderTest {
         Map<String, Object> right = new HashMap<>();
         left.put("test", testObject);
 
-        ICompareResult expectedResult = new LeafCompareResult(left,right,CompareResultType.UNCHANGED, CompareCriticalType.INFO);
+        ICompareResult expectedResult = new LeafCompareResult(left, right, CompareResultType.UNCHANGED, CompareCriticalType.INFO);
         ICompareHolder<Map<String, Object>> nodeCompareHolder = Mockito.mock(ICompareHolder.class);
         Mockito.when(nodeCompareHolder.compare(left, right, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(expectedResult);
 
@@ -176,7 +176,7 @@ public class AbstractCompareHolderTest {
         right.put("test", testObject);
         left.put("test", testObject);
 
-        ICompareResult expectedResult = new LeafCompareResult(left,right,CompareResultType.UNCHANGED, CompareCriticalType.INFO);
+        ICompareResult expectedResult = new LeafCompareResult(left, right, CompareResultType.UNCHANGED, CompareCriticalType.INFO);
         ICompareHolder<Map<String, Object>> nodeCompareHolder = Mockito.mock(ICompareHolder.class);
         Mockito.when(nodeCompareHolder.compare(left, right, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(expectedResult);
 
@@ -198,7 +198,7 @@ public class AbstractCompareHolderTest {
         right.put("test", testObject1);
         left.put("test", testObject2);
 
-        ICompareResult expectedResult = new LeafCompareResult(left,right,CompareResultType.UNCHANGED, CompareCriticalType.INFO);
+        ICompareResult expectedResult = new LeafCompareResult(left, right, CompareResultType.UNCHANGED, CompareCriticalType.INFO);
         ICompareHolder<Map<String, Object>> nodeCompareHolder = Mockito.mock(ICompareHolder.class);
         Mockito.when(nodeCompareHolder.compare(left, right, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(expectedResult);
 
@@ -219,7 +219,7 @@ public class AbstractCompareHolderTest {
         Map<String, Object> right = new HashMap<>();
         right.put("test", testObject1);
 
-        ICompareResult expectedResult = new LeafCompareResult(null,testObject1,CompareResultType.UNCHANGED, CompareCriticalType.INFO);
+        ICompareResult expectedResult = new LeafCompareResult(null, testObject1, CompareResultType.UNCHANGED, CompareCriticalType.INFO);
         ICompareHolder<Object> nodeCompareHolder = Mockito.mock(ICompareHolder.class);
         Mockito.when(nodeCompareHolder.compare(null, testObject1, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(expectedResult);
 
@@ -239,7 +239,7 @@ public class AbstractCompareHolderTest {
         Map<String, Object> right = new HashMap<>();
         left.put("test", testObject1);
 
-        ICompareResult expectedResult = new LeafCompareResult(testObject2,testObject1,CompareResultType.UNCHANGED, CompareCriticalType.INFO);
+        ICompareResult expectedResult = new LeafCompareResult(testObject2, testObject1, CompareResultType.UNCHANGED, CompareCriticalType.INFO);
         ICompareHolder<Object> nodeCompareHolder = Mockito.mock(ICompareHolder.class);
         Mockito.when(nodeCompareHolder.compare(testObject1, null, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(expectedResult);
 
@@ -260,7 +260,7 @@ public class AbstractCompareHolderTest {
         left.put("test", testObject1);
         right.put("test", testObject1);
 
-        ICompareResult expectedResult = new LeafCompareResult(testObject2,testObject1,CompareResultType.UNCHANGED, CompareCriticalType.INFO);
+        ICompareResult expectedResult = new LeafCompareResult(testObject2, testObject1, CompareResultType.UNCHANGED, CompareCriticalType.INFO);
         ICompareHolder<Object> nodeCompareHolder = Mockito.mock(ICompareHolder.class);
         Mockito.when(nodeCompareHolder.compare(testObject1, testObject1, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(expectedResult);
 
@@ -281,7 +281,7 @@ public class AbstractCompareHolderTest {
         left.put("test", testObject1);
         right.put("test", testObject2);
 
-        ICompareResult expectedResult = new LeafCompareResult(testObject2,testObject1,CompareResultType.UNCHANGED, CompareCriticalType.INFO);
+        ICompareResult expectedResult = new LeafCompareResult(testObject2, testObject1, CompareResultType.UNCHANGED, CompareCriticalType.INFO);
         ICompareHolder<Object> nodeCompareHolder = Mockito.mock(ICompareHolder.class);
         Mockito.when(nodeCompareHolder.compare(testObject1, testObject2, CompareCriticalType.INFO, CompareCriticalType.CRITICAL)).thenReturn(expectedResult);
 
@@ -326,7 +326,7 @@ public class AbstractCompareHolderTest {
 
         NodeCompareResult actual = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         compareHolder.leafCompare(left, right, "test", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.WARNING, CompareCriticalType.CRITICAL, actual);
-        LeafCompareResult expectedLeaf = new LeafCompareResult(left, right, CompareResultType.CREATED, CompareCriticalType.WARNING);
+        LeafCompareResult expectedLeaf = new LeafCompareResult(left, right, CompareResultType.CREATED, CompareCriticalType.INFO);
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("test", expectedLeaf);
 
@@ -338,10 +338,10 @@ public class AbstractCompareHolderTest {
         Object left = new Object();
         Object right = null;
 
-        NodeCompareResult actual = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        NodeCompareResult actual = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.WARNING);
         compareHolder.leafCompare(left, right, "test", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.WARNING, CompareCriticalType.CRITICAL, actual);
-        LeafCompareResult expectedLeaf = new LeafCompareResult(left, right, CompareResultType.DELETED, CompareCriticalType.CRITICAL);
-        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        LeafCompareResult expectedLeaf = new LeafCompareResult(left, right, CompareResultType.DELETED, CompareCriticalType.WARNING);
+        NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.WARNING);
         expected.put("test", expectedLeaf);
 
         assertEquals(expected, actual);
@@ -354,12 +354,13 @@ public class AbstractCompareHolderTest {
 
         NodeCompareResult actual = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         compareHolder.leafCompare(left, right, "test", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.WARNING, CompareCriticalType.CRITICAL, actual);
-        LeafCompareResult expectedLeaf = new LeafCompareResult(left, right, CompareResultType.CHANGED, CompareCriticalType.INFO);
+        LeafCompareResult expectedLeaf = new LeafCompareResult(left, right, CompareResultType.CHANGED, CompareCriticalType.CRITICAL);
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         expected.put("test", expectedLeaf);
 
         assertEquals(expected, actual);
     }
 
-    class TestCompareHolder extends AbstractCompareHolder<Object>{}
+    class TestCompareHolder extends AbstractCompareHolder<Object> {
+    }
 }

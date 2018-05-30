@@ -3,10 +3,9 @@ package de.haug_dev.swagger_compare.swagger_compare_core.security_schemes;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 public class ScopeCompareHolderTest {
 

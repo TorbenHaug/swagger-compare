@@ -1,37 +1,27 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.paths;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.*;
+import de.haug_dev.swagger_compare.swagger_compare_core.AbstractCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
 import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.servers.ServersCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.parameters.Parameter;
-import io.swagger.v3.oas.models.servers.Server;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
     private BidiMap<String, String> normalizedParameterNamesLeft = new DualHashBidiMap<>();
     private BidiMap<String, String> normalizedParameterNamesRight = new DualHashBidiMap<>();
-    private final OperationCompareHolder operationCompareHolder;
-    private final ServersCompareHolder serversCompareHolder;
-    private final ParametersCompareHolder parametersCompareHolder;
+    private CompareHolderFactory compareHolderFactory;
 
-    @Autowired
-    public PathItemCompareHolder(
-            OperationCompareHolder operationCompareHolder,
-            ServersCompareHolder serversCompareHolder,
-            ParametersCompareHolder parametersCompareHolder){
-        this.operationCompareHolder = operationCompareHolder;
-        this.serversCompareHolder = serversCompareHolder;
-        this.parametersCompareHolder = parametersCompareHolder;
+    public PathItemCompareHolder(CompareHolderFactory compareHolderFactory) {
+        this.compareHolderFactory = compareHolderFactory;
     }
 
     public void setNormalizedParameterNames(BidiMap<String, String> normalizedParameterNamesLeft, BidiMap<String, String> normalizedParameterNamesRight) {
@@ -44,45 +34,52 @@ public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
         NodeCompareResult result = new NodeCompareResult(created, deleted);
         PathItem pathItemLeft = left == null ? new PathItem() : left;
         PathItem pathItemRight = right == null ? new PathItem() : right;
-        this.leafCompare(pathItemLeft.get$ref(), pathItemRight.get$ref(), "Ref", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL,CompareCriticalType.CRITICAL, result);
-        this.leafCompare(pathItemLeft.getSummary(), pathItemRight.getSummary(), "Summary", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO,CompareCriticalType.INFO, result);
-        this.leafCompare(pathItemLeft.getDescription(), pathItemRight.getDescription(), "Description", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO,CompareCriticalType.INFO, result);
-        this.nodeCompare(pathItemLeft.getGet(), pathItemRight.getGet(), "Get", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        this.nodeCompare(pathItemLeft.getPut(), pathItemRight.getPut(), "Put", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        this.nodeCompare(pathItemLeft.getPost(), pathItemRight.getPost(), "Post", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        this.nodeCompare(pathItemLeft.getDelete(), pathItemRight.getDelete(), "Delete", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        this.nodeCompare(pathItemLeft.getOptions(), pathItemRight.getOptions(), "Options", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        this.nodeCompare(pathItemLeft.getHead(), pathItemRight.getHead(), "Head", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        this.nodeCompare(pathItemLeft.getPatch(), pathItemRight.getPatch(), "Patch", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        this.nodeCompare(pathItemLeft.getTrace(), pathItemRight.getTrace(), "Trace", operationCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
-        Map<String, Server> serversLeft = new HashMap<>();
-        if(pathItemLeft.getServers() != null) {
-            pathItemLeft.getServers().forEach((v) -> {
-                serversLeft.put(v.getUrl(), v);
-            });
-        }
-        Map<String, Server> serversRight = new HashMap<>();
-        if(pathItemRight.getServers() != null) {
-            pathItemRight.getServers().forEach((v) -> {
-                serversRight.put(v.getUrl(), v);
-            });
-        }
-        this.nodeCompare(serversLeft, serversRight, "Servers", serversCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        OperationCompareHolder operationCompareHolderGet = compareHolderFactory.getOperationCompareHolder();
+        OperationCompareHolder operationCompareHolderPut = compareHolderFactory.getOperationCompareHolder();
+        OperationCompareHolder operationCompareHolderPost = compareHolderFactory.getOperationCompareHolder();
+        OperationCompareHolder operationCompareHolderDelete = compareHolderFactory.getOperationCompareHolder();
+        OperationCompareHolder operationCompareHolderOptions = compareHolderFactory.getOperationCompareHolder();
+        OperationCompareHolder operationCompareHolderHead = compareHolderFactory.getOperationCompareHolder();
+        OperationCompareHolder operationCompareHolderPatch = compareHolderFactory.getOperationCompareHolder();
+        OperationCompareHolder operationCompareHolderTrace = compareHolderFactory.getOperationCompareHolder();
+        ServersCompareHolder serversCompareHolder = compareHolderFactory.getServersCompareHolder();
+        ParametersCompareHolder parametersCompareHolder = compareHolderFactory.getParametersCompareHolder();
+
+        this.leafCompare(pathItemLeft.get$ref(), pathItemRight.get$ref(), "Ref", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
+        this.leafCompare(pathItemLeft.getSummary(), pathItemRight.getSummary(), "Summary", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
+        this.leafCompare(pathItemLeft.getDescription(), pathItemRight.getDescription(), "Description", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
+        operationCompareHolderGet.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
+        this.nodeCompare(pathItemLeft.getGet(), pathItemRight.getGet(), "Get", operationCompareHolderGet, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        operationCompareHolderPut.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
+        this.nodeCompare(pathItemLeft.getPut(), pathItemRight.getPut(), "Put", operationCompareHolderPut, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        operationCompareHolderPost.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
+        this.nodeCompare(pathItemLeft.getPost(), pathItemRight.getPost(), "Post", operationCompareHolderPost, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        operationCompareHolderDelete.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
+        this.nodeCompare(pathItemLeft.getDelete(), pathItemRight.getDelete(), "Delete", operationCompareHolderDelete, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        operationCompareHolderOptions.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
+        this.nodeCompare(pathItemLeft.getOptions(), pathItemRight.getOptions(), "Options", operationCompareHolderOptions, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        operationCompareHolderHead.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
+        this.nodeCompare(pathItemLeft.getHead(), pathItemRight.getHead(), "Head", operationCompareHolderHead, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        operationCompareHolderPatch.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
+        this.nodeCompare(pathItemLeft.getPatch(), pathItemRight.getPatch(), "Patch", operationCompareHolderPatch, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        operationCompareHolderTrace.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
+        this.nodeCompare(pathItemLeft.getTrace(), pathItemRight.getTrace(), "Trace", operationCompareHolderTrace, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(pathItemLeft.getServers(), pathItemRight.getServers(), "Servers", serversCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         Map<String, Parameter> parametersLeft = new HashMap<>();
-        if(pathItemLeft.getParameters() != null) {
+        if (pathItemLeft.getParameters() != null) {
             pathItemLeft.getParameters().forEach((v) -> {
                 String normalizedName = normalizedParameterNamesLeft.getKey(v.getName());
-                String name = (normalizedName == null && !"path".equals(v.getIn())) ? v.getName() : normalizedName;
+                String name = (normalizedName == null) ? v.getName() : ("path".equals(v.getIn()) ? normalizedName : v.getName());
                 parametersLeft.put(v.getIn() + ":" + name, v);
             });
         }
         Map<String, Parameter> parametersRight = new HashMap<>();
-        if(pathItemRight.getParameters() != null) {
+        if (pathItemRight.getParameters() != null) {
             pathItemRight.getParameters().forEach((v) -> {
                 String normalizedName = normalizedParameterNamesRight.getKey(v.getName());
-                String name = (normalizedName == null && !"path".equals(v.getIn())) ? v.getName() : normalizedName;
+                String name = (normalizedName == null) ? v.getName() : ("path".equals(v.getIn()) ? normalizedName : v.getName());
                 parametersRight.put(v.getIn() + ":" + name, v);
             });
         }

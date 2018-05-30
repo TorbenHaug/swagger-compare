@@ -1,12 +1,12 @@
 package de.haug_dev.swagger_compare.swagger_compare_core.paths;
 
-import de.haug_dev.swagger_compare.swagger_compare_core.*;
+import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
 import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
-import de.haug_dev.swagger_compare.swagger_compare_core.paths.PathItemCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.servers.ServersCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
+import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.parameters.Parameter;
-import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -19,6 +19,8 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PathItemCompareHolderTest {
 
@@ -46,17 +48,13 @@ public class PathItemCompareHolderTest {
         serverLeft.setUrl("test");
         List<Server> serversLeft = new ArrayList<>();
         serversLeft.add(serverLeft);
-        Map<String, Server> serverMapLeft = new HashMap<>();
-        serverMapLeft.put("test", serverLeft);
         Server serverRight = new Server();
         serverRight.setUrl("test");
         List<Server> serversRight = new ArrayList<>();
         serversRight.add(serverRight);
-        Map<String, Server> serverMapRight = new HashMap<>();
-        serverMapRight.put("test", serverRight);
-        ICompareResult serversResult = new LeafCompareResult(serverMapLeft, serverMapRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
+        ICompareResult serversResult = new LeafCompareResult(serversLeft, serversRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
         ServersCompareHolder serversCompareHolder = Mockito.mock(ServersCompareHolder.class);
-        Mockito.when(serversCompareHolder.compare(eq(serverMapLeft), eq(serverMapRight), any(), any())).thenReturn(serversResult);
+        Mockito.when(serversCompareHolder.compare(eq(serversLeft), eq(serversRight), any(), any())).thenReturn(serversResult);
 
         Parameter parameterLeft = new Parameter();
         parameterLeft.setName("test");
@@ -106,12 +104,14 @@ public class PathItemCompareHolderTest {
         pathItemRight.setServers(serversRight);
         pathItemRight.setParameters(parametersRight);
 
-        PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(
-                operationCompareHolder,
-                serversCompareHolder,
-                parametersCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getOperationCompareHolder()).thenReturn(operationCompareHolder);
+        when(compareHolderFactory.getServersCompareHolder()).thenReturn(serversCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
 
-        NodeCompareResult actual = (NodeCompareResult) pathItemCompareHolder.compare(pathItemLeft,pathItemRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(compareHolderFactory);
+
+        NodeCompareResult actual = (NodeCompareResult) pathItemCompareHolder.compare(pathItemLeft, pathItemRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -157,15 +157,12 @@ public class PathItemCompareHolderTest {
         serverLeft.setUrl("test");
         List<Server> serversLeft = new ArrayList<>();
         serversLeft.add(serverLeft);
-        Map<String, Server> serverMapLeft = new HashMap<>();
-        serverMapLeft.put("test", serverLeft);
         Server serverRight = new Server();
         serverRight.setUrl("test");
         List<Server> serversRight = null;
-        Map<String, Server> serverMapRight = new HashMap<>();
-        ICompareResult serversResult = new LeafCompareResult(serverMapLeft, serverMapRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
+        ICompareResult serversResult = new LeafCompareResult(serversLeft, serversRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
         ServersCompareHolder serversCompareHolder = Mockito.mock(ServersCompareHolder.class);
-        Mockito.when(serversCompareHolder.compare(eq(serverMapLeft), eq(serverMapRight), any(), any())).thenReturn(serversResult);
+        Mockito.when(serversCompareHolder.compare(eq(serversLeft), eq(serversRight), any(), any())).thenReturn(serversResult);
 
         Parameter parameterLeft = new Parameter();
         parameterLeft.setName("test");
@@ -213,12 +210,14 @@ public class PathItemCompareHolderTest {
         pathItemRight.setServers(serversRight);
         pathItemRight.setParameters(parametersRight);
 
-        PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(
-                operationCompareHolder,
-                serversCompareHolder,
-                parametersCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getOperationCompareHolder()).thenReturn(operationCompareHolder);
+        when(compareHolderFactory.getServersCompareHolder()).thenReturn(serversCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
 
-        NodeCompareResult actual = (NodeCompareResult) pathItemCompareHolder.compare(pathItemLeft,pathItemRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(compareHolderFactory);
+
+        NodeCompareResult actual = (NodeCompareResult) pathItemCompareHolder.compare(pathItemLeft, pathItemRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -262,16 +261,13 @@ public class PathItemCompareHolderTest {
         Mockito.when(operationCompareHolder.compare(eq(operationLeft), eq(operationRight), any(), any())).thenReturn(operationResult);
 
         List<Server> serversLeft = null;
-        Map<String, Server> serverMapLeft = new HashMap<>();
         Server serverRight = new Server();
         serverRight.setUrl("test");
         List<Server> serversRight = new ArrayList<>();
         serversRight.add(serverRight);
-        Map<String, Server> serverMapRight = new HashMap<>();
-        serverMapRight.put("test", serverRight);
-        ICompareResult serversResult = new LeafCompareResult(serverMapLeft, serverMapRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
+        ICompareResult serversResult = new LeafCompareResult(serversLeft, serversRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
         ServersCompareHolder serversCompareHolder = Mockito.mock(ServersCompareHolder.class);
-        Mockito.when(serversCompareHolder.compare(eq(serverMapLeft), eq(serverMapRight), any(), any())).thenReturn(serversResult);
+        Mockito.when(serversCompareHolder.compare(eq(serversLeft), eq(serversRight), any(), any())).thenReturn(serversResult);
 
         List<Parameter> parametersLeft = null;
         Map<String, Parameter> parameterMapLeft = new HashMap<>();
@@ -316,12 +312,14 @@ public class PathItemCompareHolderTest {
         pathItemRight.setServers(serversRight);
         pathItemRight.setParameters(parametersRight);
 
-        PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(
-                operationCompareHolder,
-                serversCompareHolder,
-                parametersCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getOperationCompareHolder()).thenReturn(operationCompareHolder);
+        when(compareHolderFactory.getServersCompareHolder()).thenReturn(serversCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
 
-        NodeCompareResult actual = (NodeCompareResult) pathItemCompareHolder.compare(pathItemLeft,pathItemRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(compareHolderFactory);
+
+        NodeCompareResult actual = (NodeCompareResult) pathItemCompareHolder.compare(pathItemLeft, pathItemRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -353,12 +351,14 @@ public class PathItemCompareHolderTest {
 
         PathItem pathItemRight = new PathItem();
 
-        PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(
-                operationCompareHolder,
-                serversCompareHolder,
-                parametersCompareHolder);
+        CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
+        when(compareHolderFactory.getOperationCompareHolder()).thenReturn(operationCompareHolder);
+        when(compareHolderFactory.getServersCompareHolder()).thenReturn(serversCompareHolder);
+        when(compareHolderFactory.getParametersCompareHolder()).thenReturn(parametersCompareHolder);
 
-        NodeCompareResult actual = (NodeCompareResult) pathItemCompareHolder.compare(pathItemLeft,pathItemRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        PathItemCompareHolder pathItemCompareHolder = new PathItemCompareHolder(compareHolderFactory);
+
+        NodeCompareResult actual = (NodeCompareResult) pathItemCompareHolder.compare(pathItemLeft, pathItemRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
