@@ -14,7 +14,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                 .addResourceLocations("classpath:/META-INF/resources/");
 
         registry.addResourceHandler("/swagger-compare-ui/**")
-                .addResourceLocations("classpath:/swagger-leafCompare-ui/");
+                .addResourceLocations("classpath:/swagger-compare-ui/");
 
         registry.addResourceHandler("index.html")
                 .addResourceLocations("classpath:/static/");
@@ -44,7 +44,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("forward:/index.html");
-        registry.addViewController("swagger-compare-ui/").setViewName("forward:/swagger-leafCompare-ui/index.html");
+        registry.addViewController("swagger-compare-ui/").setViewName("forward:/swagger-compare-ui/index.html");
         super.addViewControllers(registry);
     }
 

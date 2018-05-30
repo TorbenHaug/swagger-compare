@@ -1,1 +1,1 @@
-<% response.sendRedirect("swagger-leafCompare-ui/"); %>
+<% response.sendRedirect("swagger-compare-ui/"); %>
