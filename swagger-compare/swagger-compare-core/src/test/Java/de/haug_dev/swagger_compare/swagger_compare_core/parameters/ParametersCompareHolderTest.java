@@ -21,12 +21,12 @@ public class ParametersCompareHolderTest {
 
     @Test
     public void compareWithEqualValues() {
-        String parameterNameLeft = "var1";
+        String parameterNameLeft = "path:var1";
         Parameter parameterLeft = new Parameter();
         Map<String, Parameter> parametersLeft = new HashMap<>();
         parametersLeft.put(parameterNameLeft, parameterLeft);
 
-        String parameterNameRight = "var1";
+        String parameterNameRight = "path:var1";
         Parameter parameterRight = new Parameter();
         Map<String, Parameter> parametersRight = new HashMap<>();
         parametersRight.put(parameterNameRight, parameterRight);
@@ -36,10 +36,10 @@ public class ParametersCompareHolderTest {
         Mockito.when(parameterCompareHolder.compare(eq(parameterLeft), eq(parameterRight), any(), any())).thenReturn(compareResult1);
 
         BidiMap<String, String> normalizedNamesLeft = new DualHashBidiMap<>();
-        normalizedNamesLeft.put("var1", "nameLeft");
+        normalizedNamesLeft.put("nameLeft","var1");
 
         BidiMap<String, String> normalizedNamesRight = new DualHashBidiMap<>();
-        normalizedNamesRight.put("var1", "nameRight");
+        normalizedNamesRight.put("nameRight","var1");
 
         CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
         when(compareHolderFactory.getParameterCompareHolder()).thenReturn(parameterCompareHolder);
@@ -48,7 +48,7 @@ public class ParametersCompareHolderTest {
         parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        expected.put("nameRight", compareResult1);
+        expected.put("path:nameRight", compareResult1);
 
         ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
@@ -57,12 +57,12 @@ public class ParametersCompareHolderTest {
 
     @Test
     public void compareCreatedDeletedValues() {
-        String parameterNameLeft = "var1";
+        String parameterNameLeft = "path:var1";
         Parameter parameterLeft = new Parameter();
         Map<String, Parameter> parametersLeft = new HashMap<>();
         parametersLeft.put(parameterNameLeft, parameterLeft);
 
-        String parameterNameRight = "var2";
+        String parameterNameRight = "path:var2";
         Parameter parameterRight = new Parameter();
         Map<String, Parameter> parametersRight = new HashMap<>();
         parametersRight.put(parameterNameRight, parameterRight);
@@ -74,10 +74,10 @@ public class ParametersCompareHolderTest {
         Mockito.when(parameterCompareHolder.compare(eq(null), eq(parameterRight), any(), any())).thenReturn(compareResult2);
 
         BidiMap<String, String> normalizedNamesLeft = new DualHashBidiMap<>();
-        normalizedNamesLeft.put("var1", "nameLeft");
+        normalizedNamesLeft.put("nameLeft","var1");
 
         BidiMap<String, String> normalizedNamesRight = new DualHashBidiMap<>();
-        normalizedNamesRight.put("var2", "nameRight");
+        normalizedNamesRight.put("nameRight","var2");
 
         CompareHolderFactory compareHolderFactory = mock(CompareHolderFactory.class);
         when(compareHolderFactory.getParameterCompareHolder()).thenReturn(parameterCompareHolder);
@@ -86,8 +86,8 @@ public class ParametersCompareHolderTest {
         parametersCompareHolder.setNormalizedParameterNames(normalizedNamesLeft, normalizedNamesRight);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        expected.put("nameLeft", compareResult1);
-        expected.put("nameRight", compareResult2);
+        expected.put("path:nameLeft", compareResult1);
+        expected.put("path:nameRight", compareResult2);
 
         ICompareResult actual = parametersCompareHolder.compare(parametersLeft, parametersRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 

@@ -101,6 +101,7 @@ public class PathsCompareHolder extends AbstractCompareHolder<Paths> {
 
             while (m1.find()) {
                 String value = m1.group();
+                value = value.substring(1, value.length() -1);
                 result.put(value, "var" + count++);
             }
         }

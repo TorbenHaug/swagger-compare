@@ -15,7 +15,8 @@ import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +24,7 @@ import java.util.Objects;
 
 public class OperationCompareHolder extends AbstractCompareHolder<Operation> {
 
-    private static Logger LOG = Logger.getLogger(OperationCompareHolder.class);
+    private static Logger LOG = LoggerFactory.getLogger(OperationCompareHolder.class);
 
     private BidiMap<String, String> normalizedParameterNamesLeft = new DualHashBidiMap<>();
     private BidiMap<String, String> normalizedParameterNamesRight = new DualHashBidiMap<>();
@@ -36,6 +37,9 @@ public class OperationCompareHolder extends AbstractCompareHolder<Operation> {
     public void setNormalizedParameterNames(BidiMap<String, String> normalizedParameterNamesLeft, BidiMap<String, String> normalizedParameterNamesRight) {
         this.normalizedParameterNamesLeft = normalizedParameterNamesLeft == null ? new DualHashBidiMap<>() : normalizedParameterNamesLeft;
         this.normalizedParameterNamesRight = normalizedParameterNamesRight == null ? new DualHashBidiMap<>() : normalizedParameterNamesRight;
+        LOG.debug("Set parameterNames:");
+        LOG.debug("Left: " + normalizedParameterNamesLeft.toString());
+        LOG.debug("Right: " + normalizedParameterNamesRight.toString());
     }
 
     @Override
@@ -58,23 +62,9 @@ public class OperationCompareHolder extends AbstractCompareHolder<Operation> {
         this.leafCompare(leftValue.getDescription(), rightValue.getDescription(), "Description", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
         this.nodeCompare(leftValue.getExternalDocs(), rightValue.getExternalDocs(), "ExternalDocs", externalDocumentationObjectCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.INFO);
         this.leafCompare(leftValue.getOperationId(), rightValue.getOperationId(), "OperationId", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
-        Map<String, Parameter> parametersLeft = new HashMap<>();
-        if (leftValue.getParameters() != null) {
-            leftValue.getParameters().forEach((v) -> {
-                String normalizedName = normalizedParameterNamesLeft.getKey(v.getName());
-                String name = (normalizedName == null) ? v.getName() : ("path".equals(v.getIn()) ? normalizedName : v.getName());
-                parametersLeft.put(v.getIn() + ":" + name, v);
-            });
-        }
-        Map<String, Parameter> parametersRight = new HashMap<>();
-        if (rightValue.getParameters() != null) {
-            rightValue.getParameters().forEach((v) -> {
-                String normalizedName = normalizedParameterNamesRight.getKey(v.getName());
-                String name = (normalizedName == null) ? v.getName() : ("path".equals(v.getIn()) ? normalizedName : v.getName());
-                parametersRight.put(v.getIn() + ":" + name, v);
-            });
-        }
         parametersCompareHolder.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
+        Map<String, Parameter> parametersLeft = parametersCompareHolder.listToMap(leftValue.getParameters());
+        Map<String, Parameter> parametersRight = parametersCompareHolder.listToMap(rightValue.getParameters());
         this.nodeCompare(parametersLeft, parametersRight, "Parameters", parametersCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getRequestBody(), rightValue.getRequestBody(), "RequestBody", requestBodyCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getResponses(), rightValue.getResponses(), "Responses", responsesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);

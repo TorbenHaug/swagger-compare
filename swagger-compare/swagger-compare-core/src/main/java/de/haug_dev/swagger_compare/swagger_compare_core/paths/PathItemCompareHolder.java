@@ -11,11 +11,16 @@ import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
+
+    private static Logger LOG = LoggerFactory.getLogger(PathItemCompareHolder.class);
+
     private BidiMap<String, String> normalizedParameterNamesLeft = new DualHashBidiMap<>();
     private BidiMap<String, String> normalizedParameterNamesRight = new DualHashBidiMap<>();
     private CompareHolderFactory compareHolderFactory;
@@ -67,23 +72,9 @@ public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
         this.nodeCompare(pathItemLeft.getTrace(), pathItemRight.getTrace(), "Trace", operationCompareHolderTrace, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         this.nodeCompare(pathItemLeft.getServers(), pathItemRight.getServers(), "Servers", serversCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
-        Map<String, Parameter> parametersLeft = new HashMap<>();
-        if (pathItemLeft.getParameters() != null) {
-            pathItemLeft.getParameters().forEach((v) -> {
-                String normalizedName = normalizedParameterNamesLeft.getKey(v.getName());
-                String name = (normalizedName == null) ? v.getName() : ("path".equals(v.getIn()) ? normalizedName : v.getName());
-                parametersLeft.put(v.getIn() + ":" + name, v);
-            });
-        }
-        Map<String, Parameter> parametersRight = new HashMap<>();
-        if (pathItemRight.getParameters() != null) {
-            pathItemRight.getParameters().forEach((v) -> {
-                String normalizedName = normalizedParameterNamesRight.getKey(v.getName());
-                String name = (normalizedName == null) ? v.getName() : ("path".equals(v.getIn()) ? normalizedName : v.getName());
-                parametersRight.put(v.getIn() + ":" + name, v);
-            });
-        }
         parametersCompareHolder.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
+        Map<String, Parameter> parametersLeft = parametersCompareHolder.listToMap(pathItemLeft.getParameters());
+        Map<String, Parameter> parametersRight = parametersCompareHolder.listToMap(pathItemRight.getParameters());
         this.nodeCompare(parametersLeft, parametersRight, "Parameters", parametersCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         return result;
     }

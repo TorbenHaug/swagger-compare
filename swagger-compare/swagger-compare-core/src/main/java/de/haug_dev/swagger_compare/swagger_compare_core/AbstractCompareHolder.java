@@ -1,13 +1,14 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public abstract class AbstractCompareHolder<T> implements ICompareHolder<T> {
 
-    private static final Logger LOG = Logger.getLogger(AbstractCompareHolder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractCompareHolder.class);
 
     public ICompareResult compare(T left, T right, CompareCriticalType created, CompareCriticalType deleted) {
         LOG.debug(this.getClass().getCanonicalName() + " uses the default compare!");
