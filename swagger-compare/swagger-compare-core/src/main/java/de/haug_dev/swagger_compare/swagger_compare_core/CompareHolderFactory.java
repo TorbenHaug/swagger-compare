@@ -21,6 +21,8 @@ import de.haug_dev.swagger_compare.swagger_compare_core.schemas.SchemaCompareHol
 import de.haug_dev.swagger_compare.swagger_compare_core.schemas.SchemasCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.security_schemes.*;
 import de.haug_dev.swagger_compare.swagger_compare_core.servers.ServerCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.servers.ServerVariableCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.servers.ServerVariablesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.servers.ServersCompareHolder;
 import org.springframework.stereotype.Component;
 
@@ -135,7 +137,15 @@ public class CompareHolderFactory {
     }
 
     public ServerCompareHolder getServerCompareHolder() {
-        return new ServerCompareHolder();
+        return new ServerCompareHolder(this);
+    }
+
+    public ServerVariableCompareHolder getServerVariableCompareHolder() {
+        return new ServerVariableCompareHolder();
+    }
+
+    public ServerVariablesCompareHolder getServerVariablesCompareHolder() {
+        return new ServerVariablesCompareHolder(this);
     }
 
     public ServersCompareHolder getServersCompareHolder() {

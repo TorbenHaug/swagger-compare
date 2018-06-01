@@ -92,7 +92,7 @@ public class OperationCompareHolder extends AbstractCompareHolder<Operation> {
             result.put("Deprecated", deprecatedResult);
         }
         this.nodeCompare(leftValue.getSecurity(), rightValue.getSecurity(), "Security", securitiesRequirementObjectCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
-        this.nodeCompare(leftValue.getServers(), rightValue.getServers(), "Servers", serversCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
+        this.nodeCompare(leftValue.getServers(), rightValue.getServers(), "Servers", serversCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         return result;
     }
 }

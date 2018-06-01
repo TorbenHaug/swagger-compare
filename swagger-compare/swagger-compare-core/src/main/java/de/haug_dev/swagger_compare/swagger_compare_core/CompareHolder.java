@@ -1,10 +1,14 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.paths.PathsCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.servers.ServersCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.servers.Server;
+
+import java.util.List;
 
 public class CompareHolder extends AbstractCompareHolder<OpenAPI> {
 
@@ -21,16 +25,14 @@ public class CompareHolder extends AbstractCompareHolder<OpenAPI> {
 
         PathsCompareHolder pathsCompareHolder = compareHolderFactory.getPathsCompareHolder();
         ComponentsCompareHolder componentsCompareHolder = compareHolderFactory.getComponentsCompareHolder();
+        ServersCompareHolder serversCompareHolder = compareHolderFactory.getServersCompareHolder();
 
         NodeCompareResult result = new NodeCompareResult(created, deleted);
-        if (!(leftToCompare.getPaths() == null && rightToCompare.getPaths() == null)) {
-            ICompareResult compareResult = pathsCompareHolder.compare(leftToCompare.getPaths(), rightToCompare.getPaths(), CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-            result.put("Paths", compareResult);
-        }
-        if (!(leftToCompare.getPaths() == null && rightToCompare.getPaths() == null)) {
-            ICompareResult compareResult = componentsCompareHolder.compare(leftToCompare.getComponents(), rightToCompare.getComponents(), CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-            result.put("Components", compareResult);
-        }
+        this.nodeCompare(leftToCompare.getPaths(), rightToCompare.getPaths(), "Paths", pathsCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(leftToCompare.getComponents(), rightToCompare.getComponents(), "Components", componentsCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(leftToCompare.getServers(), rightToCompare.getServers(), "Servers", serversCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+
+
 
         return result;
     }
