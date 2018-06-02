@@ -57,10 +57,21 @@ public class SwaggerCompareReader {
         return (s != null && s.startsWith("file:/"))? s.replace("file:/", "file:///") : s;
     }
 
-    public OpenAPI[] readFile(String left, String right) {
+    public OpenAPI[] readFile(String left, String right) throws InvalidOpenAPIFileException {
         OpenAPI[] result = new OpenAPI[2];
-        result[0] = parser.readContents(left, new ArrayList<>(),null).getOpenAPI();
-        result[1] = parser.readContents(right, new ArrayList<>(),null).getOpenAPI();
+        try {
+            result[0] = parser.readContents(left, new ArrayList<>(), null).getOpenAPI();
+            if(result[0] == null){
+                throw new InvalidOpenAPIFileException("The left file is not a valid OpenAPI-File");
+            }
+            result[1] = parser.readContents(right, new ArrayList<>(), null).getOpenAPI();
+            if(result[1] == null){
+                throw new InvalidOpenAPIFileException("The right file is not a valid OpenAPI-File");
+            }
+        }catch (Throwable e){
+            logger.debug("Exception: ", e);
+            throw e;
+        }
         return result;
     }
 }
