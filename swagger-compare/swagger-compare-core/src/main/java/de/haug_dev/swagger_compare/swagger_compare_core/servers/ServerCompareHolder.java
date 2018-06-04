@@ -2,12 +2,10 @@ package de.haug_dev.swagger_compare.swagger_compare_core.servers;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.AbstractCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
-import de.haug_dev.swagger_compare.swagger_compare_core.ICompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.servers.Server;
-import io.swagger.v3.oas.models.servers.ServerVariables;
 import org.springframework.stereotype.Component;
 
 import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.CRITICAL;
