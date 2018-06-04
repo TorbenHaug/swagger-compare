@@ -5,7 +5,6 @@ import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.examples.Example;
-import org.springframework.stereotype.Component;
 
 public class ExampleCompareHolder extends AbstractCompareHolder<Example> {
 

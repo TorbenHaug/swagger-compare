@@ -8,9 +8,7 @@ import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.stereotype.Component;
 
-import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.CRITICAL;
-import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.INFO;
-import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.NONE;
+import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.*;
 
 @Component
 public class ServerCompareHolder extends AbstractCompareHolder<Server> {

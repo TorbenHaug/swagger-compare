@@ -2,12 +2,9 @@ package de.haug_dev.swagger_compare.swagger_compare_core.headers;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.AbstractCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
-import de.haug_dev.swagger_compare.swagger_compare_core.ICompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
-import io.swagger.v3.oas.models.examples.Example;
 import io.swagger.v3.oas.models.headers.Header;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;

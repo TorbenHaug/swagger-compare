@@ -9,7 +9,6 @@ import java.util.*;
 import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.CRITICAL;
 import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.NONE;
 import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResultType.*;
-import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResultType.CHANGED;
 
 public abstract class AbstractCompareHolder<T> implements ICompareHolder<T> {
 

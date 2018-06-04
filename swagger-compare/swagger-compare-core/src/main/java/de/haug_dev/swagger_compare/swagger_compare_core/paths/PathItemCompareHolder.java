@@ -14,7 +14,6 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {

@@ -2,7 +2,6 @@ package de.haug_dev.swagger_compare.swagger_compare_core.paths;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.AbstractCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
-import de.haug_dev.swagger_compare.swagger_compare_core.ICompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;

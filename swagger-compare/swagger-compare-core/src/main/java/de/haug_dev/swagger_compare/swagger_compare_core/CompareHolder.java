@@ -6,9 +6,6 @@ import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.servers.Server;
-
-import java.util.List;
 
 public class CompareHolder extends AbstractCompareHolder<OpenAPI> {
 

@@ -9,9 +9,9 @@ import de.haug_dev.swagger_compare.swagger_compare_core.headers.HeadersCompareHo
 import de.haug_dev.swagger_compare.swagger_compare_core.links.LinkCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.links.LinksCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.media.MediaTypeCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.media.MediaTypesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.misc.ExternalDocumentationObjectCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.misc.TagsCompareHolder;
-import de.haug_dev.swagger_compare.swagger_compare_core.media.MediaTypesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParameterCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.paths.OperationCompareHolder;

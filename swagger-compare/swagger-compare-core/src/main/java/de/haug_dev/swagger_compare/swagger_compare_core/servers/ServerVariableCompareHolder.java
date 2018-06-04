@@ -6,9 +6,7 @@ import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.servers.ServerVariable;
 
-import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.CRITICAL;
-import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.INFO;
-import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.NONE;
+import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.*;
 
 public class ServerVariableCompareHolder extends AbstractCompareHolder<ServerVariable> {
 

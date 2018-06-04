@@ -5,7 +5,6 @@ import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import io.swagger.v3.oas.models.media.Schema;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
