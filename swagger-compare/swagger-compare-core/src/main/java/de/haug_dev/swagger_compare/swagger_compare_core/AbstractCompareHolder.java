@@ -78,7 +78,7 @@ public abstract class AbstractCompareHolder<T> implements ICompareHolder<T> {
             CompareCriticalType changedTrueToFalse,
             CompareCriticalType changedFalseToTrue,
             NodeCompareResult result){
-        if(!(left == null && left == null)){
+        if(!(left == null && right == null)){
             if(Objects.equals(left, right)){
                 result.put(name, new LeafCompareResult(left, right, UNCHANGED, unchanged));
             }else if(left == null && Objects.equals(right, false)){

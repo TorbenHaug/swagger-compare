@@ -21,6 +21,10 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Objects;
 
+import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.INFO;
+import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.NONE;
+import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.WARNING;
+
 public class OperationCompareHolder extends AbstractCompareHolder<Operation> {
 
     private static Logger LOG = LoggerFactory.getLogger(OperationCompareHolder.class);
@@ -68,28 +72,18 @@ public class OperationCompareHolder extends AbstractCompareHolder<Operation> {
         this.nodeCompare(leftValue.getRequestBody(), rightValue.getRequestBody(), "RequestBody", requestBodyCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getResponses(), rightValue.getResponses(), "Responses", responsesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getCallbacks(), rightValue.getCallbacks(), "Callbacks", callbacksCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
-        if (!(leftValue.getDeprecated() == null && rightValue.getDeprecated() == null)) {
-            LeafCompareResult deprecatedResult = null;
-            Boolean leftDeprecated = leftValue.getDeprecated();
-            Boolean rightDeprecated = rightValue.getDeprecated();
-            if (Objects.equals(leftDeprecated, rightDeprecated)) {
-                deprecatedResult = new LeafCompareResult(leftDeprecated, rightDeprecated, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
-            } else if (leftDeprecated != null && rightDeprecated == null) {
-                deprecatedResult = new LeafCompareResult(leftDeprecated, rightDeprecated, CompareResultType.DELETED, CompareCriticalType.NONE);
-            } else if (leftDeprecated == null && rightDeprecated != null && rightDeprecated.equals(Boolean.TRUE)) {
-                deprecatedResult = new LeafCompareResult(leftDeprecated, rightDeprecated, CompareResultType.CREATED, CompareCriticalType.WARNING);
-            } else if (leftDeprecated == null && rightDeprecated != null && rightDeprecated.equals(Boolean.FALSE)) {
-                deprecatedResult = new LeafCompareResult(leftDeprecated, rightDeprecated, CompareResultType.CREATED, CompareCriticalType.NONE);
-            } else if (leftDeprecated != null && leftDeprecated.equals(Boolean.TRUE) && rightDeprecated != null && rightDeprecated.equals(Boolean.FALSE)) {
-                deprecatedResult = new LeafCompareResult(leftDeprecated, rightDeprecated, CompareResultType.CHANGED, CompareCriticalType.NONE);
-            } else if (leftDeprecated != null && leftDeprecated.equals(Boolean.FALSE) && rightDeprecated != null && rightDeprecated.equals(Boolean.TRUE)) {
-                deprecatedResult = new LeafCompareResult(leftDeprecated, rightDeprecated, CompareResultType.CHANGED, CompareCriticalType.WARNING);
-            } else {
-                LOG.error("Deprecated has an unknown state! Left: " + leftDeprecated + ", Right: " + rightDeprecated);
-                deprecatedResult = new LeafCompareResult(leftDeprecated, rightDeprecated, CompareResultType.CHANGED, CompareCriticalType.CRITICAL);
-            }
-            result.put("Deprecated", deprecatedResult);
-        }
+        this.booleanCompare(
+                leftValue.getDeprecated(),
+                rightValue.getDeprecated(),
+                "Deprecated",
+                NONE,
+                NONE,
+                WARNING,
+                NONE,
+                INFO,
+                INFO,
+                WARNING,
+                result);
         this.nodeCompare(leftValue.getSecurity(), rightValue.getSecurity(), "Security", securitiesRequirementObjectCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getServers(), rightValue.getServers(), "Servers", serversCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         return result;
