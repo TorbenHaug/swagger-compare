@@ -6,6 +6,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.CRITICAL;
+import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.NONE;
+import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResultType.*;
+import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareResultType.CHANGED;
+
 public abstract class AbstractCompareHolder<T> implements ICompareHolder<T> {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCompareHolder.class);
@@ -60,5 +65,42 @@ public abstract class AbstractCompareHolder<T> implements ICompareHolder<T> {
         if (!(left == null && right == null)) {
             result.put(resultName, leafCompare(left, right, unchanged, created, deleted, changed));
         }
+    }
+
+    public void booleanCompare(
+            Boolean left,
+            Boolean right,
+            String name,
+            CompareCriticalType unchanged,
+            CompareCriticalType createdFalse,
+            CompareCriticalType createdTrue,
+            CompareCriticalType deletedFalse,
+            CompareCriticalType deletedTrue,
+            CompareCriticalType changedTrueToFalse,
+            CompareCriticalType changedFalseToTrue,
+            NodeCompareResult result){
+        if(!(left == null && left == null)){
+            if(Objects.equals(left, right)){
+                result.put(name, new LeafCompareResult(left, right, UNCHANGED, unchanged));
+            }else if(left == null && Objects.equals(right, false)){
+                result.put(name, new LeafCompareResult(left, right, CREATED, createdFalse));
+            }else if(left == null && Objects.equals(right, true)){
+                result.put(name, new LeafCompareResult(left, right, CREATED, createdTrue));
+            }else if(right == null && Objects.equals(left, false)){
+                result.put(name, new LeafCompareResult(left, right, DELETED, deletedFalse));
+            }else if(right == null && Objects.equals(left, true)){
+                result.put(name, new LeafCompareResult(left, right, DELETED, deletedTrue));
+            }else if(Objects.equals(left, true) && Objects.equals(right, false)){
+                result.put(name, new LeafCompareResult(left, right, CHANGED, changedTrueToFalse));
+            }else if(Objects.equals(left, false) && Objects.equals(right, true)){
+                result.put(name, new LeafCompareResult(left, right, CHANGED, changedFalseToTrue));
+            }else{
+                //this should never be reached!
+                LOG.error("Unhandled combination for " + name + "! Left: " + left +", Right: " + right);
+                this.leafCompare(left, right, "AllowEmptyValue", NONE, CRITICAL, CRITICAL, CRITICAL, result);
+
+            }
+        }
+
     }
 }

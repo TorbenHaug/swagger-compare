@@ -73,8 +73,8 @@ public class PathItemCompareHolder extends AbstractCompareHolder<PathItem> {
         this.nodeCompare(pathItemLeft.getServers(), pathItemRight.getServers(), "Servers", serversCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         parametersCompareHolder.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
-        Map<String, Parameter> parametersLeft = parametersCompareHolder.listToMap(pathItemLeft.getParameters());
-        Map<String, Parameter> parametersRight = parametersCompareHolder.listToMap(pathItemRight.getParameters());
+        Map<String, Parameter> parametersLeft = parametersCompareHolder.listToMapLeft(pathItemLeft.getParameters());
+        Map<String, Parameter> parametersRight = parametersCompareHolder.listToMapRight(pathItemRight.getParameters());
         this.nodeCompare(parametersLeft, parametersRight, "Parameters", parametersCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         return result;
     }

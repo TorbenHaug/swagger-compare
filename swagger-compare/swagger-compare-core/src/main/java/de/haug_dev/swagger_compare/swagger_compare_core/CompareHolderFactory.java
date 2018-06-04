@@ -4,10 +4,14 @@ import de.haug_dev.swagger_compare.swagger_compare_core.callbacks.CallbackCompar
 import de.haug_dev.swagger_compare.swagger_compare_core.callbacks.CallbacksCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.examples.ExampleCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.examples.ExamplesCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.headers.HeaderCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.headers.HeadersCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.links.LinkCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.links.LinksCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.media.MediaTypeCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.misc.ExternalDocumentationObjectCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.misc.TagsCompareHolder;
+import de.haug_dev.swagger_compare.swagger_compare_core.media.MediaTypesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParameterCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.parameters.ParametersCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.paths.OperationCompareHolder;
@@ -52,12 +56,28 @@ public class CompareHolderFactory {
         return new ExternalDocumentationObjectCompareHolder();
     }
 
+    public HeaderCompareHolder getHeaderCompareHolder() {
+        return new HeaderCompareHolder();
+    }
+
     public HeadersCompareHolder getHeadersCompareHolder() {
-        return new HeadersCompareHolder();
+        return new HeadersCompareHolder(this);
+    }
+
+    public LinkCompareHolder getLinkCompareHolder() {
+        return new LinkCompareHolder();
     }
 
     public LinksCompareHolder getLinksCompareHolder() {
-        return new LinksCompareHolder();
+        return new LinksCompareHolder(this);
+    }
+
+    public MediaTypeCompareHolder getMediaTypeCompareHolder() {
+        return new MediaTypeCompareHolder();
+    }
+
+    public MediaTypesCompareHolder getMediaTypesCompareHolder() {
+        return new MediaTypesCompareHolder(this);
     }
 
     public OAuthFlowObjectCompareHolder getOAuthFlowObjectCompareHolder() {
@@ -77,7 +97,7 @@ public class CompareHolderFactory {
     }
 
     public ParameterCompareHolder getParameterCompareHolder() {
-        return new ParameterCompareHolder();
+        return new ParameterCompareHolder(this);
     }
 
     public ParametersCompareHolder getParametersCompareHolder() {

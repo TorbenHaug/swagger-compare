@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ParametersCompareHolder extends AbstractCompareHolder<Map<String, Parameter>> {
 
@@ -38,7 +39,7 @@ public class ParametersCompareHolder extends AbstractCompareHolder<Map<String, P
             String name = k;
             LOG.debug("Rebuild: " + name);
             String[] splitName = k.split(":",2);
-            if(splitName.length == 2) {
+            if(splitName.length == 2 && Objects.equals("path", splitName[0])) {
                 LOG.debug("Looking for: " + splitName[1]);
                 if (normalizedParameterNamesLeft.getKey(splitName[1]) != null) {
                     name = splitName[0] + ":" + normalizedParameterNamesLeft.getKey(splitName[1]);
@@ -52,11 +53,19 @@ public class ParametersCompareHolder extends AbstractCompareHolder<Map<String, P
         return result;
     }
 
-    public Map<String,Parameter> listToMap(List<Parameter> parameters) {
+    public Map<String,Parameter> listToMapLeft(List<Parameter> parameters) {
+        return listToMap(parameters, normalizedParameterNamesLeft);
+    }
+
+    public Map<String,Parameter> listToMapRight(List<Parameter> parameters) {
+        return listToMap(parameters, normalizedParameterNamesRight);
+    }
+
+    private Map<String,Parameter> listToMap(List<Parameter> parameters, BidiMap<String,String> normalizedParameterNames) {
         Map<String, Parameter> result = new HashMap<>();
         if (parameters != null) {
             parameters.forEach((v) -> {
-                String normalizedName = normalizedParameterNamesLeft.get(v.getName());
+                String normalizedName = normalizedParameterNames.get(v.getName());
                 String name = (normalizedName == null) ? v.getName() : ("path".equals(v.getIn()) ? normalizedName : v.getName());
                 result.put(v.getIn() + ":" + name, v);
             });
