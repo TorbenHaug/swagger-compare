@@ -1,5 +1,6 @@
 package de.haug_dev.swagger_compare.swagger_compare_core;
 
+import de.haug_dev.swagger_compare.swagger_compare_core.misc.ExternalDocumentationObjectCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.paths.PathsCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.servers.ServersCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
@@ -23,12 +24,13 @@ public class CompareHolder extends AbstractCompareHolder<OpenAPI> {
         PathsCompareHolder pathsCompareHolder = compareHolderFactory.getPathsCompareHolder();
         ComponentsCompareHolder componentsCompareHolder = compareHolderFactory.getComponentsCompareHolder();
         ServersCompareHolder serversCompareHolder = compareHolderFactory.getServersCompareHolder();
+        ExternalDocumentationObjectCompareHolder externalDocumentationObjectCompareHolder = compareHolderFactory.getExternalDocumentationObjectCompareHolder();
 
         NodeCompareResult result = new NodeCompareResult(created, deleted);
         this.nodeCompare(leftToCompare.getPaths(), rightToCompare.getPaths(), "Paths", pathsCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftToCompare.getComponents(), rightToCompare.getComponents(), "Components", componentsCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftToCompare.getServers(), rightToCompare.getServers(), "Servers", serversCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-
+        this.nodeCompare(leftToCompare.getExternalDocs(), rightToCompare.getExternalDocs(), "ExternalDocs", externalDocumentationObjectCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.INFO);
 
 
         return result;
