@@ -117,7 +117,7 @@ public class CompareHolderFactory {
     }
 
     public RequestBodyCompareHolder getRequestBodyCompareHolder() {
-        return new RequestBodyCompareHolder();
+        return new RequestBodyCompareHolder(this);
     }
 
     public ResponseCompareHolder getResponseCompareHolder() {

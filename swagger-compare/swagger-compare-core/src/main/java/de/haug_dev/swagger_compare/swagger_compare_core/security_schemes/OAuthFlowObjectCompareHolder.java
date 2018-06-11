@@ -26,7 +26,7 @@ public class OAuthFlowObjectCompareHolder extends AbstractCompareHolder<OAuthFlo
         this.leafCompare(leftValue.getAuthorizationUrl(), rightValue.getAuthorizationUrl(), "AuthorizationUrl", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
         this.leafCompare(leftValue.getTokenUrl(), rightValue.getTokenUrl(), "TokenUrl", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
         this.leafCompare(leftValue.getRefreshUrl(), rightValue.getRefreshUrl(), "RefreshUrl", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
-        this.nodeCompare(leftValue.getScopes(), rightValue.getScopes(), "Scopes", scopesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(leftValue.getScopes(), rightValue.getScopes(), "Scopes", scopesCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         return result;
     }
 }

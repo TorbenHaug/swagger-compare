@@ -75,11 +75,11 @@ public class ExampleCompareHolderTest {
         rightExample.setExternalValue(externalValueRight);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        expected.put("Ref", new LeafCompareResult(refLeft, refRight, CompareResultType.CHANGED, CompareCriticalType.CRITICAL));
+        expected.put("Ref", new LeafCompareResult(refLeft, refRight, CompareResultType.CHANGED, CompareCriticalType.INFO));
         expected.put("Summary", new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.CHANGED, CompareCriticalType.INFO));
         expected.put("Description", new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.CHANGED, CompareCriticalType.INFO));
-        expected.put("Value", new LeafCompareResult(valueLeft, valueRight, CompareResultType.CHANGED, CompareCriticalType.WARNING));
-        expected.put("ExternalValue", new LeafCompareResult(externalValueLeft, externalValueRight, CompareResultType.CHANGED, CompareCriticalType.WARNING));
+        expected.put("Value", new LeafCompareResult(valueLeft, valueRight, CompareResultType.CHANGED, CompareCriticalType.INFO));
+        expected.put("ExternalValue", new LeafCompareResult(externalValueLeft, externalValueRight, CompareResultType.CHANGED, CompareCriticalType.INFO));
 
         ExampleCompareHolder exampleCompareHolder = new ExampleCompareHolder();
 
@@ -115,11 +115,11 @@ public class ExampleCompareHolderTest {
         rightExample.setExternalValue(externalValueRight);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        expected.put("Ref", new LeafCompareResult(refLeft, refRight, CompareResultType.DELETED, CompareCriticalType.CRITICAL));
+        expected.put("Ref", new LeafCompareResult(refLeft, refRight, CompareResultType.DELETED, CompareCriticalType.INFO));
         expected.put("Summary", new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.DELETED, CompareCriticalType.INFO));
         expected.put("Description", new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.DELETED, CompareCriticalType.INFO));
-        expected.put("Value", new LeafCompareResult(valueLeft, valueRight, CompareResultType.DELETED, CompareCriticalType.WARNING));
-        expected.put("ExternalValue", new LeafCompareResult(externalValueLeft, externalValueRight, CompareResultType.DELETED, CompareCriticalType.WARNING));
+        expected.put("Value", new LeafCompareResult(valueLeft, valueRight, CompareResultType.DELETED, CompareCriticalType.INFO));
+        expected.put("ExternalValue", new LeafCompareResult(externalValueLeft, externalValueRight, CompareResultType.DELETED, CompareCriticalType.INFO));
 
         ExampleCompareHolder exampleCompareHolder = new ExampleCompareHolder();
 
@@ -155,11 +155,11 @@ public class ExampleCompareHolderTest {
         rightExample.setExternalValue(externalValueRight);
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        expected.put("Ref", new LeafCompareResult(refLeft, refRight, CompareResultType.CREATED, CompareCriticalType.CRITICAL));
+        expected.put("Ref", new LeafCompareResult(refLeft, refRight, CompareResultType.CREATED, CompareCriticalType.INFO));
         expected.put("Summary", new LeafCompareResult(summaryLeft, summaryRight, CompareResultType.CREATED, CompareCriticalType.INFO));
         expected.put("Description", new LeafCompareResult(descriptionLeft, descriptionRight, CompareResultType.CREATED, CompareCriticalType.INFO));
-        expected.put("Value", new LeafCompareResult(valueLeft, valueRight, CompareResultType.CREATED, CompareCriticalType.WARNING));
-        expected.put("ExternalValue", new LeafCompareResult(externalValueLeft, externalValueRight, CompareResultType.CREATED, CompareCriticalType.WARNING));
+        expected.put("Value", new LeafCompareResult(valueLeft, valueRight, CompareResultType.CREATED, CompareCriticalType.INFO));
+        expected.put("ExternalValue", new LeafCompareResult(externalValueLeft, externalValueRight, CompareResultType.CREATED, CompareCriticalType.INFO));
 
         ExampleCompareHolder exampleCompareHolder = new ExampleCompareHolder();
 

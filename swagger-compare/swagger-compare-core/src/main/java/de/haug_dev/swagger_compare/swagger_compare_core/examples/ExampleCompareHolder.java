@@ -13,11 +13,11 @@ public class ExampleCompareHolder extends AbstractCompareHolder<Example> {
         Example leftValue = left == null ? new Example() : left;
         Example rightValue = right == null ? new Example() : right;
         NodeCompareResult result = new NodeCompareResult(created, deleted);
-        this.leafCompare(leftValue.get$ref(), rightValue.get$ref(), "Ref", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
+        this.leafCompare(leftValue.get$ref(), rightValue.get$ref(), "Ref", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
         this.leafCompare(leftValue.getSummary(), rightValue.getSummary(), "Summary", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
         this.leafCompare(leftValue.getDescription(), rightValue.getDescription(), "Description", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
-        this.leafCompare(leftValue.getValue(), rightValue.getValue(), "Value", CompareCriticalType.NONE, CompareCriticalType.WARNING, CompareCriticalType.WARNING, CompareCriticalType.WARNING, result);
-        this.leafCompare(leftValue.getExternalValue(), rightValue.getExternalValue(), "ExternalValue", CompareCriticalType.NONE, CompareCriticalType.WARNING, CompareCriticalType.WARNING, CompareCriticalType.WARNING, result);
+        this.leafCompare(leftValue.getValue(), rightValue.getValue(), "Value", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
+        this.leafCompare(leftValue.getExternalValue(), rightValue.getExternalValue(), "ExternalValue", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
         return result;
     }
 }
