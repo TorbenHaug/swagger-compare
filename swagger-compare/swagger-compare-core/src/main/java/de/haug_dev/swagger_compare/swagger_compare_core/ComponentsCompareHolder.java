@@ -44,7 +44,7 @@ public class ComponentsCompareHolder extends AbstractCompareHolder<Components> {
         this.nodeCompare(leftValue.getResponses(), rightValue.getResponses(), "Responses", responsesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         parametersCompareHolder.setNormalizedParameterNames(new DualHashBidiMap<>(), new DualHashBidiMap<>());
         this.nodeCompare(leftValue.getParameters(), rightValue.getParameters(), "Parameters", parametersCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
-        this.nodeCompare(leftValue.getExamples(), rightValue.getExamples(), "Examples", examplesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(leftValue.getExamples(), rightValue.getExamples(), "Examples", examplesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.INFO);
         this.nodeCompare(leftValue.getRequestBodies(), rightValue.getRequestBodies(), "RequestBodies", requestBodiesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getHeaders(), rightValue.getHeaders(), "Headers", headersCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getSecuritySchemes(), rightValue.getSecuritySchemes(), "SecuritySchemes", securitySchemesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);

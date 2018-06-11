@@ -16,7 +16,7 @@ public class ServerVariableCompareHolder extends AbstractCompareHolder<ServerVar
         ServerVariable rightValue = right == null ? new ServerVariable() : right;
         NodeCompareResult result = new NodeCompareResult(created, deleted);
 
-        this.leafCompare(leftValue.getEnum(), rightValue.getEnum(), "Enum", NONE, CRITICAL, CRITICAL, CRITICAL, result);
+        this.leafCompare(leftValue.getEnum(), rightValue.getEnum(), "Enum", NONE, WARNING, CRITICAL, CRITICAL, result);
         this.leafCompare(leftValue.getDefault(), rightValue.getDefault(), "Default", NONE, CRITICAL, CRITICAL, CRITICAL, result);
         this.leafCompare(leftValue.getDescription(), rightValue.getDescription(), "Description", NONE, INFO, INFO, INFO, result);
 

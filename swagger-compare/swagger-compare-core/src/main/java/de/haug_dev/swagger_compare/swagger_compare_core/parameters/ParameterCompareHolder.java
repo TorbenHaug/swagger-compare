@@ -5,13 +5,12 @@ import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
 import de.haug_dev.swagger_compare.swagger_compare_core.examples.ExamplesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.media.MediaTypesCompareHolder;
 import de.haug_dev.swagger_compare.swagger_compare_core.schemas.SchemaCompareHolder;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
-import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
+import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
 import java.util.Objects;
 
 import static de.haug_dev.swagger_compare.swagger_compare_datatypes.CompareCriticalType.*;
@@ -32,7 +31,7 @@ public class ParameterCompareHolder extends AbstractCompareHolder<Parameter> {
         NodeCompareResult result = new NodeCompareResult(created, deleted);
 
         if(Objects.equals(rightValue.getIn(), "path")){
-            this.leafCompare(leftValue.getName(), rightValue.getName(), "Name", NONE, CRITICAL, CRITICAL, WARNING, result);
+            this.leafCompare(leftValue.getName(), rightValue.getName(), "Name", NONE, CRITICAL, CRITICAL, INFO, result);
         } else {
             this.leafCompare(leftValue.getName(), rightValue.getName(), "Name", NONE, CRITICAL, CRITICAL, CRITICAL, result);
         }
@@ -44,9 +43,9 @@ public class ParameterCompareHolder extends AbstractCompareHolder<Parameter> {
                 rightValue.getRequired(),
                 "Required",
                 NONE,
-                INFO,
+                NONE,
                 CRITICAL,
-                INFO,
+                NONE,
                 INFO,
                 INFO,
                 CRITICAL,
@@ -80,19 +79,26 @@ public class ParameterCompareHolder extends AbstractCompareHolder<Parameter> {
                 result
         );
 
-        this.leafCompare(leftValue.getStyle(), rightValue.getStyle(), "Style", NONE, CRITICAL, CRITICAL, CRITICAL, result);
+        if(leftValue.getStyle() == null && right.getStyle() != null && isDefaultStyle(rightValue.getIn(), rightValue.getStyle())){
+            result.put("Style", new LeafCompareResult(leftValue.getStyle(), rightValue.getStyle(), CompareResultType.CREATED, INFO));
+        } else if (leftValue.getStyle() != null && right.getStyle() == null && isDefaultStyle(leftValue.getIn(), leftValue.getStyle())){
+            result.put("Style", new LeafCompareResult(leftValue.getStyle(), rightValue.getStyle(), CompareResultType.DELETED, INFO));
+        } else {
+            this.leafCompare(leftValue.getStyle(), rightValue.getStyle(), "Style", NONE, CRITICAL, CRITICAL, CRITICAL, result);
+        }
+
         this.booleanCompare(
-                leftValue.getExplode(),
-                rightValue.getExplode(),
-                "Explode",
-                NONE,
-                CRITICAL,
-                CRITICAL,
-                CRITICAL,
-                CRITICAL,
-                CRITICAL,
-                CRITICAL,
-                result
+            leftValue.getExplode(),
+            rightValue.getExplode(),
+            "Explode",
+            NONE,
+            CRITICAL,
+            CRITICAL,
+            CRITICAL,
+            CRITICAL,
+            CRITICAL,
+            CRITICAL,
+            result
         );
         this.booleanCompare(
                 leftValue.getAllowReserved(),
@@ -116,6 +122,13 @@ public class ParameterCompareHolder extends AbstractCompareHolder<Parameter> {
         MediaTypesCompareHolder mediaTypesCompareHolder = compareHolderFactory.getMediaTypesCompareHolder();
         this.nodeCompare(leftValue.getContent(), rightValue.getContent(), "Content", mediaTypesCompareHolder, result, CRITICAL, CRITICAL);
         return result;
+    }
+
+    private boolean isDefaultStyle(String in, Parameter.StyleEnum style) {
+        return (Objects.equals(in,"query") && Objects.equals(style, Parameter.StyleEnum.FORM)) ||
+                (Objects.equals(in,"path") && Objects.equals(style, Parameter.StyleEnum.SIMPLE)) ||
+                (Objects.equals(in,"header") && Objects.equals(style, Parameter.StyleEnum.SIMPLE)) ||
+                (Objects.equals(in,"cookie") && Objects.equals(style, Parameter.StyleEnum.FORM));
     }
 
 

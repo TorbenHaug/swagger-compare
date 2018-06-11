@@ -86,7 +86,7 @@ public class ServerVariableCompareHolderTest {
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
         expected.put("Description", new LeafCompareResult(null, rightValue.getDescription(), CompareResultType.CREATED, CompareCriticalType.INFO));
         expected.put("Default", new LeafCompareResult(null, rightValue.getDefault(), CompareResultType.CREATED, CompareCriticalType.CRITICAL));
-        expected.put("Enum", new LeafCompareResult(null, rightValue.getEnum(), CompareResultType.CREATED, CompareCriticalType.CRITICAL));
+        expected.put("Enum", new LeafCompareResult(null, rightValue.getEnum(), CompareResultType.CREATED, CompareCriticalType.WARNING));
 
         ICompareResult actual = compareHolderFactory.getServerVariableCompareHolder().compare(leftValue, rightValue, CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
 
