@@ -247,7 +247,7 @@ public class OperationCompareHolderTest {
 
         ICompareResult summaryResult = new LeafCompareResult(leftSummary, null, CompareResultType.DELETED, CompareCriticalType.INFO);
         ICompareResult descriptionResult = new LeafCompareResult(leftDescription, null, CompareResultType.DELETED, CompareCriticalType.INFO);
-        ICompareResult operationIdResult = new LeafCompareResult(leftOperationId, null, CompareResultType.DELETED, CompareCriticalType.CRITICAL);
+        ICompareResult operationIdResult = new LeafCompareResult(leftOperationId, null, CompareResultType.DELETED, CompareCriticalType.WARNING);
         ICompareResult deprecatedResult = new LeafCompareResult(leftDeprecated, null, CompareResultType.DELETED, CompareCriticalType.NONE);
         
 
@@ -344,7 +344,7 @@ public class OperationCompareHolderTest {
 
         ICompareResult summaryResult = new LeafCompareResult(null, rightSummary, CompareResultType.CREATED, CompareCriticalType.INFO);
         ICompareResult descriptionResult = new LeafCompareResult(null, rightDescription, CompareResultType.CREATED, CompareCriticalType.INFO);
-        ICompareResult operationIdResult = new LeafCompareResult(null, rightOperationId, CompareResultType.CREATED, CompareCriticalType.CRITICAL);
+        ICompareResult operationIdResult = new LeafCompareResult(null, rightOperationId, CompareResultType.CREATED, CompareCriticalType.WARNING);
         ICompareResult deprecatedResult = new LeafCompareResult( null, rightDeprecated,CompareResultType.CREATED, CompareCriticalType.NONE);
 
 
@@ -586,7 +586,7 @@ public class OperationCompareHolderTest {
 
         ICompareResult summaryResult = new LeafCompareResult(leftSummary, rightSummary, CompareResultType.CHANGED, CompareCriticalType.INFO);
         ICompareResult descriptionResult = new LeafCompareResult(leftDescription, rightDescription, CompareResultType.CHANGED, CompareCriticalType.INFO);
-        ICompareResult operationIdResult = new LeafCompareResult(leftOperationId, rightOperationId, CompareResultType.CHANGED, CompareCriticalType.CRITICAL);
+        ICompareResult operationIdResult = new LeafCompareResult(leftOperationId, rightOperationId, CompareResultType.CHANGED, CompareCriticalType.WARNING);
         ICompareResult deprecatedResult = new LeafCompareResult( leftDeprecated, rightDeprecated, CompareResultType.CHANGED, CompareCriticalType.WARNING);
 
 

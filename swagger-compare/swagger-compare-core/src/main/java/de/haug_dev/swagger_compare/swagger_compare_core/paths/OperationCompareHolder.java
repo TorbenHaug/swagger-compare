@@ -64,13 +64,13 @@ public class OperationCompareHolder extends AbstractCompareHolder<Operation> {
         this.leafCompare(leftValue.getSummary(), rightValue.getSummary(), "Summary", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
         this.leafCompare(leftValue.getDescription(), rightValue.getDescription(), "Description", CompareCriticalType.NONE, CompareCriticalType.INFO, CompareCriticalType.INFO, CompareCriticalType.INFO, result);
         this.nodeCompare(leftValue.getExternalDocs(), rightValue.getExternalDocs(), "ExternalDocs", externalDocumentationObjectCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.INFO);
-        this.leafCompare(leftValue.getOperationId(), rightValue.getOperationId(), "OperationId", CompareCriticalType.NONE, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL, result);
+        this.leafCompare(leftValue.getOperationId(), rightValue.getOperationId(), "OperationId", CompareCriticalType.NONE, CompareCriticalType.WARNING, CompareCriticalType.WARNING, CompareCriticalType.WARNING, result);
         parametersCompareHolder.setNormalizedParameterNames(normalizedParameterNamesLeft, normalizedParameterNamesRight);
         Map<String, Parameter> parametersLeft = parametersCompareHolder.listToMapLeft(leftValue.getParameters());
         Map<String, Parameter> parametersRight = parametersCompareHolder.listToMapRight(rightValue.getParameters());
         this.nodeCompare(parametersLeft, parametersRight, "Parameters", parametersCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         this.nodeCompare(leftValue.getRequestBody(), rightValue.getRequestBody(), "RequestBody", requestBodyCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
-        this.nodeCompare(leftValue.getResponses(), rightValue.getResponses(), "Responses", responsesCompareHolder, result, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        this.nodeCompare(leftValue.getResponses(), rightValue.getResponses(), "Responses", responsesCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.INFO);
         this.nodeCompare(leftValue.getCallbacks(), rightValue.getCallbacks(), "Callbacks", callbacksCompareHolder, result, CompareCriticalType.CRITICAL, CompareCriticalType.CRITICAL);
         this.booleanCompare(
                 leftValue.getDeprecated(),

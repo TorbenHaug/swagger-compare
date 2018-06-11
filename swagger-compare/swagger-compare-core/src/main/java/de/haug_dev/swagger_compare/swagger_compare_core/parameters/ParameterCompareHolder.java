@@ -79,9 +79,9 @@ public class ParameterCompareHolder extends AbstractCompareHolder<Parameter> {
                 result
         );
 
-        if(leftValue.getStyle() == null && right.getStyle() != null && isDefaultStyle(rightValue.getIn(), rightValue.getStyle())){
+        if(leftValue.getStyle() == null && rightValue.getStyle() != null && isDefaultStyle(rightValue.getIn(), rightValue.getStyle())){
             result.put("Style", new LeafCompareResult(leftValue.getStyle(), rightValue.getStyle(), CompareResultType.CREATED, INFO));
-        } else if (leftValue.getStyle() != null && right.getStyle() == null && isDefaultStyle(leftValue.getIn(), leftValue.getStyle())){
+        } else if (leftValue.getStyle() != null && rightValue.getStyle() == null && isDefaultStyle(leftValue.getIn(), leftValue.getStyle())){
             result.put("Style", new LeafCompareResult(leftValue.getStyle(), rightValue.getStyle(), CompareResultType.DELETED, INFO));
         } else {
             this.leafCompare(leftValue.getStyle(), rightValue.getStyle(), "Style", NONE, CRITICAL, CRITICAL, CRITICAL, result);
@@ -92,12 +92,12 @@ public class ParameterCompareHolder extends AbstractCompareHolder<Parameter> {
             rightValue.getExplode(),
             "Explode",
             NONE,
-            CRITICAL,
-            CRITICAL,
-            CRITICAL,
-            CRITICAL,
-            CRITICAL,
-            CRITICAL,
+            INFO,
+            INFO,
+            INFO,
+            INFO,
+            INFO,
+            INFO,
             result
         );
         this.booleanCompare(
@@ -106,11 +106,11 @@ public class ParameterCompareHolder extends AbstractCompareHolder<Parameter> {
                 "AllowReserved",
                 NONE,
                 INFO,
-                WARNING,
+                CRITICAL,
                 INFO,
-                WARNING,
-                WARNING,
-                WARNING,
+                CRITICAL,
+                CRITICAL,
+                CRITICAL,
                 result
         );
 

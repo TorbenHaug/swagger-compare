@@ -121,7 +121,7 @@ public class CompareHolderFactory {
     }
 
     public ResponseCompareHolder getResponseCompareHolder() {
-        return new ResponseCompareHolder();
+        return new ResponseCompareHolder(this);
     }
 
     public ResponsesCompareHolder getResponsesCompareHolder() {
