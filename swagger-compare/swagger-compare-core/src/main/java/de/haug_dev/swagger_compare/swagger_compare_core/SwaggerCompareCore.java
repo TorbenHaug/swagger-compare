@@ -11,11 +11,11 @@ import org.springframework.util.Assert;
 @Component
 public class SwaggerCompareCore {
 
-    private CompareHolder openAPICompareHolder;
+    private final CompareHolderFactory compareHolderFactory;
 
     @Autowired
     public SwaggerCompareCore(CompareHolderFactory compareHolderFactory) {
-        this.openAPICompareHolder = compareHolderFactory.getOpenAPICompareHolder();
+        this.compareHolderFactory = compareHolderFactory;
     }
 
 
@@ -23,6 +23,7 @@ public class SwaggerCompareCore {
         Assert.notNull(left, "Left API must be set");
         Assert.notNull(right, "Right API must be set");
 
+        CompareHolder openAPICompareHolder = compareHolderFactory.getOpenAPICompareHolder();
         ICompareResult compareResult = openAPICompareHolder.compare(left, right, CompareCriticalType.INFO, CompareCriticalType.INFO);
 
         return compareResult;
