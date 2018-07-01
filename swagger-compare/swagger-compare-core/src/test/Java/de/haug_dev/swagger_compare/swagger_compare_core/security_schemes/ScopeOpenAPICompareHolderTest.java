@@ -7,7 +7,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-public class ScopeCompareHolderTest {
+public class ScopeOpenAPICompareHolderTest {
 
     @Test
     public void compareValueValue() {

@@ -1,8 +1,8 @@
-package de.haug_dev.swagger_compare.swagger_compare_core.schemas;
+package de.haug_dev.swagger_compare.swagger_compare_core.request_bodies;
 
 import de.haug_dev.swagger_compare.swagger_compare_core.CompareHolderFactory;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.*;
-import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.parameters.RequestBody;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -13,18 +13,18 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
-public class SchemasCompareHolderTest {
+public class RequestBodiesOpenAPICompareHolderTest {
     @Test
     public void compareNullNull() {
         CompareHolderFactory compareHolderFactory = new CompareHolderFactory();
         CompareHolderFactory spiedCompareHolderFactory = spy(compareHolderFactory);
 
-        Map<String, Schema> leftMap = null;
-        Map<String, Schema> rightMap = null;
+        Map<String, RequestBody> leftMap = null;
+        Map<String, RequestBody> rightMap = null;
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
 
-        ICompareResult actual = spiedCompareHolderFactory.getSchemasCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
+        ICompareResult actual = spiedCompareHolderFactory.getRequestBodiesCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -34,12 +34,12 @@ public class SchemasCompareHolderTest {
         CompareHolderFactory compareHolderFactory = new CompareHolderFactory();
         CompareHolderFactory spiedCompareHolderFactory = spy(compareHolderFactory);
 
-        Map<String, Schema> leftMap = null;
-        Map<String, Schema> rightMap = new HashMap<>();
+        Map<String, RequestBody> leftMap = null;
+        Map<String, RequestBody> rightMap = new HashMap<>();
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
 
-        ICompareResult actual = spiedCompareHolderFactory.getSchemasCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
+        ICompareResult actual = spiedCompareHolderFactory.getRequestBodiesCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -49,12 +49,12 @@ public class SchemasCompareHolderTest {
         CompareHolderFactory compareHolderFactory = new CompareHolderFactory();
         CompareHolderFactory spiedCompareHolderFactory = spy(compareHolderFactory);
 
-        Map<String, Schema> leftMap = new HashMap<>();
-        Map<String, Schema> rightMap = null;
+        Map<String, RequestBody> leftMap = new HashMap<>();
+        Map<String, RequestBody> rightMap = null;
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
 
-        ICompareResult actual = spiedCompareHolderFactory.getSchemasCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
+        ICompareResult actual = spiedCompareHolderFactory.getRequestBodiesCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -64,12 +64,12 @@ public class SchemasCompareHolderTest {
         CompareHolderFactory compareHolderFactory = new CompareHolderFactory();
         CompareHolderFactory spiedCompareHolderFactory = spy(compareHolderFactory);
 
-        Map<String, Schema> leftMap = new HashMap<>();
-        Map<String, Schema> rightMap = new HashMap<>();
+        Map<String, RequestBody> leftMap = new HashMap<>();
+        Map<String, RequestBody> rightMap = new HashMap<>();
 
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
 
-        ICompareResult actual = spiedCompareHolderFactory.getSchemasCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
+        ICompareResult actual = spiedCompareHolderFactory.getRequestBodiesCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -78,13 +78,13 @@ public class SchemasCompareHolderTest {
     public void compareCreated() {
         CompareHolderFactory compareHolderFactory = new CompareHolderFactory();
         CompareHolderFactory spiedCompareHolderFactory = spy(compareHolderFactory);
-        SchemaCompareHolder subCompareHolder = mock(SchemaCompareHolder.class);
-        when(spiedCompareHolderFactory.getSchemaCompareHolder()).thenReturn(subCompareHolder);
+        RequestBodyCompareHolder subCompareHolder = mock(RequestBodyCompareHolder.class);
+        when(spiedCompareHolderFactory.getRequestBodyCompareHolder()).thenReturn(subCompareHolder);
 
-        Map<String, Schema> leftMap = new HashMap<>();
-        Schema subLeft = null;
-        Map<String, Schema> rightMap = new HashMap<>();
-        Schema subRight = new Schema();
+        Map<String, RequestBody> leftMap = new HashMap<>();
+        RequestBody subLeft = null;
+        Map<String, RequestBody> rightMap = new HashMap<>();
+        RequestBody subRight = new RequestBody();
         rightMap.put("test", subRight);
 
         ILeafCompareResult expectedLeaf = new LeafCompareResult(subLeft, subRight, CompareResultType.CREATED, CompareCriticalType.INFO);
@@ -94,7 +94,7 @@ public class SchemasCompareHolderTest {
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
         expected.put("test", expectedLeaf);
 
-        ICompareResult actual = spiedCompareHolderFactory.getSchemasCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
+        ICompareResult actual = spiedCompareHolderFactory.getRequestBodiesCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -103,14 +103,14 @@ public class SchemasCompareHolderTest {
     public void compareDeleted() {
         CompareHolderFactory compareHolderFactory = new CompareHolderFactory();
         CompareHolderFactory spiedCompareHolderFactory = spy(compareHolderFactory);
-        SchemaCompareHolder subCompareHolder = mock(SchemaCompareHolder.class);
-        when(spiedCompareHolderFactory.getSchemaCompareHolder()).thenReturn(subCompareHolder);
+        RequestBodyCompareHolder subCompareHolder = mock(RequestBodyCompareHolder.class);
+        when(spiedCompareHolderFactory.getRequestBodyCompareHolder()).thenReturn(subCompareHolder);
 
-        Map<String, Schema> leftMap = new HashMap<>();
-        Schema subLeft = new Schema();
+        Map<String, RequestBody> leftMap = new HashMap<>();
+        RequestBody subLeft = new RequestBody();
         leftMap.put("test", subLeft);
-        Map<String, Schema> rightMap = new HashMap<>();
-        Schema subRight = null;
+        Map<String, RequestBody> rightMap = new HashMap<>();
+        RequestBody subRight = null;
 
         ILeafCompareResult expectedLeaf = new LeafCompareResult(subLeft, subRight, CompareResultType.DELETED, CompareCriticalType.INFO);
 
@@ -119,7 +119,7 @@ public class SchemasCompareHolderTest {
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
         expected.put("test", expectedLeaf);
 
-        ICompareResult actual = spiedCompareHolderFactory.getSchemasCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
+        ICompareResult actual = spiedCompareHolderFactory.getRequestBodiesCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -128,15 +128,15 @@ public class SchemasCompareHolderTest {
     public void compareUnchanged() {
         CompareHolderFactory compareHolderFactory = new CompareHolderFactory();
         CompareHolderFactory spiedCompareHolderFactory = spy(compareHolderFactory);
-        SchemaCompareHolder subCompareHolder = mock(SchemaCompareHolder.class);
-        when(spiedCompareHolderFactory.getSchemaCompareHolder()).thenReturn(subCompareHolder);
+        RequestBodyCompareHolder subCompareHolder = mock(RequestBodyCompareHolder.class);
+        when(spiedCompareHolderFactory.getRequestBodyCompareHolder()).thenReturn(subCompareHolder);
 
-        Map<String, Schema> leftMap = new HashMap<>();
-        Schema subLeft = new Schema();
+        Map<String, RequestBody> leftMap = new HashMap<>();
+        RequestBody subLeft = new RequestBody();
         leftMap.put("test", subLeft);
 
-        Map<String, Schema> rightMap = new HashMap<>();
-        Schema subRight = new Schema();
+        Map<String, RequestBody> rightMap = new HashMap<>();
+        RequestBody subRight = new RequestBody();
         rightMap.put("test", subRight);
 
         ILeafCompareResult expectedLeaf = new LeafCompareResult(subLeft, subRight, CompareResultType.UNCHANGED, CompareCriticalType.NONE);
@@ -146,7 +146,7 @@ public class SchemasCompareHolderTest {
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
         expected.put("test", expectedLeaf);
 
-        ICompareResult actual = spiedCompareHolderFactory.getSchemasCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
+        ICompareResult actual = spiedCompareHolderFactory.getRequestBodiesCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }
@@ -155,16 +155,16 @@ public class SchemasCompareHolderTest {
     public void compareChanged() {
         CompareHolderFactory compareHolderFactory = new CompareHolderFactory();
         CompareHolderFactory spiedCompareHolderFactory = spy(compareHolderFactory);
-        SchemaCompareHolder subCompareHolder = mock(SchemaCompareHolder.class);
-        when(spiedCompareHolderFactory.getSchemaCompareHolder()).thenReturn(subCompareHolder);
+        RequestBodyCompareHolder subCompareHolder = mock(RequestBodyCompareHolder.class);
+        when(spiedCompareHolderFactory.getRequestBodyCompareHolder()).thenReturn(subCompareHolder);
 
-        Map<String, Schema> leftMap = new HashMap<>();
-        Schema subLeft = new Schema();
+        Map<String, RequestBody> leftMap = new HashMap<>();
+        RequestBody subLeft = new RequestBody();
         subLeft.setDescription("Test1");
         leftMap.put("test", subLeft);
 
-        Map<String, Schema> rightMap = new HashMap<>();
-        Schema subRight = new Schema();
+        Map<String, RequestBody> rightMap = new HashMap<>();
+        RequestBody subRight = new RequestBody();
         subRight.setDescription("Test2");
         rightMap.put("test", subRight);
 
@@ -175,7 +175,7 @@ public class SchemasCompareHolderTest {
         NodeCompareResult expected = new NodeCompareResult(CompareCriticalType.WARNING, CompareCriticalType.CRITICAL);
         expected.put("test", expectedLeaf);
 
-        ICompareResult actual = spiedCompareHolderFactory.getSchemasCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
+        ICompareResult actual = spiedCompareHolderFactory.getRequestBodiesCompareHolder().compare(leftMap, rightMap, CompareCriticalType.WARNING,CompareCriticalType.CRITICAL);
 
         assertEquals(expected, actual);
     }

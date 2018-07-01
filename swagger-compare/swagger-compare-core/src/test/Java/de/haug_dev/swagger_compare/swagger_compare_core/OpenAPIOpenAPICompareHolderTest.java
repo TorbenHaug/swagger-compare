@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class OpenAPICompareHolderTest {
+public class OpenAPIOpenAPICompareHolderTest {
 
     @Test
     public void testAllValuesSet() {
@@ -44,9 +44,9 @@ public class OpenAPICompareHolderTest {
         when(compareHolderFactory.getPathsCompareHolder()).thenReturn(pathsCompareHolder);
         when(compareHolderFactory.getComponentsCompareHolder()).thenReturn(componentsCompareHolder);
 
-        CompareHolder openAPICompareHolder = new CompareHolder(compareHolderFactory);
+        OpenAPICompareHolder openAPIOpenAPICompareHolder = new OpenAPICompareHolder(compareHolderFactory);
 
-        ICompareResult actual = openAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        ICompareResult actual = openAPIOpenAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(pathsCompareResult, ((NodeCompareResult) actual).getValues().get("Paths"));
         assertEquals(componentsCompareResult, ((NodeCompareResult) actual).getValues().get("Components"));
@@ -83,9 +83,9 @@ public class OpenAPICompareHolderTest {
         when(compareHolderFactory.getPathsCompareHolder()).thenReturn(pathsCompareHolder);
         when(compareHolderFactory.getComponentsCompareHolder()).thenReturn(componentsCompareHolder);
 
-        CompareHolder openAPICompareHolder = new CompareHolder(compareHolderFactory);
+        OpenAPICompareHolder openAPIOpenAPICompareHolder = new OpenAPICompareHolder(compareHolderFactory);
 
-        ICompareResult actual = openAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        ICompareResult actual = openAPIOpenAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(pathsCompareResult, ((NodeCompareResult) actual).getValues().get("Paths"));
         assertEquals(componentsCompareResult, ((NodeCompareResult) actual).getValues().get("Components"));
@@ -122,9 +122,9 @@ public class OpenAPICompareHolderTest {
         when(compareHolderFactory.getPathsCompareHolder()).thenReturn(pathsCompareHolder);
         when(compareHolderFactory.getComponentsCompareHolder()).thenReturn(componentsCompareHolder);
 
-        CompareHolder openAPICompareHolder = new CompareHolder(compareHolderFactory);
+        OpenAPICompareHolder openAPIOpenAPICompareHolder = new OpenAPICompareHolder(compareHolderFactory);
 
-        ICompareResult actual = openAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        ICompareResult actual = openAPIOpenAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(pathsCompareResult, ((NodeCompareResult) actual).getValues().get("Paths"));
         assertEquals(componentsCompareResult, ((NodeCompareResult) actual).getValues().get("Components"));
@@ -156,9 +156,9 @@ public class OpenAPICompareHolderTest {
         when(compareHolderFactory.getPathsCompareHolder()).thenReturn(pathsCompareHolder);
         when(compareHolderFactory.getComponentsCompareHolder()).thenReturn(componentsCompareHolder);
 
-        CompareHolder openAPICompareHolder = new CompareHolder(compareHolderFactory);
+        OpenAPICompareHolder openAPIOpenAPICompareHolder = new OpenAPICompareHolder(compareHolderFactory);
 
-        ICompareResult actual = openAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
+        ICompareResult actual = openAPIOpenAPICompareHolder.compare(openAPILeft, openAPIRight, CompareCriticalType.INFO, CompareCriticalType.CRITICAL);
 
         assertEquals(null, ((NodeCompareResult) actual).getValues().get("Paths"));
         assertEquals(null, ((NodeCompareResult) actual).getValues().get("Components"));

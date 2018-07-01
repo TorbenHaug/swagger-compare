@@ -23,8 +23,8 @@ public class SwaggerCompareCore {
         Assert.notNull(left, "Left API must be set");
         Assert.notNull(right, "Right API must be set");
 
-        CompareHolder openAPICompareHolder = compareHolderFactory.getOpenAPICompareHolder();
-        ICompareResult compareResult = openAPICompareHolder.compare(left, right, CompareCriticalType.INFO, CompareCriticalType.INFO);
+        OpenAPICompareHolder openAPIOpenAPICompareHolder = compareHolderFactory.getOpenAPICompareHolder();
+        ICompareResult compareResult = openAPIOpenAPICompareHolder.compare(left, right, CompareCriticalType.INFO, CompareCriticalType.INFO);
 
         return compareResult;
     }

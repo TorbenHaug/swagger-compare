@@ -88,8 +88,8 @@ public class CompareHolderFactory {
         return new OAuthFlowsObjectCompareHolder(this);
     }
 
-    public CompareHolder getOpenAPICompareHolder() {
-        return new CompareHolder(this);
+    public OpenAPICompareHolder getOpenAPICompareHolder() {
+        return new OpenAPICompareHolder(this);
     }
 
     public OperationCompareHolder getOperationCompareHolder() {

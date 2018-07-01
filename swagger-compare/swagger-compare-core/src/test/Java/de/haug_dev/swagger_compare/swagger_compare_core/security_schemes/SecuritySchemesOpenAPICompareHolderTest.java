@@ -17,7 +17,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SecuritySchemesCompareHolderTest {
+public class SecuritySchemesOpenAPICompareHolderTest {
 
     @Test
     public void compareNullNull() {

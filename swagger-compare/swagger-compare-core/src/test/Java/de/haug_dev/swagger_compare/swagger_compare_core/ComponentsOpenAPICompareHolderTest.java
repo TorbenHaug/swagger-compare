@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 
 ;
 
-public class ComponentsCompareHolderTest {
+public class ComponentsOpenAPICompareHolderTest {
 
     @Test
     public void compareAllValuesSet() {

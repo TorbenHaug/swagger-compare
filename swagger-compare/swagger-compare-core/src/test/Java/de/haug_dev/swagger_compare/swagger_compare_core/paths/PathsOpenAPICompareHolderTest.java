@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class PathsCompareHolderTest {
+public class PathsOpenAPICompareHolderTest {
 
     @Test
     public void testEqualPaths() {

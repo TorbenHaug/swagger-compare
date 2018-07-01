@@ -8,11 +8,11 @@ import de.haug_dev.swagger_compare.swagger_compare_datatypes.ICompareResult;
 import de.haug_dev.swagger_compare.swagger_compare_datatypes.NodeCompareResult;
 import io.swagger.v3.oas.models.OpenAPI;
 
-public class CompareHolder extends AbstractCompareHolder<OpenAPI> {
+public class OpenAPICompareHolder extends AbstractCompareHolder<OpenAPI> {
 
     private CompareHolderFactory compareHolderFactory;
 
-    public CompareHolder(CompareHolderFactory compareHolderFactory) {
+    public OpenAPICompareHolder(CompareHolderFactory compareHolderFactory) {
         this.compareHolderFactory = compareHolderFactory;
     }
 

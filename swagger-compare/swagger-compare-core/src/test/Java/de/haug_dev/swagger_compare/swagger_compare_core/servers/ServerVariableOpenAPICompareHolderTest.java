@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class ServerVariableCompareHolderTest {
+public class ServerVariableOpenAPICompareHolderTest {
 
     @Test
     public void compareNullNull() {

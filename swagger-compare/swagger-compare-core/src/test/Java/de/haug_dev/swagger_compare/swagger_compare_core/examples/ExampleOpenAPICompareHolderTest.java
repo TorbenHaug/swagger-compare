@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ExampleCompareHolderTest {
+public class ExampleOpenAPICompareHolderTest {
 
     @Test
     public void compareUnchangedValues() {
