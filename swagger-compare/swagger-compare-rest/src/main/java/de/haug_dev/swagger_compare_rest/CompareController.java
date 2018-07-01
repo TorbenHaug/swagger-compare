@@ -34,8 +34,6 @@ public class CompareController {
 
     @PostMapping(value = "/compareFiles")
     public ICompareResult compareFiles(@RequestParam("fileLeft") MultipartFile fileLeft, @RequestParam("fileRight") MultipartFile fileRight) throws IOException, InvalidOpenAPIFileException {
-        logger.info("Left: " + new String(fileLeft.getBytes()));
-        logger.info("Right: " + new String(fileRight.getBytes()));
         ICompareResult compareResult = facade.compareFiles(new String(fileLeft.getBytes()), new String(fileRight.getBytes()));
         return compareResult;
     }
