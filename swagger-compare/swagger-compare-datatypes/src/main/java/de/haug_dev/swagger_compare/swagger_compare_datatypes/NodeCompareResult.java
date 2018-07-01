@@ -17,7 +17,6 @@ public class NodeCompareResult extends AbstractCompareResult implements INodeCom
         this.values = new TreeMap<>();
     }
 
-    @Override
     public void put(String key, ICompareResult value){
         this.values.put(key, value);
         boolean allResultTypesAreEqual = this.values.
