@@ -6,7 +6,7 @@ import {INodeCompareResult} from "../compare-result";
 
 
 @Component({
-  selector: 'app-compare-result',
+  selector: 'compare-result',
   templateUrl: './compare-result.component.html',
   styleUrls: ['./compare-result.component.scss']
 })
